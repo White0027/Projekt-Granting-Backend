@@ -1,7 +1,9 @@
 # GQL_Granting - Deníček
 
 __Tomáš Urban,__ 
-__Sabina Kubešová__  
+__Sabina Kubešová__
+
+7.10.2024 publikován repositář
 ________________________________________________________________________
 
 ## Aktuální úkoly
