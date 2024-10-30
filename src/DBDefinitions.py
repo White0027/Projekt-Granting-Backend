@@ -38,20 +38,18 @@ BaseModel = declarative_base()
 
 class ProgramModel(BaseModel):
     """It encapsulates a study at university, like Cyber defence.
-
+    
     Args:
-        id (ID): An primary key.
-        name (str): aka Matematika
-        name_en (str): aka Mathematics
-        type_id (ID): structure defining the kind of program
+            id: An primary key
     """
+    
     __tablename__ = "acprograms"
     id = UUIDColumn()
-    name = Column(String)
-    name_en = Column(String)
+    name = Column(String, comment="Matematika")
+    name_en = Column(String, comment="Mathematics")
     type_id = Column(ForeignKey("acprogramtypes.id"), index=True)
-    group_id = UUIDFKey(nullable=True) # garanti programu
-    licenced_group_id = UUIDFKey(nullable=True) # fakulta nebo skola
+    group_id = UUIDFKey(nullable=True, comment="Garants of the program")
+    licenced_group_id = UUIDFKey(nullable=True, comment="Identifier for the faculty or school")
 
     created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
     lastchange = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of last update")
@@ -61,24 +59,19 @@ class ProgramModel(BaseModel):
 
 class ProgramTypeModel(BaseModel):
     """It encapsulates a study at university, like Cyber defence.
-
+    
     Args:
-        id (ID): An primary key.
-        name (str): aka Matematika
-        name_en (str): aka Mathematics
-        form_id (ID): defines a form (distant, present)
-        language_id (ID): defines a language (Czech, English)
-        level_id (ID): defines a level (Bacelor, Master, Doctoral, ... )
-        title_id (ID): defined a title (Bc., MSc., Ph.D., ...)
+            id: An primary key
     """
+    
     __tablename__ = "acprogramtypes"
     id = UUIDColumn()
-    name = Column(String)
-    name_en = Column(String)
-    form_id = Column(ForeignKey("acprogramforms.id"), index=True)
-    language_id = Column(ForeignKey("acprogramlanguages.id"), index=True)
-    level_id = Column(ForeignKey("acprogramlevels.id"), index=True)
-    title_id = Column(ForeignKey("acprogramtitles.id"), index=True)
+    name = Column(String, comment="Matematika")
+    name_en = Column(String, comment=" Mathematics")
+    form_id = Column(ForeignKey("acprogramforms.id"), index=True, comment="defines a form (distant, present)")
+    language_id = Column(ForeignKey("acprogramlanguages.id"), index=True, comment="defines a language (Czech, English)")
+    level_id = Column(ForeignKey("acprogramlevels.id"), index=True, comment="defines a level (Bacelor, Master, Doctoral, ... )")
+    title_id = Column(ForeignKey("acprogramtitles.id"), index=True, comment="defined a title (Bc., MSc., Ph.D., ...)")
     # combination
 
     created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
@@ -88,6 +81,7 @@ class ProgramTypeModel(BaseModel):
     rbacobject = UUIDFKey(nullable=True, comment="id rbacobject")#Column(ForeignKey("users.id"), index=True, nullable=True)
 
 class ProgramStudentMessageModel(BaseModel):
+    
     __tablename__ = "acprograms_studentmessages"
     id = UUIDColumn()
     name = Column(String)
@@ -103,6 +97,7 @@ class ProgramStudentMessageModel(BaseModel):
     rbacobject = UUIDFKey(nullable=True, comment="id rbacobject")#Column(ForeignKey("users.id"), index=True, nullable=True)
 
 class ProgramStudentModel(BaseModel):
+    
     __tablename__ = "acprograms_students"
     id = UUIDColumn()
     student_id = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
@@ -120,6 +115,7 @@ class ProgramStudentModel(BaseModel):
     rbacobject = UUIDFKey(nullable=True, comment="id rbacobject")#Column(ForeignKey("users.id"), index=True, nullable=True)
 
 class ProgramStudentStateModel(BaseModel):
+    
     __tablename__ = "acprograms_studentstates"
     id = UUIDColumn()
     name = Column(String)
@@ -132,18 +128,16 @@ class ProgramStudentStateModel(BaseModel):
     rbacobject = UUIDFKey(nullable=True, comment="id rbacobject")#Column(ForeignKey("users.id"), index=True, nullable=True)
     
 class ProgramFormTypeModel(BaseModel):
+    
     """It encapsulates a study at university, like Cyber defence.
-
+    
     Args:
-        id (ID): An primary key.
-        name (str): aka Presenční
-        name_en (str): aka Present
+            id: An primary key
     """
     __tablename__ = "acprogramforms"
     id = UUIDColumn()
-    name = Column(String)
-    name_en = Column(String)
-    # present, distant, hybrid
+    name = Column(String, comment="Presenční, dálkové, kombinované")
+    name_en = Column(String, comment="Present, distant, hybrid")
 
     created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
     lastchange = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of last update")
@@ -156,14 +150,11 @@ class ProgramLanguageTypeModel(BaseModel):
 
     Args:
         id (ID): An primary key.
-        name (str): aka Čeština
-        name_en (str): aka Czech
     """
     __tablename__ = "acprogramlanguages"
     id = UUIDColumn()
-    name = Column(String)
-    name_en = Column(String)
-    # czech, english
+    name = Column(String, comment="Čeština, Angličtina")
+    name_en = Column(String, comment="Czech, English")
 
     created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
     lastchange = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of last update")
@@ -418,7 +409,7 @@ def ComposeConnectionString():
     user = os.environ.get("POSTGRES_USER", "postgres")
     password = os.environ.get("POSTGRES_PASSWORD", "example")
     database = os.environ.get("POSTGRES_DB", "data")
-    hostWithPort = os.environ.get("POSTGRES_HOST", "host.docker.internal:5432")
+    hostWithPort = os.environ.get("POSTGRES_HOST", "localhost:5432")
 
     driver = "postgresql+asyncpg"  # "postgresql+psycopg2"
     connectionstring = f"{driver}://{user}:{password}@{hostWithPort}/{database}"
