@@ -7,11 +7,14 @@ ________________________________________________________________________
 ## Deníček
 
 7.10.2024 publikován repositář
+
+30.10.2024 dokončení komentářů u DBDefinitons
 ________________________________________________________________________
 
 ## Aktuální úkoly
 
 - [x] Fork hrbolek/gql_granting jako template
+- [x] Okomentovat DBDefinitons
 ________________________________________________________________________
 
 ## Harmonogram skupinové práce
