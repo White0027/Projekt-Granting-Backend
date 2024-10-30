@@ -349,7 +349,7 @@ class LessonTypeModel(BaseModel):
     id = UUIDColumn()
     name = Column(String)
     name_en = Column(String)
-    abbr = Column(String)
+    abbr = Column(String, comment="P, C, L, ... (shortcuts)")
 
     created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
     lastchange = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of last update")
