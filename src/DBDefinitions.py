@@ -228,10 +228,10 @@ class SemesterModel(BaseModel):
 
     __tablename__ = "acsemesters"
     id = UUIDColumn()
-    order = Column(Integer, comment="2.semestr")
-    credits = Column(Integer)
-    subject_id = Column(ForeignKey("acsubjects.id"), index=True, comment="the subject to which semestr belongs")
-    classificationtype_id = Column(ForeignKey("acclassificationtypes.id"), index=True)
+    order = Column(Integer, comment="the semester to which subject belongs")
+    credits = Column(Integer, comment="number of credicts for subject")
+    subject_id = Column(ForeignKey("acsubjects.id"), index=True, comment="the subject to which semester belongs")
+    classificationtype_id = Column(ForeignKey("acclassificationtypes.id"), index=True, comment="Zkouška, Klasifikovaný zápočet, Zápočet")
 
     created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
     lastchange = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of last update")
@@ -244,7 +244,11 @@ class SemesterModel(BaseModel):
     # themes = relationship('StudyThemesModel', back_populates='studysemesters')
 
 class TopicModel(BaseModel):
-    """Aka Functions"""
+    """Represents a topic within a semester.
+
+    Args:
+        id (UUID): An primary key.
+    """
 
     __tablename__ = "actopics"
     id = UUIDColumn()
@@ -286,19 +290,16 @@ class ClassificationModel(BaseModel):
 
     Args:
         id (ID): An primary key.
-        order (int): 1 for first attempt.
-        classificationtype_id (ID): Exam or so
-        classificationlevel_id = A, B, C, ...
     """
     __tablename__ = "acclassifications"
 
     id = UUIDColumn()
-    order = Column(Integer) #
+    order = Column(Integer, comment="number for every attempt") #
 
     semester_id = Column(ForeignKey("acsemesters.id"), index=True)
     student_id = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True)
-    #classificationtype_id = Column(ForeignKey("acclassificationtypes.id"), index=True)
-    classificationlevel_id = Column(ForeignKey("acclassificationlevels.id"), index=True)
+    #classificationtype_id = Column(ForeignKey("acclassificationtypes.id"), index=True, comment="Zkouška, Klasifikovaný zápočet, Zápočet")
+    classificationlevel_id = Column(ForeignKey("acclassificationlevels.id"), index=True, comment="A, B, C, D, E, F")
 
     date = Column(DateTime, server_default=sqlalchemy.sql.func.now())
 
@@ -313,16 +314,13 @@ class ClassificationLevelModel(BaseModel):
 
     Args:
         id (ID): An primary key.
-        name (ID): A, B, C, ...
-        name_en (ID): A, B, C, ...
-        ordervalue = 1, 2, 3, ...
     """
     __tablename__ = "acclassificationlevels"
 
     id = UUIDColumn()
-    name = Column(String)
-    name_en = Column(String)
-    ordervalue = Column(Integer)
+    name = Column(String, comment="A, B, C, D, E, F")
+    name_en = Column(String, comment="A, B, C, D, E, F")
+    ordervalue = Column(Integer, comment="1, 2, 3, ...")
 
     created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
     lastchange = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of last update")
@@ -331,11 +329,12 @@ class ClassificationLevelModel(BaseModel):
     rbacobject = UUIDFKey(nullable=True, comment="id rbacobject")#Column(ForeignKey("users.id"), index=True, nullable=True)
 
 class ClassificationTypeModel(BaseModel):
+    """ Holds a particular classification type (Zkouška, Klasifikovaný zápočet, Zápočet)."""
+    
     __tablename__ = "acclassificationtypes"
     id = UUIDColumn()
     name = Column(String)
     name_en = Column(String)
-    # Z, KZ, Z+Zk, Zk, ...
     # classificationsemesters = relationship('SemesterModel', back_populates='classifications')
 
     created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
@@ -345,6 +344,7 @@ class ClassificationTypeModel(BaseModel):
     rbacobject = UUIDFKey(nullable=True, comment="id rbacobject")#Column(ForeignKey("users.id"), index=True, nullable=True)
 
 class LessonTypeModel(BaseModel):
+    """ Holds a particular lesson type (Lecture, Excercise, Laboratory, ...)."""
     __tablename__ = "aclessontypes"
     id = UUIDColumn()
     name = Column(String)
@@ -356,7 +356,6 @@ class LessonTypeModel(BaseModel):
     createdby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
     changedby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
     rbacobject = UUIDFKey(nullable=True, comment="id rbacobject")#Column(ForeignKey("users.id"), index=True, nullable=True)
-    # lectures, excersise, laboratory, ...
 
     # items = relationship('StudyThemeItemModel', back_populates='type')
 
