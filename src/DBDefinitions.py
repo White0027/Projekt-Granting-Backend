@@ -167,18 +167,13 @@ class ProgramLevelTypeModel(BaseModel):
 
     Args:
         id (ID): An primary key.
-        name (str): aka Bakalář
-        name_en (str): aka Bachelor
-        length (ID): length of study
-        priority (ID): allows to compare two programs and derive appropriate order
     """
     __tablename__ = "acprogramlevels"
     id = UUIDColumn()
-    name = Column(String)
-    name_en = Column(String)
-    length = Column(Integer)
-    priority = Column(Integer)  # 1 for Bc., 2 for Mgr. or NMgr., 3 for Ph.D.
-    # bachelor, magister, doctoral
+    name = Column(String, comment="Bakalář, Magist, Doktorant")
+    name_en = Column(String, comment="Bachelor, Magister, Doctoral")
+    length = Column(Integer, comment="leght of study")
+    priority = Column(Integer, comment="allows to compare two programs and derive appropriate order... # 1 for Bc., 2 for Mgr. or NMgr., 3 for Ph.D.")  
 
     created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
     lastchange = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of last update")
@@ -191,14 +186,11 @@ class ProgramTitleTypeModel(BaseModel):
 
     Args:
         id (ID): An primary key.
-        name (str): aka Bc.
-        name_en (str): aka Bc.
     """
     __tablename__ = "acprogramtitles"
     id = UUIDColumn()
-    name = Column(String)
-    name_en = Column(String)
-    # Bc., Mgr., Ing, ...
+    name = Column(String, comment="Bc., Mgr., Ing, ...")
+    name_en = Column(String, comment="Bc., Mgr., Ing, ...")
 
     created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
     lastchange = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of last update")
@@ -212,15 +204,12 @@ class SubjectModel(BaseModel):
 
     Args:
         id (ID): An primary key.
-        name (str): aka Matematika
-        name_en (str): aka Mathematics
-        program_id (ID): the program to which subject belongs
     """
     __tablename__ = "acsubjects"
     id = UUIDColumn()
-    name = Column(String)
-    name_en = Column(String)
-    program_id = Column(ForeignKey("acprograms.id"), index=True)
+    name = Column(String, comment="Matematika")
+    name_en = Column(String, comment="Mathematics")
+    program_id = Column(ForeignKey("acprograms.id"), index=True, comment="the program to which subject belongs")
     group_id = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
 
     created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
@@ -239,9 +228,9 @@ class SemesterModel(BaseModel):
 
     __tablename__ = "acsemesters"
     id = UUIDColumn()
-    order = Column(Integer)
+    order = Column(Integer, comment="2.semestr")
     credits = Column(Integer)
-    subject_id = Column(ForeignKey("acsubjects.id"), index=True)
+    subject_id = Column(ForeignKey("acsubjects.id"), index=True, comment="the subject to which semestr belongs")
     classificationtype_id = Column(ForeignKey("acclassificationtypes.id"), index=True)
 
     created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
