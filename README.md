@@ -9,12 +9,15 @@ ________________________________________________________________________
 7.10.2024 publikován repositář
 
 30.10.2024 dokončení komentářů u DBDefinitons
+
+5.11.2024 dokončení descriptions v GraphTypeDefinitions
 ________________________________________________________________________
 
 ## Aktuální úkoly
 
 - [x] Fork hrbolek/gql_granting jako template
 - [x] Okomentovat DBDefinitons
+- [x] Přidat description v GraphTypeDefinitions
 ________________________________________________________________________
 
 ## Harmonogram skupinové práce
