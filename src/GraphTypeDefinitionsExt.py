@@ -20,7 +20,7 @@ from ._GraphPermissions import (
 AcProgramStudentGQLModel = Annotated["AcProgramStudentGQLModel", strawberry.lazy(".GraphTypeDefinitions")]
 AcClassificationGQLModel = Annotated["AcClassificationGQLModel", strawberry.lazy(".GraphTypeDefinitions")]
 
-@strawberry.federation.type(extend=True, keys=["id"])
+@strawberry.federation.type(extend=True, keys=["id"], description="User group")
 class UserGQLModel:
     id: IDType = strawberry.federation.field(external=True)
     resolve_reference = resolve_reference
@@ -46,13 +46,13 @@ class UserGQLModel:
         return result
 
 
-@strawberry.federation.type(extend=True, keys=["id"])
+@strawberry.federation.type(extend=True, keys=["id"], description="Group")
 class GroupGQLModel:
     id: IDType = strawberry.federation.field(external=True)
     resolve_reference = resolve_reference
 
 
-@strawberry.federation.type(extend=True, keys=["id"])
+@strawberry.federation.type(extend=True, keys=["id"], description="Role")
 class RBACObjectGQLModel:
     id: IDType = strawberry.federation.field(external=True)
     resolve_reference = resolve_reference
