@@ -1,428 +1,167 @@
 import sqlalchemy
-import datetime
-from sqlalchemy import (
-    Column,
-    String,
-    BigInteger,
-    Integer,
-    DateTime,
-    ForeignKey,
-    Sequence,
-    Table,
-    Boolean,
-)
-from sqlalchemy.dialects.postgresql import UUID
-
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, String, Integer, DateTime, ForeignKey, Boolean
 from sqlalchemy.orm import declarative_base
-import uuid
 from .uuid import UUIDColumn, UUIDFKey
 
-
 class BaseModel(declarative_base()):
-    '''Base class for all models
-    
-    Args:
-        id (UUID): An primary key.
-    '''
-    
-    __abstract__ = True  # Určuje, že tato třída nebude mapována jako tabulka v databázi
-    
+    """Base class for all models."""
+    __abstract__ = True
+
     id = UUIDColumn()
-    
     created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
     lastchange = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of last update")
-    createdby_id = UUIDFKey(nullable=True, comment="Reference to the UUID of the user who created this record")#Column(ForeignKey("users.id"), index=True, nullable=True)
-    changedby_id = UUIDFKey(nullable=True, comment="Reference to the UUID of the user who changed this record")#Column(ForeignKey("users.id"), index=True, nullable=True)
-    rbacobject_id = UUIDFKey(nullable=True, comment="id rbacobject")#Column(ForeignKey("users.id"), index=True, nullable=True)
-
-# id = Column(UUID(as_uuid=True), primary_key=True, server_default=sqlalchemy.text("uuid_generate_v4()"),)
-
-###########################################################################################################################
-#
-# zde definujte sve SQLAlchemy modely
-# je-li treba, muzete definovat modely obsahujici jen id polozku, na ktere se budete odkazovat
-# primarni klice pojmenujte vzdy jako id
-# cizi klice pojmenujte vzdy jako neco_id
-# soucasti datove struktury by mely byt nejake polozky
-# - lastchange
-# - created
-# - createdby
-# - changedby
-# - rbacobject
+    createdby = UUIDFKey(nullable=True, comment="Reference to the UUID of the user who created this record")
+    changedby = UUIDFKey(nullable=True, comment="Reference to the UUID of the user who changed this record")
+    rbacobject = UUIDFKey(nullable=True, comment="id rbacobject")
 
 class ProgramModel(BaseModel):
-    """It encapsulates a study at university, like Cyber defence.
-    
-    Args:
-            id: An primary key
-    """
-    
+    """It encapsulates a study at university, like Cyber defence."""
     __tablename__ = "acprograms"
-    
+
     name = Column(String, comment="Matematika")
     name_en = Column(String, comment="Mathematics")
     type_id = Column(ForeignKey("acprogramtypes.id"), index=True)
     group_id = UUIDFKey(nullable=True, comment="Garants of the program")
     licenced_group_id = UUIDFKey(nullable=True, comment="Identifier for the faculty or school")
-    
+
 class ProgramTypeModel(BaseModel):
-    """It encapsulates a study at university, like Cyber defence.
-    
-    Args:
-            id: An primary key
-    """
-    
+    """It encapsulates a study at university, like Cyber defence."""
     __tablename__ = "acprogramtypes"
-    
-    id = UUIDColumn()
+
     name = Column(String, comment="Matematika")
-    name_en = Column(String, comment=" Mathematics")
+    name_en = Column(String, comment="Mathematics")
     form_id = Column(ForeignKey("acprogramforms.id"), index=True, comment="defines a form (distant, present)")
     language_id = Column(ForeignKey("acprogramlanguages.id"), index=True, comment="defines a language (Czech, English)")
     level_id = Column(ForeignKey("acprogramlevels.id"), index=True, comment="defines a level (Bacelor, Master, Doctoral, ... )")
     title_id = Column(ForeignKey("acprogramtitles.id"), index=True, comment="defined a title (Bc., MSc., Ph.D., ...)")
 
-    created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
-    lastchange = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of last update")
-    createdby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    changedby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    rbacobject = UUIDFKey(nullable=True, comment="id rbacobject")#Column(ForeignKey("users.id"), index=True, nullable=True)
-
 class ProgramStudentMessageModel(BaseModel):
-    """Represents a message associated with a student in a specific program.
-
-    Args:
-        id (UUID): An primary key.
-    """
-
+    """Represents a message associated with a student in a specific program."""
     __tablename__ = "acprograms_studentmessages"
-    
-    id = UUIDColumn()
+
     name = Column(String, comment="Name of the message") 
     description = Column(String, comment="Description of the message")
     student_id = UUIDFKey(nullable=False, comment="the student to which message belongs")
     program_id = Column(ForeignKey("acprograms.id"), index=True, comment="the program to which message belongs")
     date = Column(DateTime, server_default=sqlalchemy.sql.func.now())
 
-    created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
-    lastchange = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of last update")
-    createdby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    changedby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    rbacobject = UUIDFKey(nullable=True, comment="id rbacobject")#Column(ForeignKey("users.id"), index=True, nullable=True)
-
 class ProgramStudentModel(BaseModel):
-    """Represents a student enrolled in a specific program.
-
-    Args:
-        id (UUID): An primary key.
-    """
-        
+    """Represents a student enrolled in a specific program."""
     __tablename__ = "acprograms_students"
-    
-    id = UUIDColumn()
-    student_id = UUIDFKey(nullable=True, comment="Identifier for the student")#Column(ForeignKey("users.id"), index=True, nullable=True)
-    # state_id = Column(ForeignKey("acprograms_studentstates.id"), index=True)
-    state_id = UUIDFKey(nullable=True, comment="State of the program")#Column(ForeignKey("users.id"), index=True, nullable=True, c)
+
+    student_id = UUIDFKey(nullable=True, comment="Identifier for the student")
+    state_id = UUIDFKey(nullable=True, comment="State of the program")
     program_id = Column(ForeignKey("acprograms.id"), index=True, comment="Identifier for the program")
     semester = Column(Integer, comment="Current semester")
     valid = Column(Boolean, default=lambda item: True)
 
-    created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
-    lastchange = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of last update")
-    createdby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    changedby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    rbacobject = UUIDFKey(nullable=True, comment="id rbacobject")#Column(ForeignKey("users.id"), index=True, nullable=True)
-
 class ProgramStudentStateModel(BaseModel):
-    """Represents a state of a student in a specific program.
-    
-    Args:
-        id (UUID): An primary key.
-    """
-        
+    """Represents a state of a student in a specific program."""
     __tablename__ = "acprograms_studentstates"
-    
-    id = UUIDColumn()
+
     name = Column(String, comment="Name of the state")
     name_en = Column(String, comment="Name of the state in English")
 
-    created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
-    lastchange = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of last update")
-    createdby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    changedby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    rbacobject = UUIDFKey(nullable=True, comment="id rbacobject")#Column(ForeignKey("users.id"), index=True, nullable=True)
-    
 class ProgramFormTypeModel(BaseModel):
-    
-    """It encapsulates a study at university, like Cyber defence.
-    
-    Args:
-            id: An primary key
-    """
-    
+    """It encapsulates a study at university, like Cyber defence."""
     __tablename__ = "acprogramforms"
-    
-    id = UUIDColumn()
+
     name = Column(String, comment="Presenční, dálkové, kombinované")
     name_en = Column(String, comment="Present, distant, hybrid")
 
-    created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
-    lastchange = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of last update")
-    createdby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    changedby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    rbacobject = UUIDFKey(nullable=True, comment="id rbacobject")#Column(ForeignKey("users.id"), index=True, nullable=True)
-
 class ProgramLanguageTypeModel(BaseModel):
-    """It encapsulates a study at university, like Cyber defence.
-
-    Args:
-        id (ID): An primary key.
-    """
-    
+    """It encapsulates a study at university, like Cyber defence."""
     __tablename__ = "acprogramlanguages"
-    
-    id = UUIDColumn()
+
     name = Column(String, comment="Čeština, Angličtina")
     name_en = Column(String, comment="Czech, English")
 
-    created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
-    lastchange = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of last update")
-    createdby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    changedby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    rbacobject = UUIDFKey(nullable=True, comment="id rbacobject")#Column(ForeignKey("users.id"), index=True, nullable=True)
-
 class ProgramLevelTypeModel(BaseModel):
-    """It encapsulates a study at university, like Cyber defence.
-
-    Args:
-        id (ID): An primary key.
-    """
-    
+    """It encapsulates a study at university, like Cyber defence."""
     __tablename__ = "acprogramlevels"
-    
-    id = UUIDColumn()
+
     name = Column(String, comment="Bakalář, Magist, Doktorant")
     name_en = Column(String, comment="Bachelor, Magister, Doctoral")
     length = Column(Integer, comment="leght of study")
     priority = Column(Integer, comment="allows to compare two programs and derive appropriate order... # 1 for Bc., 2 for Mgr. or NMgr., 3 for Ph.D.")  
 
-    created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
-    lastchange = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of last update")
-    createdby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    changedby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    rbacobject = UUIDFKey(nullable=True, comment="id rbacobject")#Column(ForeignKey("users.id"), index=True, nullable=True)
-
 class ProgramTitleTypeModel(BaseModel):
-    """It encapsulates a study at university, like Cyber defence.
-
-    Args:
-        id (ID): An primary key.
-    """
-    
+    """It encapsulates a study at university, like Cyber defence."""
     __tablename__ = "acprogramtitles"
-    
-    id = UUIDColumn()
+
     name = Column(String, comment="Bc., Mgr., Ing, ...")
     name_en = Column(String, comment="Bc., Mgr., Ing, ...")
 
-    created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
-    lastchange = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of last update")
-    createdby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    changedby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    rbacobject = UUIDFKey(nullable=True, comment="id rbacobject")#Column(ForeignKey("users.id"), index=True, nullable=True)
-
-
 class SubjectModel(BaseModel):
-    """Could be a Mathematics.
-
-    Args:
-        id (ID): An primary key.
-    """
+    """Could be a Mathematics."""
     __tablename__ = "acsubjects"
-    
-    id = UUIDColumn()
+
     name = Column(String, comment="Matematika")
     name_en = Column(String, comment="Mathematics")
     program_id = Column(ForeignKey("acprograms.id"), index=True, comment="the program to which subject belongs")
-    group_id = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-
-    created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
-    lastchange = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of last update")
-    createdby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    changedby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    rbacobject = UUIDFKey(nullable=True, comment="id rbacobject")#Column(ForeignKey("users.id"), index=True, nullable=True)
-
-    # language_id = Column(ForeignKey('plan_subject_languages.id'))
-    # program = relationship('StudyProgramModel', back_populates='subjects')
-    # semesters = relationship('SemesterModel', back_populates='subject')
-    # language = relationship('StudyLanguageModel', back_populates='subjects')
+    group_id = UUIDFKey(nullable=True)
 
 class SemesterModel(BaseModel):
-    """Aka Mathematics, 2nd semester.
-
-    Args:
-        id (ID): An primary key.
-    """
-
+    """Aka Mathematics, 2nd semester."""
     __tablename__ = "acsemesters"
-    
-    id = UUIDColumn()
+
     order = Column(Integer, comment="the semester to which subject belongs")
     credits = Column(Integer, comment="number of credicts for subject")
     subject_id = Column(ForeignKey("acsubjects.id"), index=True, comment="the subject to which semester belongs")
     classificationtype_id = Column(ForeignKey("acclassificationtypes.id"), index=True, comment="Zkouška, Klasifikovaný zápočet, Zápočet")
 
-    created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
-    lastchange = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of last update")
-    createdby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    changedby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    rbacobject = UUIDFKey(nullable=True, comment="id rbacobject")#Column(ForeignKey("users.id"), index=True, nullable=True)
-
-    # subject = relationship('SubjectModel', back_populates='semesters')
-    # classifications = relationship('ClassificationModel', back_populates='classificationsemesters')
-    # themes = relationship('StudyThemesModel', back_populates='studysemesters')
-
 class TopicModel(BaseModel):
-    """Represents a topic within a semester.
-
-    Args:
-        id (UUID): An primary key.
-    """
-
+    """Represents a topic within a semester."""
     __tablename__ = "actopics"
-    
-    id = UUIDColumn()
+
     name = Column(String, comment="Name of the topic")
     name_en = Column(String, comment="Name of the topic in English")
     order = Column(Integer, comment="Order of the topic")
     semester_id = Column(ForeignKey("acsemesters.id"), index=True, comment="the semester to which topic belongs")
 
-    created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
-    lastchange = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of last update")
-    createdby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    changedby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    rbacobject = UUIDFKey(nullable=True, comment="id rbacobject")#Column(ForeignKey("users.id"), index=True, nullable=True)
-
-    # studysemesters = relationship('SemesterModel', back_populates='themes')
-    # items = relationship('StudyThemeItemModel', back_populates='theme')
-
 class LessonModel(BaseModel):
-    """Lecture, 2h, 1st semester, Mathematics.
-    
-    Args:
-        id (ID): An primary key.
-    """
-
+    """Lecture, 2h, 1st semester, Mathematics."""
     __tablename__ = "aclessons"
-    
-    id = UUIDColumn()
+
     topic_id = Column(ForeignKey("actopics.id"), index=True, comment="the topic to which lesson belongs")
     type_id = Column(ForeignKey("aclessontypes.id"), index=True, comment="Lecture, Excercise, Laboratory, ...")
     count = Column(Integer, comment="number of lessons")
 
-    created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
-    lastchange = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of last update")
-    createdby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    changedby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    rbacobject = UUIDFKey(nullable=True, comment="id rbacobject")#Column(ForeignKey("users.id"), index=True, nullable=True)
-
-    # type = relationship('ThemeTypeModel', back_populates='items')
-    # theme = relationship('StudyThemeModel', back_populates='items')
-
 class ClassificationModel(BaseModel):
-    """Holds a particular classification for a student.
-
-    Args:
-        id (ID): An primary key.
-    """
+    """Holds a particular classification for a student."""
     __tablename__ = "acclassifications"
 
-    id = UUIDColumn()
-    order = Column(Integer, comment="number for every attempt") #
+    order = Column(Integer, comment="number for every attempt")
     semester_id = Column(ForeignKey("acsemesters.id"), index=True)
-    student_id = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True)
-    #classificationtype_id = Column(ForeignKey("acclassificationtypes.id"), index=True, comment="Zkouška, Klasifikovaný zápočet, Zápočet")
+    student_id = UUIDFKey(nullable=True)
     classificationlevel_id = Column(ForeignKey("acclassificationlevels.id"), index=True, comment="A, B, C, D, E, F")
     date = Column(DateTime, server_default=sqlalchemy.sql.func.now())
-    
-    created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
-    lastchange = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of last update")
-    createdby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    changedby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    rbacobject = UUIDFKey(nullable=True, comment="id rbacobject")#Column(ForeignKey("users.id"), index=True, nullable=True)
 
 class ClassificationLevelModel(BaseModel):
-    """Holds a particular classification level (A, B, C, ...).
-
-    Args:
-        id (ID): An primary key.
-    """
-    
+    """Holds a particular classification level (A, B, C, ...)."""
     __tablename__ = "acclassificationlevels"
-    
-    id = UUIDColumn()
+
     name = Column(String, comment="A, B, C, D, E, F")
     name_en = Column(String, comment="A, B, C, D, E, F")
     ordervalue = Column(Integer, comment="1, 2, 3, ...")
-    
-    created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
-    lastchange = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of last update")
-    createdby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    changedby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    rbacobject = UUIDFKey(nullable=True, comment="id rbacobject")#Column(ForeignKey("users.id"), index=True, nullable=True)
 
 class ClassificationTypeModel(BaseModel):
-    """ Holds a particular classification type (Zkouška, Klasifikovaný zápočet, Zápočet).
-    
-    Args:
-        id (ID): An primary key.
-    """
-    
+    """Holds a particular classification type (Zkouška, Klasifikovaný zápočet, Zápočet)."""
     __tablename__ = "acclassificationtypes"
-    
-    id = UUIDColumn()
+
     name = Column(String, comment="Zkouška, Klasifikovaný zápočet, Zápočet")
     name_en = Column(String, comment="Exam, Classified credit, Credit")
-    # classificationsemesters = relationship('SemesterModel', back_populates='classifications')
-    
-    created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
-    lastchange = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of last update")
-    createdby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    changedby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    rbacobject = UUIDFKey(nullable=True, comment="id rbacobject")#Column(ForeignKey("users.id"), index=True, nullable=True)
 
 class LessonTypeModel(BaseModel):
-    """ Holds a particular lesson type (Lecture, Excercise, Laboratory, ...).
-    
-    Args:
-        id (ID): An primary key.
-    """
-    
+    """Holds a particular lesson type (Lecture, Excercise, Laboratory, ...)."""
     __tablename__ = "aclessontypes"
-    
-    id = UUIDColumn()
+
     name = Column(String)
     name_en = Column(String)
     abbr = Column(String, comment="P, C, L, ... (shortcuts)")
-    
-    created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
-    lastchange = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of last update")
-    createdby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    changedby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    rbacobject = UUIDFKey(nullable=True, comment="id rbacobject")#Column(ForeignKey("users.id"), index=True, nullable=True)
 
-    # items = relationship('StudyThemeItemModel', back_populates='type')
-
-
-
-
-from sqlalchemy import create_engine
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
-
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.ext.asyncio import create_async_engine
-
 
 async def startEngine(connectionstring, makeDrop=False, makeUp=True):
     """Provede nezbytne ukony a vrati asynchronni SessionMaker"""
@@ -441,9 +180,7 @@ async def startEngine(connectionstring, makeDrop=False, makeUp=True):
     )
     return async_sessionMaker
 
-
 import os
-
 
 def ComposeConnectionString():
     """Odvozuje connectionString z promennych prostredi (nebo z Docker Envs, coz je fakticky totez).
@@ -454,7 +191,7 @@ def ComposeConnectionString():
     database = os.environ.get("POSTGRES_DB", "data")
     hostWithPort = os.environ.get("POSTGRES_HOST", "localhost:5432")
 
-    driver = "postgresql+asyncpg"  # "postgresql+psycopg2"
+    driver = "postgresql+asyncpg"
     connectionstring = f"{driver}://{user}:{password}@{hostWithPort}/{database}"
     connectionstring = os.environ.get("CONNECTION_STRING", connectionstring)
 
