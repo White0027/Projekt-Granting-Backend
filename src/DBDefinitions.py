@@ -1,18 +1,19 @@
 import sqlalchemy
 from sqlalchemy import Column, String, Integer, DateTime, ForeignKey, Boolean
-from sqlalchemy.orm import declarative_base
+from sqlalchemy.orm import DeclarativeBase
 from .uuid import UUIDColumn, UUIDFKey
 
-class BaseModel(declarative_base()):
+
+class BaseModel(DeclarativeBase):
     """Base class for all models."""
     __abstract__ = True
 
     id = UUIDColumn()
     created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
     lastchange = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of last update")
-    createdby = UUIDFKey(nullable=True, comment="Reference to the UUID of the user who created this record")
-    changedby = UUIDFKey(nullable=True, comment="Reference to the UUID of the user who changed this record")
-    rbacobject = UUIDFKey(nullable=True, comment="id rbacobject")
+    createdby_id = UUIDFKey(nullable=True, comment="Reference to the UUID of the user who created this record")
+    changedby_id = UUIDFKey(nullable=True, comment="Reference to the UUID of the user who changed this record")
+    rbacobject_id = UUIDFKey(nullable=True, comment="id rbacobject")
 
 class ProgramModel(BaseModel):
     """It encapsulates a study at university, like Cyber defence."""

@@ -93,7 +93,7 @@ RBACObjectGQLModel = typing.Annotated["RBACObjectGQLModel", strawberry.lazy(".Gr
         permission_classes=[OnlyForAuthentized()])
 async def resolve_rbacobject(self, info: strawberry.types.Info) -> typing.Optional[RBACObjectGQLModel]:
     from .GraphTypeDefinitionsExt import RBACObjectGQLModel
-    result = None if self.rbacobject is None else await RBACObjectGQLModel.resolve_reference(info, self.rbacobject)
+    result = None if self.rbacobject_id is None else await RBACObjectGQLModel.resolve_reference(info, self.rbacobject_id)
     return result
 
 
