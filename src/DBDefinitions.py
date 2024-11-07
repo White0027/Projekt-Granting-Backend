@@ -18,7 +18,23 @@ from sqlalchemy.orm import declarative_base
 import uuid
 from .uuid import UUIDColumn, UUIDFKey
 
-BaseModel = declarative_base()
+
+class BaseModel(declarative_base()):
+    '''Base class for all models
+    
+    Args:
+        id (UUID): An primary key.
+    '''
+    
+    __abstract__ = True  # Určuje, že tato třída nebude mapována jako tabulka v databázi
+    
+    id = UUIDColumn()
+    
+    created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
+    lastchange = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of last update")
+    createdby_id = UUIDFKey(nullable=True, comment="Reference to the UUID of the user who created this record")#Column(ForeignKey("users.id"), index=True, nullable=True)
+    changedby_id = UUIDFKey(nullable=True, comment="Reference to the UUID of the user who changed this record")#Column(ForeignKey("users.id"), index=True, nullable=True)
+    rbacobject_id = UUIDFKey(nullable=True, comment="id rbacobject")#Column(ForeignKey("users.id"), index=True, nullable=True)
 
 # id = Column(UUID(as_uuid=True), primary_key=True, server_default=sqlalchemy.text("uuid_generate_v4()"),)
 
@@ -34,7 +50,6 @@ BaseModel = declarative_base()
 # - createdby
 # - changedby
 # - rbacobject
-#
 
 class ProgramModel(BaseModel):
     """It encapsulates a study at university, like Cyber defence.
@@ -45,19 +60,12 @@ class ProgramModel(BaseModel):
     
     __tablename__ = "acprograms"
     
-    id = UUIDColumn()
     name = Column(String, comment="Matematika")
     name_en = Column(String, comment="Mathematics")
     type_id = Column(ForeignKey("acprogramtypes.id"), index=True)
     group_id = UUIDFKey(nullable=True, comment="Garants of the program")
     licenced_group_id = UUIDFKey(nullable=True, comment="Identifier for the faculty or school")
-
-    created = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of creation")
-    lastchange = Column(DateTime, server_default=sqlalchemy.sql.func.now(), comment="timestamp of last update")
-    createdby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    changedby = UUIDFKey(nullable=True)#Column(ForeignKey("users.id"), index=True, nullable=True)
-    rbacobject = UUIDFKey(nullable=True, comment="id rbacobject")#Column(ForeignKey("users.id"), index=True, nullable=True)
-
+    
 class ProgramTypeModel(BaseModel):
     """It encapsulates a study at university, like Cyber defence.
     
