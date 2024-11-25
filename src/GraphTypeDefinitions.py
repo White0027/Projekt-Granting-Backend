@@ -2,6 +2,7 @@ import datetime
 from typing import List, Union, Optional, Annotated
 from dataclasses import dataclass
 import strawberry
+from uoishelpers.resolvers import Insert, InsertError, Update, UpdateError, Delete, DeleteError
 
 from uoishelpers.resolvers import createInputs
 
@@ -1707,6 +1708,30 @@ async def program_subject_insert(self, info: strawberry.types.Info, subject: Sub
     )
 async def program_subject_update(self, info: strawberry.types.Info, subject: SubjectUpdateGQLModel) -> SubjectResultGQLModel:
     return await encapsulateUpdate(info, AcSubjectGQLModel.getLoader(info), subject, SubjectResultGQLModel(msg="ok", id=subject.id))
+
+@strawberry.mutation(
+        description="""Update the type of study program""",
+        permission_classes=[OnlyForAuthentized(isList=False)]
+    )
+async def program_subject_insert(self, info: strawberry.types.Info, subject: SubjectInsertGQLModel) -> Union[AcSubjectGQLModel, InsertError[AcSubjectGQLModel]]:
+    result = await Insert[AcSubjectGQLModel].DoItSafeWay(info=info, entity=subject)
+    return result
+
+@strawberry.mutation(
+        description="""Update the type of study program""",
+        permission_classes=[OnlyForAuthentized(isList=False)]
+    )
+async def program_subject_update(self, info: strawberry.types.Info, subject: SubjectUpdateGQLModel) -> Union[AcSubjectGQLModel, UpdateError[AcSubjectGQLModel]]:
+    result = await Update[AcSubjectGQLModel].DoItSafeWay(info=info, entity=subject)
+    return result
+
+@strawberry.mutation(
+        description="""Update the type of study program""",
+        permission_classes=[OnlyForAuthentized(isList=False)]
+    )
+async def program_subject_delete(self, info: strawberry.types.Info, subject: IDType) -> Union[AcSubjectGQLModel, DeleteError[AcSubjectGQLModel]]:
+    result = await Delete[AcSubjectGQLModel].DoItSafeWay(info=info, entity=subject)
+    return result
 
 # endregion
 
