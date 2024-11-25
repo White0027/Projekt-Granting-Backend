@@ -24,6 +24,7 @@ ________________________________________________________________________
 - [x] Fork hrbolek/gql_granting jako template
 - [x] Okomentovat DBDefinitons
 - [x] Přidat description v GraphTypeDefinitions
+- [x] Přidání CRUD operací
 ________________________________________________________________________
 
 ## Harmonogram skupinové práce
