@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
 from strawberry.fastapi import GraphQLRouter
 from strawberry.asgi import GraphQL
 
@@ -154,6 +154,11 @@ graphql_app = GraphQLRouter(
 @app.get("/gql")
 async def graphiql(request: Request):
     return await graphql_app.render_graphql_ide(request)
+
+@app.get("/voyager", response_class=FileResponse)
+async def voyager():
+    realpath = os.path.realpath("./voyager.html")
+    return realpath
 
 @app.post("/gql")
 async def apollo_gql(request: Request, item: Item):

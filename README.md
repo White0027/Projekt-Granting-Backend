@@ -11,6 +11,12 @@ ________________________________________________________________________
 30.10.2024 dokončení komentářů u DBDefinitons
 
 5.11.2024 dokončení descriptions v GraphTypeDefinitions
+
+7.11.2024 uspěšné prezentování projektu na 1. projektovém dni
+
+14.11.2024 úprava Dataloaderů
+
+25.11.2024 přidání Voyager pro zobrazení dat
 ________________________________________________________________________
 
 ## Aktuální úkoly
