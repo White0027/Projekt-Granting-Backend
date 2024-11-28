@@ -24,7 +24,33 @@ ________________________________________________________________________
 - [x] Fork hrbolek/gql_granting jako template
 - [x] Okomentovat DBDefinitons
 - [x] Přidat description v GraphTypeDefinitions
+- [x] Všechny GQL typy mají private attribut _data, což je odpovídající db řádek (neplatí pro extended types)
+- [x] Všechny GQL typy a odpovídající DB modely mají atributy:
+    - lastchange
+    - created
+    - changedby_id
+    - createby_id
+    - rbacobject_id
 - [x] Přidání CRUD operací
+
+- [ ] Vektorové atributy mají volitelné parametry where, limit a skip a mají alternativu podle standardu relay connection
+- [ ] Vektorové resolvery globální úrovně (query) mají také alternativu podle standardu relay connection
+- [ ] Součástí filtrů (where) bude primární klíč i cizí klíče
+- [ ] Počáteční import dat je realizován jako asynchronní task: 
+    ```python
+    task = asyncio.create_task(initDB(asyncSessionMaker))
+    ```
+- [ ] Mutace upravit tak, aby používaly:
+    ```python
+    from uoishelpers.resolvers import encapsulateInsert, encapsulateUpdate, encapsulateDelete
+    ```
+- [ ] Všechny atributy mají anotace, např.:
+    ```python
+    Annotated[Optional[str], strawberry.argument(description="")]="0"
+    ```
+- [ ] U všech fields jsou permission classes a v komentáři uvedeno, kdo má k atributu či funkcionalitě přístup
+- [ ] Testy s alespoň 90% pokrytím pomocí dotazů, ty jsou uloženy v systému souborů (read.gql, create.gql, …)
+
 ________________________________________________________________________
 
 ## Harmonogram skupinové práce
@@ -49,3 +75,4 @@ pytest --cov-report term-missing --cov=src --log-cli-level=INFO -x
 ```bash
 pytest -k "test_FillDataViaGQL" --cov-report term-missing --cov=src --log-cli-level=INFO -x
 ```
+

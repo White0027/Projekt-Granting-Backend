@@ -1,10 +1,33 @@
 import datetime
-from typing import List, Union, Optional, Annotated
+from typing import List, Union, Optional, Annotated, Any
 from dataclasses import dataclass
 import strawberry
 from uoishelpers.resolvers import Insert, InsertError, Update, UpdateError, Delete, DeleteError
 
 from uoishelpers.resolvers import createInputs
+
+# from .DBDefinitions import (
+#     ProgramFormTypeModel,
+#     ProgramLanguageTypeModel,
+#     ProgramLevelTypeModel,
+#     ProgramModel,
+#     ProgramTitleTypeModel,
+#     ProgramTypeModel,
+#     ProgramStudentModel,
+#     ProgramStudentMessageModel,
+#     ProgramStudentStateModel,
+
+#     ClassificationLevelModel,
+#     ClassificationModel,
+#     ClassificationTypeModel,
+    
+#     SubjectModel,
+#     SemesterModel,
+#     TopicModel,
+#     LessonModel,
+#     LessonTypeModel
+# )
+
 
 UserGQLModel = Annotated["UserGQLModel", strawberry.lazy(".GraphTypeDefinitionsExt")]
 GroupGQLModel = Annotated["GroupGQLModel", strawberry.lazy(".GraphTypeDefinitionsExt")]
@@ -69,6 +92,7 @@ class AcProgramGQLModel:
     created = resolve_created
     lastchange = resolve_lastchange
     rbacobject = resolve_rbacobject
+    _data: strawberry.Private[Any] = None
 
     @strawberry.field(
             description="""Bachelor, ...""",
@@ -140,6 +164,7 @@ class AcProgramLevelTypeGQLModel:
     changedby = resolve_changedby
     created = resolve_created
     lastchange = resolve_lastchange
+    _data: strawberry.Private[Any] = None
 
 # endregion
     
@@ -162,6 +187,7 @@ class AcProgramTypeGQLModel:
     changedby = resolve_changedby
     created = resolve_created
     lastchange = resolve_lastchange
+    _data: strawberry.Private[Any] = None
 
     @strawberry.field(
             description="""Bachelor, ...""",
@@ -214,6 +240,7 @@ class AcProgramMessageGQLModel:
     changedby = resolve_changedby
     created = resolve_created
     lastchange = resolve_lastchange
+    _data: strawberry.Private[Any] = None
 
     name = resolve_name
 
@@ -273,6 +300,8 @@ class AcProgramStudentGQLModel:
     changedby = resolve_changedby
     created = resolve_created
     lastchange = resolve_lastchange
+    _data = strawberry.Private[Any]
+
 
     @strawberry.field(
             description="""semester which student of the program is in""",
@@ -345,7 +374,7 @@ class AcProgramStudentStateGQLModel:
     changedby = resolve_changedby
     created = resolve_created
     lastchange = resolve_lastchange
-   
+    _data: strawberry.Private[Any] = None
 # endregion
     
 # region FormType Model
@@ -366,9 +395,7 @@ class AcProgramFormTypeGQLModel:
     changedby = resolve_changedby
     created = resolve_created
     lastchange = resolve_lastchange
-
-
-
+    _data: strawberry.Private[Any] = None
 
 # endregion
     
@@ -388,6 +415,7 @@ class AcProgramLanguageTypeGQLModel:
     changedby = resolve_changedby
     created = resolve_created
     lastchange = resolve_lastchange
+    _data: strawberry.Private[Any] = None
 
 # endregion
     
@@ -407,6 +435,7 @@ class AcProgramTitleTypeGQLModel:
     changedby = resolve_changedby
     created = resolve_created
     lastchange = resolve_lastchange
+    _data: strawberry.Private[Any] = None
 
 # endregion
 
@@ -428,6 +457,7 @@ class AcClassificationTypeGQLModel:
     changedby = resolve_changedby
     created = resolve_created
     lastchange = resolve_lastchange
+    _data: strawberry.Private[Any] = None
 
 # endregion
     
@@ -447,6 +477,7 @@ class AcLessonTypeGQLModel:
     changedby = resolve_changedby
     created = resolve_created
     lastchange = resolve_lastchange
+    _data: strawberry.Private[Any] = None
 
 # endregion
     
@@ -469,6 +500,9 @@ class AcSubjectGQLModel:
     changedby = resolve_changedby
     created = resolve_created
     lastchange = resolve_lastchange
+    rbacobject = resolve_rbacobject
+    
+    _data: strawberry.Private[Any] = None
 
     @strawberry.field(
             description="""Program owing this subjects""",
@@ -526,6 +560,7 @@ class AcSemesterGQLModel:
     changedby = resolve_changedby
     created = resolve_created
     lastchange = resolve_lastchange
+    _data: strawberry.Private[Any] = None
 
     @strawberry.field(
             description="""semester number""",
@@ -602,6 +637,7 @@ class AcTopicGQLModel:
     changedby = resolve_changedby
     created = resolve_created
     lastchange = resolve_lastchange
+    _data: strawberry.Private[Any] = None
 
     @strawberry.field(
             description="""order (1)""",
@@ -648,6 +684,7 @@ class AcLessonGQLModel:
     changedby = resolve_changedby
     created = resolve_created
     lastchange = resolve_lastchange
+    _data: strawberry.Private[Any] = None
 
     @strawberry.field(
             description="""Lesson type""",
@@ -691,6 +728,7 @@ class AcClassificationGQLModel:
     changedby = resolve_changedby
     created = resolve_created
     lastchange = resolve_lastchange
+    _data: strawberry.Private[Any] = None
 
     @strawberry.field(
             description="""datetime of classification""",
@@ -751,6 +789,7 @@ class AcClassificationLevelGQLModel:
     changedby = resolve_changedby
     created = resolve_created
     lastchange = resolve_lastchange
+    _data: strawberry.Private[Any] = None
 
 # endregion
 
@@ -2152,7 +2191,7 @@ class Mutation:
 ###########################################################################################################################
 
 from .GraphTypeDefinitionsExt import GroupGQLModel as _GroupGQLModel, UserGQLModel as _UserGQLModel
-schema = strawberry.federation.Schema(query=Query, mutation=Mutation,
+schema = strawberry.federation.Schema(query=Query, mutation=Mutation, extensions=[],
     types=(
     _GroupGQLModel, 
     _UserGQLModel,
@@ -2165,3 +2204,7 @@ schema = strawberry.federation.Schema(query=Query, mutation=Mutation,
     AcProgramLanguageTypeGQLModel,
     AcProgramGQLModel,
     AcProgramFormTypeGQLModel))
+
+from uoishelpers.schema import WhoAmIExtension
+schema.extensions.append(WhoAmIExtension)
+

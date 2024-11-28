@@ -160,31 +160,12 @@ async def voyager():
     realpath = os.path.realpath("./voyager.html")
     return realpath
 
-@app.post("/gql")
-async def apollo_gql(request: Request, item: Item):
-    DEMOE = os.getenv("DEMO", None)
+graphql_app = GraphQLRouter(
+    schema,
+    context_getter=get_context
+)
 
-    sentinelResult = await sentinel(request, item)
-    if DEMOE in ["False", "false"]:
-        if sentinelResult:
-            logging.info(f"sentinel test failed for query={item} \n request={request}")
-            return sentinelResult
-        logging.info(f"sentinel test passed for query={item}")
-    else:
-        request.scope["user"] = {"id": "2d9dc5ca-a4a2-11ed-b9df-0242ac120003"}
-        logging.info(f"sentinel skippend because of DEMO mode for query={item} for user {request.scope['user']}")
-    try:
-        context = await get_context(request)
-        schemaresult = await schema.execute(query=item.query, variable_values=item.variables, operation_name=item.operationName, context_value=context)
-    except Exception as e:
-        logging.info(f"error during schema execute {e}")
-        return {"data": None, "errors": [f"{type(e).__name__}: {e}"]}
-    
-    # logging.info(f"schema execute result \n{schemaresult}")
-    result = {"data": schemaresult.data}
-    if schemaresult.errors:
-        result["errors"] = [f"{error}" for error in schemaresult.errors]
-    return result
+app.include_router(graphql_app, prefix="/gql")
 
 logging.info("All initialization is done")
 
