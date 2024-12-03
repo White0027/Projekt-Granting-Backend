@@ -103,3 +103,5 @@ change by same way this pay some attention to replace Insert (insert), Update (u
 
 
 
+- do souboru shared doplnit modely
+- v test queries nadefinovat dotazy, které se nás týkají
