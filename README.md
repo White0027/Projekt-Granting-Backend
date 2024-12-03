@@ -78,3 +78,28 @@ pytest --cov-report term-missing --cov=src --log-cli-level=INFO -x
 pytest -k "test_FillDataViaGQL" --cov-report term-missing --cov=src --log-cli-level=INFO -x
 ```
 
+
+chat gpt
+consider this as input
+@strawberry.mutation(
+        description="""Update thestudy program""",
+        permission_classes=[OnlyForAuthentized(isList=False)]
+    )
+async def program_update(self, info: strawberry.types.Info, program: ProgramUpdateGQLModel) -> ProgramResultGQLModel:
+    return await encapsulateUpdate(info, AcProgramGQLModel.getLoader(info), program, ProgramResultGQLModel(msg="ok", id=program.id))
+
+
+next part is output
+
+@strawberry.mutation(
+        description="""Update thestudy program""",
+        permission_classes=[OnlyForAuthentized(isList=False)]
+    )
+async def program_update(self, info: strawberry.types.Info, program: ProgramUpdateGQLModel) -> Union[AcProgramGQLModel, InsertError[AcProgramGQLModel]]
+    return await Insert [AcProgramGQLModel].DoItSafeWay(info=info, entity=program)
+
+change by same way this pay some attention to replace Insert (insert), Update (update), Delete (delete), if you include Insert in funcion body, the result must contain InsertError, similary for other cases
+
+
+
+
