@@ -19,6 +19,8 @@ ________________________________________________________________________
 25.11.2024 přidání Voyager pro zobrazení dat
 
 28.11.2024 Přidání schémat a _data do QGL modelů
+
+6.1.2024 Kompletní dokončení CRUD operací
 ________________________________________________________________________
 
 ## Aktuální úkoly
@@ -34,18 +36,18 @@ ________________________________________________________________________
     - createby_id
     - rbacobject_id
 - [x] Přidání CRUD operací
-- [ ] Vektorové atributy mají volitelné parametry where, limit a skip a mají alternativu podle standardu relay connection
+- [x] Vektorové atributy mají volitelné parametry where, limit a skip a mají alternativu podle standardu relay connection
 - [ ] Vektorové resolvery globální úrovně (query) mají také alternativu podle standardu relay connection
 - [ ] Součástí filtrů (where) bude primární klíč i cizí klíče
-- [ ] Počáteční import dat je realizován jako asynchronní task: 
+- [x] Počáteční import dat je realizován jako asynchronní task: 
     ```python
     task = asyncio.create_task(initDB(asyncSessionMaker))
     ```
-- [ ] Mutace upravit tak, aby používaly:
+- [x] Mutace upravit tak, aby používaly:
     ```python
     from uoishelpers.resolvers import encapsulateInsert, encapsulateUpdate, encapsulateDelete
     ```
-- [ ] Všechny atributy mají anotace, např.:
+- [x] Všechny atributy mají anotace, např.:
     ```python
     Annotated[Optional[str], strawberry.argument(description="")]="0"
     ```

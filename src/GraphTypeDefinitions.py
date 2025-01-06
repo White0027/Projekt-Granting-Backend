@@ -1344,6 +1344,12 @@ class ProgramResultGQLModel:
         result = await AcProgramGQLModel.resolve_reference(info, self.id)
         return result
     
+@strawberry.mutation(
+        description="""Update the study program""",
+        permission_classes=[OnlyForAuthentized(isList=False)]
+    )
+async def program_update(self, info: strawberry.types.Info, program: ProgramUpdateGQLModel) -> ProgramResultGQLModel:
+    return await encapsulateUpdate(info, AcProgramGQLModel.getLoader(info), program, ProgramResultGQLModel(msg="ok", id=program.id))
 
 @strawberry.mutation(
         description="""Adds new study program""",
@@ -1360,13 +1366,6 @@ async def program_insert(self, info: strawberry.types.Info, program: ProgramInse
     )
 async def program_update(self, info: strawberry.types.Info, program: ProgramUpdateGQLModel) -> Union[AcProgramGQLModel, InsertError[AcProgramGQLModel]]:
     return await Insert [AcProgramGQLModel].DoItSafeWay(info=info, entity=program)
-
-@strawberry.mutation(
-        description="""Update the study program""",
-        permission_classes=[OnlyForAuthentized(isList=False)]
-    )
-async def program_update(self, info: strawberry.types.Info, program: ProgramUpdateGQLModel) -> ProgramResultGQLModel:
-    return await encapsulateUpdate(info, AcProgramGQLModel.getLoader(info), program, ProgramResultGQLModel(msg="ok", id=program.id))
 
 @strawberry.mutation(
         description="""Delete the program""",
