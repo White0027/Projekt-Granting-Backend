@@ -34,7 +34,6 @@ ________________________________________________________________________
     - createby_id
     - rbacobject_id
 - [x] Přidání CRUD operací
-
 - [ ] Vektorové atributy mají volitelné parametry where, limit a skip a mají alternativu podle standardu relay connection
 - [ ] Vektorové resolvery globální úrovně (query) mají také alternativu podle standardu relay connection
 - [ ] Součástí filtrů (where) bude primární klíč i cizí klíče
