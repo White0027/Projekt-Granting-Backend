@@ -1,3 +1,4 @@
+
 import os
 import strawberry
 import socket
@@ -6,7 +7,7 @@ import asyncio
 from pydantic import BaseModel
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import JSONResponse, FileResponse
 from strawberry.fastapi import GraphQLRouter
 from strawberry.asgi import GraphQL
@@ -18,6 +19,11 @@ from src.GraphTypeDefinitions import schema
 from src.DBDefinitions import startEngine, ComposeConnectionString
 from src.DBFeeder import initDB
 from uoishelpers.authenticationMiddleware import createAuthentizationSentinel
+
+from load_environment import load_environment
+
+# Načtení environmentálních proměnných ze souboru environment.txt
+load_environment("environment.txt")
 
 # region logging setup
 
@@ -150,6 +156,20 @@ graphql_app = GraphQLRouter(
     schema,
     context_getter=get_context
 )
+
+app = FastAPI()
+
+# Create a Pydantic model to validate the request body
+class LoginData(BaseModel):
+    username: str
+    password: str
+
+@app.post("/oauth/login3")
+async def login(data: LoginData):
+    if data.username == "test" and data.password == "test":
+        return {"message": "Login successful"}
+    raise HTTPException(status_code=401, detail="Invalid credentials")
+
 
 @app.get("/gql")
 async def graphiql(request: Request):

@@ -21,6 +21,9 @@ ________________________________________________________________________
 28.11.2024 Přidání schémat a _data do QGL modelů
 
 6.1.2024 Kompletní dokončení CRUD operací
+
+21.1.2024 Částečná oprava testů (předělání portů, přidaní POST k FastAPI pro /oauth/login3)
+          Splněno ze 72% (Test má GET, server má POST)
 ________________________________________________________________________
 
 ## Aktuální úkoly
@@ -73,6 +76,7 @@ ________________________________________________________________________
 uvicorn main:app --env-file environment.txt --port 8001
 ```
 ```bash
+uvicorn main:app --reload --port 8125
 pytest --cov-report term-missing --cov=src --log-cli-level=INFO -x
 ```
 ```bash

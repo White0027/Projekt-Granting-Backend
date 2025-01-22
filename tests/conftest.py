@@ -17,6 +17,13 @@ def uuid1():
 # serversTestscope = "session"
 serversTestscope = "function"
 
+from load_environment import load_environment
+
+@pytest.fixture(scope='session', autouse=True)
+def load_env():
+    # Načtení environmentálních proměnných ze souboru environment.txt
+    load_environment("environment.txt")
+
 @pytest.fixture
 def DBModels():
     from src.DBDefinitions import (

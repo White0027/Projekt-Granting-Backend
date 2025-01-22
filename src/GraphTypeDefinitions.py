@@ -1327,7 +1327,7 @@ class ProgramUpdateGQLModel:
     changedby: strawberry.Private[IDType] = None
 
 @strawberry.input(description="Attributes for deletion")
-class SemesterDeleteGQLModel:
+class ProgramDeleteGQLModel:
     id: IDType = strawberry.field(description="Primary key")
     lastchange: datetime.datetime = strawberry.field(description="Timestamp for optimistic locking")
 
@@ -1403,7 +1403,7 @@ class ProgramTypeUpdateGQLModel:
     changedby: strawberry.Private[IDType] = None
     
 @strawberry.input(description="Attributes for deletion")
-class SemesterDeleteGQLModel:
+class ProgramTypeDeleteGQLModel:
     id: IDType = strawberry.field(description="Primary key")
     lastchange: datetime.datetime = strawberry.field(description="Timestamp for optimistic locking")   
 
@@ -1479,7 +1479,7 @@ class ProgramLanguageTypeUpdateGQLModel:
     changedby: strawberry.Private[IDType] = None  
 
 @strawberry.input(description="Attributes for deletion")
-class SemesterDeleteGQLModel:
+class ProgramLanguageTypeDeleteGQLModel:
     id: IDType = strawberry.field(description="Primary key")
     lastchange: datetime.datetime = strawberry.field(description="Timestamp for optimistic locking")
 
@@ -1554,7 +1554,7 @@ class ProgramTitleTypeUpdateGQLModel:
     changedby: strawberry.Private[IDType] = None
     
 @strawberry.input(description="Attributes for deletion")
-class SemesterDeleteGQLModel:
+class ProgramTitleTypeDeleteGQLModel:
     id: IDType = strawberry.field(description="Primary key")
     lastchange: datetime.datetime = strawberry.field(description="Timestamp for optimistic locking")   
 
@@ -1630,7 +1630,7 @@ class ProgramLevelTypeUpdateGQLModel:
     changedby: strawberry.Private[IDType] = None 
 
 @strawberry.input(description="Attributes for deletion")
-class SemesterDeleteGQLModel:
+class ProgramLevelTypeDeleteGQLModel:
     id: IDType = strawberry.field(description="Primary key")
     lastchange: datetime.datetime = strawberry.field(description="Timestamp for optimistic locking")  
 
@@ -1706,7 +1706,7 @@ class ProgramFormTypeUpdateGQLModel:
     changedby: strawberry.Private[IDType] = None
     
 @strawberry.input(description="Attributes for deletion")
-class SemesterDeleteGQLModel:
+class ProgramFormTypeDeleteGQLModel:
     id: IDType = strawberry.field(description="Primary key")
     lastchange: datetime.datetime = strawberry.field(description="Timestamp for optimistic locking")   
 
@@ -1786,7 +1786,7 @@ class ProgramMessageUpdateGQLModel:
     changedby: strawberry.Private[IDType] = None
     
 @strawberry.input(description="Attributes for deletion")
-class SemesterDeleteGQLModel:
+class ProgramMessageDeleteGQLModel:
     id: IDType = strawberry.field(description="Primary key")
     lastchange: datetime.datetime = strawberry.field(description="Timestamp for optimistic locking")   
 
@@ -1868,7 +1868,7 @@ class ProgramStudentUpdateGQLModel:
     changedby: strawberry.Private[IDType] = None  
     
 @strawberry.input(description="Attributes for deletion")
-class SemesterDeleteGQLModel:
+class ProgramStudentDeleteGQLModel:
     id: IDType = strawberry.field(description="Primary key")
     lastchange: datetime.datetime = strawberry.field(description="Timestamp for optimistic locking") 
 
@@ -1948,7 +1948,7 @@ class SubjectUpdateGQLModel:
     changedby: strawberry.Private[IDType] = None
     
 @strawberry.input(description="Attributes for deletion")
-class ExampleDeleteGQLModel:
+class SubjectDeleteGQLModel:
     id: IDType = strawberry.field(description="Primary key")
     lastchange: datetime.datetime = strawberry.field(description="Timestamp for optimistic locking")
 
@@ -2107,7 +2107,7 @@ class LessonTypeUpdateGQLModel:
     changedby: strawberry.Private[IDType] = None   
     
 @strawberry.input(description="Attributes for deletion")
-class SemesterDeleteGQLModel:
+class LessonTypeDeleteGQLModel:
     id: IDType = strawberry.field(description="Primary key")
     lastchange: datetime.datetime = strawberry.field(description="Timestamp for optimistic locking")
 
@@ -2182,7 +2182,7 @@ class ClassificationTypeUpdateGQLModel:
     changedby: strawberry.Private[IDType] = None   
     
 @strawberry.input(description="Attributes for deletion")
-class SemesterDeleteGQLModel:
+class ClassificationTypeDeleteGQLModel:
     id: IDType = strawberry.field(description="Primary key")
     lastchange: datetime.datetime = strawberry.field(description="Timestamp for optimistic locking")
 
@@ -2261,7 +2261,7 @@ class ClassificationUpdateGQLModel:
     changedby: strawberry.Private[IDType] = None   
     
 @strawberry.input(description="Attributes for deletion")
-class SemesterDeleteGQLModel:
+class ClassificationDeleteGQLModel:
     id: IDType = strawberry.field(description="Primary key")
     lastchange: datetime.datetime = strawberry.field(description="Timestamp for optimistic locking")
 
@@ -2339,7 +2339,7 @@ class TopicUpdateGQLModel:
     changedby: strawberry.Private[IDType] = None   
     
 @strawberry.input(description="Attributes for deletion")
-class SemesterDeleteGQLModel:
+class TopicDeleteGQLModel:
     id: IDType = strawberry.field(description="Primary key")
     lastchange: datetime.datetime = strawberry.field(description="Timestamp for optimistic locking")
 
@@ -2419,7 +2419,7 @@ class LessonUpdateGQLModel:
     changedby: strawberry.Private[IDType] = None   
     
 @strawberry.input(description="Attributes for deletion")
-class SemesterDeleteGQLModel:
+class LessonDeleteGQLModel:
     id: IDType = strawberry.field(description="Primary key")
     lastchange: datetime.datetime = strawberry.field(description="Timestamp for optimistic locking")
 
@@ -2499,7 +2499,7 @@ class StudentStateUpdateGQLModel:
     changedby: strawberry.Private[IDType] = None   
     
 @strawberry.input(description="Attributes for deletion")
-class SemesterDeleteGQLModel:
+class StudentStateDeleteGQLModel:
     id: IDType = strawberry.field(description="Primary key")
     lastchange: datetime.datetime = strawberry.field(description="Timestamp for optimistic locking")
 

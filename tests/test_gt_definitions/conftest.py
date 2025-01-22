@@ -4,6 +4,15 @@ import datetime
 import pytest_asyncio
 import uuid
 
+import os
+import pytest
+from load_environment import load_environment
+
+@pytest.fixture(scope='session', autouse=True)
+def load_env():
+    # Načtení environmentálních proměnných ze souboru environment.txt
+    load_environment("environment.txt")
+
 queries = {
     "acprograms": {
         "read": """query($id: UUID!){ result: acProgramById(id: $id) { id } }""",
