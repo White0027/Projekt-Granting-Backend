@@ -1,4 +1,3 @@
-
 import os
 import strawberry
 import socket
@@ -42,20 +41,9 @@ if SYSLOGHOST is not None:
     #handler = logging.handlers.SocketHandler('10.10.11.11', 611)
     my_logger.addHandler(handler)
 
-
 # endregion
 
 # region DB setup
-
-## Definice GraphQL typu (pomoci strawberry https://strawberry.rocks/)
-## Strawberry zvoleno kvuli moznosti mit federovane GraphQL API (https://strawberry.rocks/docs/guides/federation, https://www.apollographql.com/docs/federation/)
-## Definice DB typu (pomoci SQLAlchemy https://www.sqlalchemy.org/)
-## SQLAlchemy zvoleno kvuli moznost komunikovat s DB asynchronne
-## https://docs.sqlalchemy.org/en/14/core/future.html?highlight=select#sqlalchemy.future.select
-
-
-## Zabezpecuje prvotni inicializaci DB a definovani Nahodne struktury pro "Univerzity"
-# from gql_workflow.DBFeeder import createSystemDataStructureRoleTypes, createSystemDataStructureGroupTypes
 
 connectionString = ComposeConnectionString()
 
@@ -157,20 +145,6 @@ graphql_app = GraphQLRouter(
     context_getter=get_context
 )
 
-app = FastAPI()
-
-# Create a Pydantic model to validate the request body
-class LoginData(BaseModel):
-    username: str
-    password: str
-
-@app.post("/oauth/login3")
-async def login(data: LoginData):
-    if data.username == "test" and data.password == "test":
-        return {"message": "Login successful"}
-    raise HTTPException(status_code=401, detail="Invalid credentials")
-
-
 @app.get("/gql")
 async def graphiql(request: Request):
     return await graphql_app.render_graphql_ide(request)
@@ -245,3 +219,25 @@ logging.info(f"GQLUG_ENDPOINT_URL = {GQLUG_ENDPOINT_URL}")
 logging.info(f"JWTPUBLICKEYURL = {JWTPUBLICKEYURL}")
 logging.info(f"JWTRESOLVEUSERPATHURL = {JWTRESOLVEUSERPATHURL}")
 # endregion
+
+# region Login endpoint
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
+@app.post("/oauth/login3")
+async def oauth_login3(login: LoginRequest):
+    # Example authentication logic
+    if login.username == "test" and login.password == "test":
+        return {"message": "Logged in successfully", "token": "token"}
+    raise HTTPException(status_code=401, detail="Invalid credentials")
+
+# Optional: Handle unsupported methods explicitly
+@app.get("/oauth/login3")
+async def oauth_login3_get():
+    raise HTTPException(status_code=405, detail="GET method is not allowed for this endpoint")
+# endregion
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8125)

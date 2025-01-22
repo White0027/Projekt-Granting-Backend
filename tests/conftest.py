@@ -10,6 +10,14 @@ import sqlalchemy
 from uuid import uuid1 as uuid
 import random
 import pytest_asyncio
+import aiohttp
+import asyncio
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
+from sqlalchemy.orm import sessionmaker
+from src.DBDefinitions import BaseModel, ProgramStudentStateModel
+from src.DBFeeder import initDB
+
+DATABASE_URL = "sqlite+aiosqlite:///./test.db"
 
 def uuid1():
     return f"{uuid()}"
@@ -462,26 +470,20 @@ def OAuthServer(monkeypatch, OAuthport, AdminUser):
 
 @pytest_asyncio.fixture(autouse=True, scope=serversTestscope)
 async def AccessToken(OAuthport, OAuthServer, AdminUser):
-    import aiohttp 
     userDict = AdminUser
-    # keyurl = f"http://localhost:{OAuthport}/publickey"
     loginurl = f"http://localhost:{OAuthport}/oauth/login3"
     async with aiohttp.ClientSession() as session:
-        async with session.get(loginurl) as resp:
-            assert resp.status == 200, resp
-            accessjson = await resp.json()
         payload = {
-            "username": userDict["email"],
-            "password": "IDontCare",
-            **accessjson
+            "username": "test",
+            "password": "test"
         }
         async with session.post(loginurl, json=payload) as resp:
             assert resp.status == 200, resp
             tokendict = await resp.json()
-    token = tokendict["token"] 
+    token = tokendict["token"]
     logging.info(f"have token {token}")
     yield token
-    logging.info(f"expiring token {token} ")
+    logging.info(f"expiring token {token}")
 
 @pytest_asyncio.fixture
 async def AuthorizationHeaders(AccessToken):
@@ -627,3 +629,32 @@ def ClientExecutorDemo(DemoTrue, ClientExecutor):
 @pytest.fixture
 def ClientExecutorNoDemo(DemoFalse, ClientExecutor):
     return ClientExecutor
+
+@pytest.fixture(scope="session")
+def event_loop():
+    loop = asyncio.get_event_loop()
+    yield loop
+    loop.close()
+
+@pytest_asyncio.fixture(scope="session")
+async def async_engine():
+    engine = create_async_engine(DATABASE_URL, echo=True)
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+    yield engine
+    await engine.dispose()
+
+@pytest_asyncio.fixture(scope="session")
+async def async_session(async_engine):
+    async_session = sessionmaker(
+        async_engine, expire_on_commit=False, class_=AsyncSession
+    )
+    async with async_session() as session:
+        await initDB(async_engine)
+        yield session
+
+@pytest_asyncio.fixture(scope="function")
+async def db_session(async_session):
+    async with async_session() as session:
+        yield session
+        await session.rollback()

@@ -24,6 +24,8 @@ ________________________________________________________________________
 
 21.1.2024 Částečná oprava testů (předělání portů, přidaní POST k FastAPI pro /oauth/login3)
           Splněno ze 72% (Test má GET, server má POST)
+
+22.1.2024 Splněno 72%, Oprava předchozích chyb, potřeba doplnit "tables"
 ________________________________________________________________________
 
 ## Aktuální úkoly
