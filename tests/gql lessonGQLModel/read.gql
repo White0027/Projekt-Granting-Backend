@@ -1,0 +1,13 @@
+query AcLessonById($id: UUID!) {
+  result: acLessonById(id: $id) {
+    id
+    lastchange
+    count
+    topic {
+      id
+    }
+    type {
+      id
+    }
+  }
+}

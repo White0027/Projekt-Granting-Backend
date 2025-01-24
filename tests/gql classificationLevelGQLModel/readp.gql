@@ -1,0 +1,7 @@
+query AcClassificationLevelPage($skip: Int, $limit: Int) {
+  result: acClassificationLevelPage(skip: $skip, limit: $limit) {
+    id
+    name
+    nameEn
+  }
+}

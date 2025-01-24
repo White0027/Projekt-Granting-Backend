@@ -1,0 +1,19 @@
+query AcSemesterById($id: UUID!) {
+  result: acSemesterById(id: $id) {
+    id
+    lastchange
+    order
+    subject {
+      id
+    }
+    classifications {
+      id
+    }
+    classificationType {
+      id
+    }
+    topics {
+      id
+    }
+  }
+}

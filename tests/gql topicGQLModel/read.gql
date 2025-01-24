@@ -1,0 +1,15 @@
+query AcTopicById($id: UUID!) {
+  result: acTopicById(id: $id) {
+    id
+    lastchange
+    name
+    nameEn
+    order
+    semester {
+      id
+    }
+    lessons {
+      id
+    }
+  }
+}

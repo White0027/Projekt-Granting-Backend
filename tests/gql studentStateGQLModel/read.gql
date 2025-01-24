@@ -1,0 +1,7 @@
+query AcProgramStudentStateById($id: UUID!) {
+  result: acProgramStudentStateById(id: $id) {
+    id
+    name
+    nameEn
+  }
+}

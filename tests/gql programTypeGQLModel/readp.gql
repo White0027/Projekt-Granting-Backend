@@ -1,0 +1,19 @@
+query AcProgramTypePage($skip: Int, $limit: Int) {
+  result: acProgramTypePage(skip: $skip, limit: $limit) {
+    id
+    name
+    nameEn
+    level {
+      id
+    }
+    form {
+      id
+    }
+    language {
+      id
+    }
+    title {
+      id
+    }
+  }
+}

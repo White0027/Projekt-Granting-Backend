@@ -1,0 +1,14 @@
+query AcProgramMessagePage($skip: Int, $limit: Int) {
+  result: acProgramMessagePage(skip: $skip, limit: $limit) {
+    id
+    name
+    description
+    date
+    student {
+      id
+    }
+    program {
+      id
+    }
+  }
+}

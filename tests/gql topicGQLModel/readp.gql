@@ -1,0 +1,15 @@
+query AcTopicPage($skip: Int, $limit: Int) {
+  result: acTopicPage(skip: $skip, limit: $limit) {
+    id
+    lastchange
+    name
+    nameEn
+    order
+    semester {
+      id
+    }
+    lessons {
+      id
+    }
+  }
+}

@@ -1,0 +1,17 @@
+query ($id: UUID!) {
+    result: acClassificationById(id: $id) {
+        id
+        lastchange
+        date
+        order
+        student {
+            id
+        }
+        semester {
+            id
+        }
+        level {
+            id
+        }
+    }
+}

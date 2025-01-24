@@ -1,0 +1,8 @@
+query AcProgramLanguageTypeById($id: UUID!) {
+  result: acProgramLanguageTypeById(id: $id) {
+    id
+    lastchange
+    name
+    nameEn
+  }
+}

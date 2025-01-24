@@ -1,0 +1,31 @@
+query AcProgramById($id: UUID!) {
+  result: acProgramById(id: $id) {
+    id
+    name
+    nameEn
+    type {
+      id
+    }
+    subjects {
+      id
+    }
+    students {
+      id
+    }
+    grantsGroup {
+      id
+    }
+    licencedGroup {
+      id
+    }
+    createdby {
+      id
+    }
+    changedby {
+      id
+    }
+    rbacobject {
+      id
+    }
+  }
+}

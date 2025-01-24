@@ -1,0 +1,8 @@
+query AcProgramFormTypeById($id: UUID!) {
+  result: acProgramFormTypeById(id: $id) {
+    id
+    lastchange
+    name
+    nameEn
+  }
+}

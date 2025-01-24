@@ -1,0 +1,8 @@
+query AcProgramLanguageTypePage($skip: Int, $limit: Int) {
+  result: acProgramLanguageTypePage(skip: $skip, limit: $limit) {
+    id
+    lastchange
+    name
+    nameEn
+  }
+}

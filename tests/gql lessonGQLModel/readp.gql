@@ -1,0 +1,13 @@
+query AcLessonPage($skip: Int, $limit: Int) {
+  result: acLessonPage(skip: $skip, limit: $limit) {
+    id
+    lastchange
+    count
+    topic {
+      id
+    }
+    type {
+      id
+    }
+  }
+}

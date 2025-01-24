@@ -1,0 +1,7 @@
+query AcProgramStudentStatePage($skip: Int, $limit: Int) {
+  result: acProgramStudentStatePage(skip: $skip, limit: $limit) {
+    id
+    name
+    nameEn
+  }
+}

@@ -1,0 +1,7 @@
+query AcLessonTypePage($skip: Int, $limit: Int) {
+  result: acLessonTypePage(skip: $skip, limit: $limit) {
+    id
+    name
+    nameEn
+  }
+}

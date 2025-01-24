@@ -1,0 +1,8 @@
+query AcProgramLevelTypeById($id: UUID!) {
+  result: acProgramLevelTypeById(id: $id) {
+    id
+    lastchange
+    name
+    nameEn
+  }
+}

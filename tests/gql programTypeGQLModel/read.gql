@@ -1,0 +1,19 @@
+query AcProgramTypeById($id: UUID!) {
+  result: acProgramTypeById(id: $id) {
+    id
+    name
+    nameEn
+    level {
+      id
+    }
+    form {
+      id
+    }
+    language {
+      id
+    }
+    title {
+      id
+    }
+  }
+}
