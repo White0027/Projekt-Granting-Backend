@@ -1,8 +1,0 @@
-query AcProgramLevelTypePage($skip: Int, $limit: Int) {
-  result: acProgramLevelTypePage(skip: $skip, limit: $limit) {
-    id
-    lastchange
-    name
-    nameEn
-  }
-}

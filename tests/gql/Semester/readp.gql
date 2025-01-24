@@ -1,0 +1,24 @@
+query AcSemesterPage($skip: Int, $limit: Int) {
+    result: acSemesterPage(skip: $skip, limit: $limit) {
+        __typename
+        ...AcSemester
+    }
+}
+
+fragment AcSemester on AcSemesterGQLModel {
+    id
+    lastchange
+    order
+    subject {
+        id
+    }
+    classifications {
+        id
+    }
+    classificationType {
+        id
+    }
+    topics {
+        id
+    }
+}

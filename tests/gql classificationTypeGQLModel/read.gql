@@ -1,7 +1,0 @@
-query AcClassificationTypeById($id: UUID!) {
-  result: acClassificationTypeById(id: $id) {
-    id
-    name
-    nameEn
-  }
-}

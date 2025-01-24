@@ -1,0 +1,13 @@
+query AcProgramLevelTypePage($skip: Int, $limit: Int) {
+    result: acProgramLevelTypePage(skip: $skip, limit: $limit) {
+        __typename
+        ...AcProgramLevelType
+    }
+}
+
+fragment AcProgramLevelType on AcProgramLevelTypeGQLModel {
+    id
+    lastchange
+    name
+    nameEn
+}

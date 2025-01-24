@@ -1,7 +1,0 @@
-queries = {
-    "acprograms": {
-        "read": """
-
-"""
-    }
-}

@@ -1,0 +1,23 @@
+query ($skip: Int, $limit: Int) {
+    result: acClassificationPage(skip: $skip, limit: $limit) {
+        __typename
+        ...AcClassification
+    }
+}
+
+fragment AcClassification on AcClassificationGQLModel {
+    id
+    lastchange
+    date
+    order
+    student {
+        id
+    }
+    semester {
+        id
+    }
+    level {
+        id
+    }
+}
+

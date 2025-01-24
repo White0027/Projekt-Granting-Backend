@@ -1,0 +1,12 @@
+query AcClassificationTypePage($skip: Int, $limit: Int) {
+    result: acClassificationTypePage(skip: $skip, limit: $limit) {
+        __typename
+        ...AcClassificationType
+    }
+}
+
+fragment AcClassificationType on AcClassificationTypeGQLModel {
+    id
+    name
+    nameEn
+}

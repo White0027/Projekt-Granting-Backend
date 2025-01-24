@@ -1,0 +1,24 @@
+query AcProgramTypeById($id: UUID!) {
+    result: acProgramTypeById(id: $id) {
+        __typename
+        ...AcProgramType
+    }
+}
+
+fragment AcProgramType on AcProgramTypeGQLModel {
+    id
+    name
+    nameEn
+    level {
+        id
+    }
+    form {
+        id
+    }
+    language {
+        id
+    }
+    title {
+        id
+    }
+}

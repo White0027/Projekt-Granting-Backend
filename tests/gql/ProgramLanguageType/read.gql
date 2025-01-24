@@ -1,0 +1,13 @@
+query AcProgramLanguageTypeById($id: UUID!) {
+    result: acProgramLanguageTypeById(id: $id) {
+        __typename
+        ...AcProgramLanguageType
+    }
+}
+
+fragment AcProgramLanguageType on AcProgramLanguageTypeGQLModel {
+    id
+    lastchange
+    name
+    nameEn
+}

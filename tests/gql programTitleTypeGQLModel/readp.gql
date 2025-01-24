@@ -1,8 +1,0 @@
-query AcProgramTitleTypePage($skip: Int, $limit: Int) {
-  result: acProgramTitleTypePage(skip: $skip, limit: $limit) {
-    id
-    lastchange
-    name
-    nameEn
-  }
-}

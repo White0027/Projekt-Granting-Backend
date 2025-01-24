@@ -1,8 +1,0 @@
-query AcProgramTitleTypeById($id: UUID!) {
-  result: acProgramTitleTypeById(id: $id) {
-    id
-    lastchange
-    name
-    nameEn
-  }
-}

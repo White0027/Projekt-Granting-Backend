@@ -1,0 +1,13 @@
+query AcProgramLanguageTypePage($skip: Int, $limit: Int) {
+    result: acProgramLanguageTypePage(skip: $skip, limit: $limit) {
+        __typename
+        ...AcProgramLanguageType
+    }
+}
+
+fragment AcProgramLanguageType on AcProgramLanguageTypeGQLModel {
+    id
+    lastchange
+    name
+    nameEn
+}

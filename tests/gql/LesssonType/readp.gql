@@ -1,0 +1,12 @@
+query AcLessonTypePage($skip: Int, $limit: Int) {
+    result: acLessonTypePage(skip: $skip, limit: $limit) {
+        __typename
+        ...AcLessonType
+    }
+}
+
+fragment AcLessonType on AcLessonTypeGQLModel {
+    id
+    name
+    nameEn
+}

@@ -1,0 +1,12 @@
+query AcLessonTypeById($id: UUID!) {
+  result: acLessonTypeById(id: $id) {
+    __typename
+    ...AcLessonTypeFragment
+  }
+}
+
+fragment AcLessonTypeFragment on AcLessonTypeGQLModel {
+  id
+  name
+  nameEn
+}

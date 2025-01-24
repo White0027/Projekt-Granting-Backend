@@ -452,23 +452,3 @@ async def initDB(asyncSessionMaker):
     await ImportModels(asyncSessionMaker, dbModels, jsonData)
     print("data imported", flush=True)
     pass
-
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.future import select
-from sqlalchemy.orm import sessionmaker
-
-async def initDB(engine):
-    async with engine.begin() as conn:
-        # Naplnění databáze daty
-        await conn.run_sync(BaseModel.metadata.create_all)
-
-        # Příklad naplnění tabulky acprograms_studentstates
-        async with AsyncSession(engine) as session:
-            async with session.begin():
-                # Zkontrolujte, zda tabulka není prázdná
-                result = await session.execute(select(ProgramStudentStateModel))
-                if not result.scalars().all():
-                    # Naplnění tabulky daty
-                    student_state = ProgramStudentStateModel(name="example_state", name_en="example_state_en")
-                    session.add(student_state)
-                    await session.commit()

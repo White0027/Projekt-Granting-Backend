@@ -1,0 +1,19 @@
+query AcProgramMessageById($id: UUID!) {
+    result: acProgramMessageById(id: $id) {
+        __typename
+        ...AcProgramMessage
+    }
+}
+
+fragment AcProgramMessage on AcProgramMessageGQLModel {
+    id
+    name
+    description
+    date
+    student {
+        id
+    }
+    program {
+        id
+    }
+}

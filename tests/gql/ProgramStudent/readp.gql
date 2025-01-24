@@ -1,0 +1,20 @@
+query AcProgramStudentPage($skip: Int, $limit: Int) {
+    result: acProgramStudentPage(skip: $skip, limit: $limit) {
+        __typename
+        ...AcProgramStudent
+    }
+}
+
+fragment AcProgramStudent on AcProgramStudentGQLModel {
+    id
+    lastchange
+    student {
+        id
+    }
+    messages {
+        id
+    }
+    state {
+        id
+    }
+}

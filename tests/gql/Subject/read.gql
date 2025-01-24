@@ -1,0 +1,22 @@
+query AcSubjectById($id: UUID!) {
+    result: acSubjectById(id: $id) {
+        __typename
+        ...AcSubject
+    }
+}
+
+fragment AcSubject on AcSubjectGQLModel {
+    id
+    lastchange
+    name
+    nameEn
+    program {
+        id
+    }
+    semesters {
+        id
+    }
+    grants {
+        id
+    }
+}

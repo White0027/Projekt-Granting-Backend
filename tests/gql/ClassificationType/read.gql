@@ -1,0 +1,12 @@
+query AcClassificationTypeById($id: UUID!) {
+    result: acClassificationTypeById(id: $id) {
+        __typename
+        ...AcClassificationType
+    }
+}
+
+fragment AcClassificationType on AcClassificationTypeGQLModel {
+    id
+    name
+    nameEn
+}

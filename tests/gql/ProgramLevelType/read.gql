@@ -1,0 +1,13 @@
+query AcProgramLevelTypeById($id: UUID!) {
+    result: acProgramLevelTypeById(id: $id) {
+        __typename
+        ...AcProgramLevelType
+    }
+}
+
+fragment AcProgramLevelType on AcProgramLevelTypeGQLModel {
+    id
+    lastchange
+    name
+    nameEn
+}

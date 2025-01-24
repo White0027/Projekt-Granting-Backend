@@ -1,0 +1,13 @@
+query AcProgramFormTypeById($id: UUID!) {
+    result: acProgramFormTypeById(id: $id) {
+        __typename
+        ...AcProgramFormType
+    }
+}
+
+fragment AcProgramFormType on AcProgramFormTypeGQLModel {
+    id
+    lastchange
+    name
+    nameEn
+}

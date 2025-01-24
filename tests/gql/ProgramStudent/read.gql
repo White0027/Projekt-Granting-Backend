@@ -1,0 +1,21 @@
+query AcProgramStudentById($id: UUID!) {
+    result: acProgramStudentById(id: $id) {
+        __typename
+        ...AcProgramStudent
+    }
+}
+
+fragment AcProgramStudent on AcProgramStudentGQLModel {
+    id
+    lastchange
+    student {
+        id
+    }
+    messages {
+        id
+    }
+    state {
+        id
+    }
+}
+

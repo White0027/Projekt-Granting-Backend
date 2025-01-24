@@ -1,0 +1,20 @@
+query AcTopicById($id: UUID!) {
+    result: acTopicById(id: $id) {
+        __typename
+        ...AcTopic
+    }
+}
+
+fragment AcTopic on AcTopicGQLModel {
+    id
+    lastchange
+    name
+    nameEn
+    order
+    semester {
+        id
+    }
+    lessons {
+        id
+    }
+}

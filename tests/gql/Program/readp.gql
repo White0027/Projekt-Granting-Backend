@@ -1,0 +1,36 @@
+query AcProgramPage($skip: Int, $limit: Int) {
+    result: acProgramPage(skip: $skip, limit: $limit) {
+        __typename
+        ...AcProgram
+    }
+}
+
+fragment AcProgram on AcProgramGQLModel {
+    id
+    name
+    nameEn
+    type {
+        id
+    }
+    subjects {
+        id
+    }
+    students {
+        id
+    }
+    grantsGroup {
+        id
+    }
+    licencedGroup {
+        id
+    }
+    createdby {
+        id
+    }
+    changedby {
+        id
+    }
+    rbacobject {
+        id
+    }
+}

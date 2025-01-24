@@ -1,0 +1,12 @@
+query AcClassificationLevelById($id: UUID!) {
+    result: acClassificationLevelById(id: $id) {
+        __typename
+        ...AcClassificationLevel
+    }
+}
+
+fragment AcClassificationLevel on AcClassificationLevelGQLModel {
+    id
+    name
+    nameEn
+}

@@ -1,7 +1,0 @@
-query AcLessonTypeById($id: UUID!) {
-  result: acLessonTypeById(id: $id) {
-    id
-    name
-    nameEn
-  }
-}

@@ -1,0 +1,13 @@
+query AcProgramTitleTypeById($id: UUID!) {
+    result: acProgramTitleTypeById(id: $id) {
+        __typename
+        ...AcProgramTitleType
+    }
+}
+
+fragment AcProgramTitleType on AcProgramTitleTypeGQLModel {
+    id
+    lastchange
+    name
+    nameEn
+}
