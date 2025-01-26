@@ -1,19 +1,24 @@
 query AcProgramTypePage($skip: Int, $limit: Int) {
-  result: acProgramTypePage(skip: $skip, limit: $limit) {
+    result: acProgramTypePage(skip: $skip, limit: $limit) {
+        __typename
+        ...AcProgramType
+    }
+}
+
+fragment AcProgramType on AcProgramTypeGQLModel {
     id
     name
     nameEn
     level {
-      id
+        id
     }
     form {
-      id
+        id
     }
     language {
-      id
+        id
     }
     title {
-      id
+        id
     }
-  }
 }
