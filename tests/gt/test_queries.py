@@ -36,117 +36,117 @@ myquery = """
 
 # Read ClassificationLevel by ID
 test_classification_level_by_id = createByIdTest2(
-    tableName="classification_levels"
+    tableName="acclassificationlevels"
 )
 
 ######################################################################### Classification CRUD Tests
 
 # Read Classification by ID
 test_classification_by_id = createByIdTest2(
-    tableName="classifications"
+    tableName="acclassifications"
 )
 
 ######################################################################### ClassificationType CRUD Tests
 
 # Read ClassificationType by ID
 test_classification_type_by_id = createByIdTest2(
-    tableName="classification_types"
+    tableName="acclassificationtypes"
 )
 
 ######################################################################### Lesson CRUD Tests
 
 # Read Lesson by ID
 test_lesson_by_id = createByIdTest2(
-    tableName="lessons"
+    tableName="aclessons"
 )
 
 ######################################################################### LessonType CRUD Tests
 
 # Read LessonType by ID
 test_lesson_type_by_id = createByIdTest2(
-    tableName="lesson_types"
+    tableName="aclessontypes"
 )
 
 ######################################################################### Program CRUD Tests
 
 # Read Program by ID
 test_program_by_id = createByIdTest2(
-    tableName="programs"
+    tableName="acprograms"
 )
 
 ######################################################################### ProgramFormType CRUD Tests
 
-# Read ProgramFormType by ID
+# Read ProgramForm by ID
 test_program_form_type_by_id = createByIdTest2(
-    tableName="program_form_types"
+    tableName="acprogramforms"
 )
 
 ######################################################################### ProgramLanguageType CRUD Tests
 
 # Read ProgramLanguageType by ID
 test_program_language_type_by_id = createByIdTest2(
-    tableName="program_language_types"
+    tableName="acprogramlanguages"
 )
 
 ######################################################################### ProgramLevelType CRUD Tests
 
 # Read ProgramLevelType by ID
 test_program_level_type_by_id = createByIdTest2(
-    tableName="program_level_types"
+    tableName="acprogramlevels"
 )
 
-######################################################################### ProgramMessage CRUD Tests
+######################################################################### ProgramStudentMessage CRUD Tests
 
-# Read ProgramMessage by ID
+# Read ProgramStudentMessage by ID
 test_program_message_by_id = createByIdTest2(
-    tableName="program_messages"
+    tableName="acprograms_studentmessages"
 )
 
 ######################################################################### ProgramStudent CRUD Tests
 
 # Read ProgramStudent by ID
 test_program_student_by_id = createByIdTest2(
-    tableName="program_students"
+    tableName="acprograms_students"
 )
 
 ######################################################################### ProgramTitleType CRUD Tests
 
 # Read ProgramTitleType by ID
 test_program_title_type_by_id = createByIdTest2(
-    tableName="program_title_types"
+    tableName="acprogramtitles"
 )
 
 ######################################################################### ProgramType CRUD Tests
 
 # Read ProgramType by ID
 test_program_type_by_id = createByIdTest2(
-    tableName="program_types"
+    tableName="acprogramtypes"
 )
 
 ######################################################################### Semester CRUD Tests
 
 # Read Semester by ID
 test_semester_by_id = createByIdTest2(
-    tableName="semesters"
+    tableName="acsemesters"
 )
 
 ######################################################################### StudentState CRUD Tests
 
 # Read StudentState by ID
 test_student_state_by_id = createByIdTest2(
-    tableName="student_states"
+    tableName="acprograms_studentstates"
 )
 
 ######################################################################### Subject CRUD Tests
 
 # Read Subject by ID
 test_subject_by_id = createByIdTest2(
-    tableName="subjects"
+    tableName="acsubjects"
 )
 
 ######################################################################### Topic CRUD Tests
 
 # Read Topic by ID
 test_topic_by_id = createByIdTest2(
-    tableName="topics"
+    tableName="actopics"
 )
