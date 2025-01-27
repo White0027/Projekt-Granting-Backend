@@ -1,0 +1,12 @@
+query {
+    result: acClassificationLevelPage {
+        __typename
+        ...AcClassificationLevel
+    }
+}
+
+fragment AcClassificationLevel on AcClassificationLevelGQLModel {
+    id
+    name
+    nameEn
+}

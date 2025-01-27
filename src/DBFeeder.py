@@ -378,7 +378,7 @@ import json
 
 from uoishelpers.feeders import ImportModels
 
-def get_demodata():
+def get_demodata(filename="./systemdata.json"):
     def datetime_parser(json_dict):
         for (key, value) in json_dict.items():
             if key in ["date", "startdate", "enddate", "lastchange", "created"]:
@@ -406,12 +406,12 @@ def get_demodata():
         return json_dict
 
 
-    with open("./systemdata.json", "r", encoding="utf-8") as f:
+    with open(filename, "r", encoding="utf-8") as f:
         jsonData = json.load(f, object_hook=datetime_parser)
 
     return jsonData
 
-async def initDB(asyncSessionMaker):
+async def initDB(asyncSessionMaker, filename="./systemdata.json"):
     Demo = os.environ.get("DEMODATA", None) in ["True", "true"]
     if Demo:
         dbModels = [
@@ -448,7 +448,7 @@ async def initDB(asyncSessionMaker):
             ClassificationTypeModel,
         ]
         
-    jsonData = get_demodata()
+    jsonData = get_demodata(filename)
     await ImportModels(asyncSessionMaker, dbModels, jsonData)
     print("data imported", flush=True)
     pass

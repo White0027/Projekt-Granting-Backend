@@ -1,0 +1,13 @@
+query {
+    result: acProgramTitleTypePage {
+        __typename
+        ...AcProgramTitleType
+    }
+}
+
+fragment AcProgramTitleType on AcProgramTitleTypeGQLModel {
+    id
+    lastchange
+    name
+    nameEn
+}

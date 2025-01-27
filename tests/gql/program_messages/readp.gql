@@ -1,0 +1,19 @@
+query {
+    result: acProgramMessagePage {
+        __typename
+        ...AcProgramMessage
+    }
+}
+
+fragment AcProgramMessage on AcProgramMessageGQLModel {
+    id
+    name
+    description
+    date
+    student {
+        id
+    }
+    program {
+        id
+    }
+}

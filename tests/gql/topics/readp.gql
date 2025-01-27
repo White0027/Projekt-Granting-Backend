@@ -1,0 +1,15 @@
+query {
+  result: acTopicPage {
+    id
+    lastchange
+    name
+    nameEn
+    order
+    semester {
+      id
+    }
+    lessons {
+      id
+    }
+  }
+}

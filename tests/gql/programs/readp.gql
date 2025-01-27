@@ -1,0 +1,36 @@
+query {
+    result: acProgramPage {
+        __typename
+        ...AcProgram
+    }
+}
+
+fragment AcProgram on AcProgramGQLModel {
+    id
+    name
+    nameEn
+    type {
+        id
+    }
+    subjects {
+        id
+    }
+    students {
+        id
+    }
+    grantsGroup {
+        id
+    }
+    licencedGroup {
+        id
+    }
+    createdby {
+        id
+    }
+    changedby {
+        id
+    }
+    rbacobject {
+        id
+    }
+}

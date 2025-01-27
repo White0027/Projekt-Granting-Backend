@@ -1,0 +1,13 @@
+query {
+    result: acProgramStudentStatePage {
+        __typename
+        ...AcProgramStudentState
+    }
+}
+
+fragment AcProgramStudentState on AcProgramStudentStateGQLModel {
+    id
+    name
+    nameEn
+}
+

@@ -1,0 +1,12 @@
+query {
+    result: acClassificationTypePage {
+        __typename
+        ...AcClassificationType
+    }
+}
+
+fragment AcClassificationType on AcClassificationTypeGQLModel {
+    id
+    name
+    nameEn
+}

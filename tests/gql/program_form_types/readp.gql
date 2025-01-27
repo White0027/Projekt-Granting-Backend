@@ -1,0 +1,13 @@
+query {
+    result: acProgramFormTypePage {
+        __typename
+        ...AcProgramFormType
+    }
+}
+
+fragment AcProgramFormType on AcProgramFormTypeGQLModel {
+    id
+    lastchange
+    name
+    nameEn
+}
