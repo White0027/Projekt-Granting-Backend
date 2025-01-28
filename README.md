@@ -26,6 +26,8 @@ ________________________________________________________________________
           Splněno ze 72% (Test má GET, server má POST)
 
 22.1.2024 Splněno 72%, Oprava předchozích chyb, potřeba doplnit "tables"
+
+28.1.2024 update testů, celkově 79%, 
 ________________________________________________________________________
 
 ## Aktuální úkoly
