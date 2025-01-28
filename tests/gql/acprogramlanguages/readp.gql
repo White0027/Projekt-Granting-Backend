@@ -1,0 +1,13 @@
+query {
+    result: acProgramLanguageTypePage {
+        __typename
+        ...AcProgramLanguageType
+    }
+}
+
+fragment AcProgramLanguageType on AcProgramLanguageTypeGQLModel {
+    id
+    lastchange
+    name
+    nameEn
+}

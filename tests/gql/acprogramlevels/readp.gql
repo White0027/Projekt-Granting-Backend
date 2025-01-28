@@ -1,0 +1,13 @@
+query {
+    result: acProgramLevelTypePage {
+        __typename
+        ...AcProgramLevelType
+    }
+}
+
+fragment AcProgramLevelType on AcProgramLevelTypeGQLModel {
+    id
+    lastchange
+    name
+    nameEn
+}

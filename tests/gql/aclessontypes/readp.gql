@@ -1,0 +1,12 @@
+query {
+    result: acLessonTypePage {
+        __typename
+        ...AcLessonType
+    }
+}
+
+fragment AcLessonType on AcLessonTypeGQLModel {
+    id
+    name
+    nameEn
+}

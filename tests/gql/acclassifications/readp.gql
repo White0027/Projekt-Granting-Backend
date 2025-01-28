@@ -1,0 +1,23 @@
+query {
+    result: acClassificationPage{
+        __typename
+        ...AcClassification
+    }
+}
+
+fragment AcClassification on AcClassificationGQLModel {
+    id
+    lastchange
+    date
+    order
+    student {
+        id
+    }
+    semester {
+        id
+    }
+    level {
+        id
+    }
+}
+
