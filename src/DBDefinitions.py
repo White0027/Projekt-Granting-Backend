@@ -42,7 +42,7 @@ class ProgramStudentMessageModel(BaseModel):
 
     name = Column(String, comment="Name of the message") 
     description = Column(String, comment="Description of the message")
-    student_id = UUIDFKey(nullable=False, comment="the student to which message belongs")
+    student_id = UUIDFKey(nullable=True, comment="the student to which message belongs")
     program_id = Column(ForeignKey("acprograms.id"), index=True, comment="the program to which message belongs")
     date = Column(DateTime, server_default=sqlalchemy.sql.func.now())
 

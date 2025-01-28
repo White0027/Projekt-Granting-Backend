@@ -13,7 +13,7 @@ fragment AcProgramMessage on AcProgramMessageGQLModel {
     student {
         id
     }
-    program {
+    program 
         id
     }
-}
+
