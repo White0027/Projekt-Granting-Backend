@@ -27,6 +27,8 @@ ________________________________________________________________________
 
 22.1.2024 Splněno 72%, Oprava předchozích chyb, potřeba doplnit "tables"
 
+27.1.2024 Splněno 74%, Aktualizace starých testů, potřeba doplnit CUD operace
+
 28.1.2024 update testů, celkově 79%, 
 ________________________________________________________________________
 
