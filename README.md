@@ -26,6 +26,8 @@ ________________________________________________________________________
           Splněno ze 72% (Test má GET, server má POST)
 
 22.1.2024 Splněno 72%, Oprava předchozích chyb, potřeba doplnit "tables"
+
+27.1.2024 Splněno 74%, Aktualizace starých testů, potřeba doplnit CUD operace
 ________________________________________________________________________
 
 ## Aktuální úkoly
