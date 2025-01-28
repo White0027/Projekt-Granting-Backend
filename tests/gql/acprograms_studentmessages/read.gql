@@ -10,10 +10,7 @@ fragment AcProgramMessage on AcProgramMessageGQLModel {
     name
     description
     date
-    student {
+    program {
         id
     }
-    program 
-        id
-    }
-
+}
