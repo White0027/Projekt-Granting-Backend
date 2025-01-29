@@ -49,7 +49,6 @@ test_classification_level_by_id = createByIdTest2(
     tableName="acclassificationlevels"
 )
 
-
 # Update ClassificationLevel
 test_classification_level_update = createUpdateTest2(
     tableName="acclassificationlevels",
@@ -60,15 +59,15 @@ test_classification_level_update = createUpdateTest2(
     }
 )
 
-"""
 # Delete ClassificationLevel
 test_classification_level_delete = createDeleteTest2(
     tableName="acclassificationlevels",
     variables={
         "lastchange": "2023-01-01T00:00:00",
+        "name": "Delete Classification Level",
+        "nameEn": "Delete Classification Level EN"
     }
 )
-"""
 
 ######################################################################### Classification CRUD Tests
 

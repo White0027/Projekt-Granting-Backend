@@ -2072,8 +2072,8 @@ async def program_classification_type_delete(self, info: strawberry.types.Info, 
 # region Classification CU
 @strawberry.input(description="Model for initialization during C operation")
 class ClassificationInsertGQLModel:
-    semester_id: uuid.UUID
-    student_id: uuid.UUID
+    semester_id: IDType
+    student_id: IDType
     classificationlevel_id: IDType
     date: datetime.datetime
     order: int
@@ -2083,7 +2083,7 @@ class ClassificationInsertGQLModel:
 
 @strawberry.input(description="Model for definition of D operation")
 class ClassificationUpdateGQLModel:
-    id: uuid.UUID = strawberry.field(description="Primary key")
+    id: IDType = strawberry.field(description="Primary key")
     lastchange: datetime.datetime
     classificationlevel_id: Optional[IDType] = None
     date: Optional[datetime.datetime] = None
@@ -2092,7 +2092,7 @@ class ClassificationUpdateGQLModel:
     
 @strawberry.input(description="Attributes for deletion")
 class ClassificationDeleteGQLModel:
-    id: uuid.UUID = strawberry.field(description="Primary key")
+    id: IDType = strawberry.field(description="Primary key")
     lastchange: datetime.datetime = strawberry.field(description="Timestamp for optimistic locking")
 
 @strawberry.type(description="Result of CUD operations")
@@ -2146,7 +2146,7 @@ class ClassificationLevelInsertGQLModel:
 
 @strawberry.input(description="Model for definition of D operation")
 class ClassificationLevelUpdateGQLModel:
-    id: uuid.UUID = strawberry.field(description="Primary key")
+    id: IDType = strawberry.field(description="Primary key")
     lastchange: datetime.datetime
     name: Optional[str] = None
     name_en: Optional[str] = None
@@ -2155,7 +2155,7 @@ class ClassificationLevelUpdateGQLModel:
 @strawberry.input(description="set of updateable attributes")
 class ClassificationLevelDeleteGQLModel:
     lastchange: datetime.datetime = strawberry.field(description="timestamp")
-    id: uuid.UUID = strawberry.field(description="Primary key")
+    id: IDType = strawberry.field(description="Primary key")
     
 @strawberry.type(description="Result of CUD operations")
 class ClassificationLevelResultGQLModel:

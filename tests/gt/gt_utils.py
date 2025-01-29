@@ -65,8 +65,9 @@ import re
 dir_path = os.path.dirname(os.path.realpath(__file__))
 print("dir_path", dir_path, flush=True)
 
-location = "./tests/gql"
-location = re.sub(r"\\tests\\.+", r"\\tests\\gql", dir_path)
+#location = "./src/tests/gqls"
+#location = re.sub(r"\\tests\\.+", r"\\tests\\gqls", dir_path)
+location = os.path.join(os.path.dirname(dir_path), "gql")
 # location
 print("location", location, flush=True)
 logging.info(f"Queries location {dir_path} => {location}")
@@ -150,7 +151,15 @@ def createTest2(tableName, queryName, variables=None, expectedJson=None):
         else:
             assert "errors" not in responseJson, f"query for {query} with {_variables}, got error {responseJson}"
             logging.debug(f"query for \n{query} with \n{_variables}, no tested response, got\n{responseJson}")
+        responseData = responseJson.get("data")
+        assert responseData is not None, f"got no data while creating an entity for delete query {responseJson}"
         
+        [responseEntity, *_] = responseData.values()
+        assert responseEntity is not None, f"got no entity while asking for lastchange atribute {responseJson}"
+        __typename = responseEntity.get("__typename", None)
+        assert __typename is not None, f"got no __typename {responseJson}"
+        assert "Error" not in responseEntity["__typename"], f"got error while creating entity {responseEntity["msg"]}"
+
     return result_test
 
 def createUpdateTest2(tableName, variables=None, expectedJson=None):
@@ -208,13 +217,17 @@ def createDeleteTest2(tableName, variables=None, expectedJson=None):
         if _variables is None:
             _variables = getVariables(tableName=tableName, queryName="delete")
         assert _variables != {}, f"variables must be set"
-
+        logging.info(f"query for {queryCreate} with {_variables}, creating entity to delete")
         responseJson = await SchemaExecutorDemo(query=queryCreate, variable_values=_variables)
         responseData = responseJson.get("data")
         assert responseData is not None, f"got no data while creating an entity for delete query {responseJson}"
         
         [responseEntity, *_] = responseData.values()
         assert responseEntity is not None, f"got no entity while asking for lastchange atribute {responseJson}"
+        __typename = responseEntity.get("__typename", None)
+        assert __typename is not None, f"got no __typename {responseJson}"
+        assert "Error" not in responseEntity["__typename"], f"got error while creating entity {responseEntity["msg"]}"
+
         assert "lastchange" in responseEntity, f"query read for table {tableName} is not asking for lastchange which is needed see {responseJson}"
         assert "id" in responseEntity is not None, f"variables must have an 'id'"
         

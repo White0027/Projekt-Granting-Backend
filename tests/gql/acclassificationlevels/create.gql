@@ -24,4 +24,5 @@ fragment FE on AcClassificationLevelGQLModel {
   id
   name
   nameEn
+  lastchange
 }

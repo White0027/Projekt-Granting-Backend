@@ -31,7 +31,7 @@ ________________________________________________________________________
 
 28.1.2024 update testů, celkově 79%, 
 
-29.1.2024 Splněno 84%, přidání create a delete u classificationlevels, předělání GraphTypeDefinitions.py
+29.1.2024 Splněno 84%, přidání CUD operací u classificationlevels, předělání GraphTypeDefinitions.py
 ________________________________________________________________________
 
 ## Aktuální úkoly
