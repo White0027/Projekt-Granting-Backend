@@ -1,0 +1,21 @@
+mutation DeleteClassificationLevel($id: UUID!, $lastchange: DateTime!) {
+  programClassificationLevelDelete(
+    classificationLevel: {
+      id: $id
+      lastchange: $lastchange
+    }
+  ) {
+    __typename
+    ...Error
+  }
+}
+
+fragment Error on AcClassificationLevelGQLModelDeleteError {
+  msg
+  input
+  failed
+  Entity {
+    id
+    lastchange
+  }
+}

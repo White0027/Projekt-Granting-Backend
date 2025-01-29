@@ -27,17 +27,48 @@ myquery = """
 # async def test_result_test(NoRole_UG_Server):
 #     response = await NoRole_UG_Server(query=myquery, variables={})
 #     assert "data" in response, f"Expected 'data' in response, got: {response}"
-#     data= response["data"]
+#     data = response["data"]
 #     assert data is not None, f"Expected 'data' in response, got: {response}"
 #     assert response["data"].get("me", None) is not None, f"Expected 'me' field in response data {response}"
 #     logging.info(f"User data: {response}")
-    
+
 ######################################################################### ClassificationLevel CRUD Tests
+
+# Create ClassificationLevel
+test_classification_level_create = createTest2(
+    tableName="acclassificationlevels",
+    queryName="create",
+    variables={
+        "name": "Test Classification Level",
+        "nameEn": "Test Classification Level EN"
+    }
+)
 
 # Read ClassificationLevel by ID
 test_classification_level_by_id = createByIdTest2(
     tableName="acclassificationlevels"
 )
+
+
+# Update ClassificationLevel
+test_classification_level_update = createUpdateTest2(
+    tableName="acclassificationlevels",
+    variables={
+        "lastchange": "2023-01-01T00:00:00",
+        "name": "Updated Classification Level",
+        "nameEn": "Updated Classification Level EN"
+    }
+)
+
+"""
+# Delete ClassificationLevel
+test_classification_level_delete = createDeleteTest2(
+    tableName="acclassificationlevels",
+    variables={
+        "lastchange": "2023-01-01T00:00:00",
+    }
+)
+"""
 
 ######################################################################### Classification CRUD Tests
 

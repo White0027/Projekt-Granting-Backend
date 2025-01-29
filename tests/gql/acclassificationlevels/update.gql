@@ -1,0 +1,30 @@
+mutation UpdateClassificationLevel($id: UUID!, $lastchange: DateTime!, $name: String, $name_en: String) {
+  programClassificationLevelUpdate(
+    classificationLevel: {
+      id: $id
+      lastchange: $lastchange
+      name: $name
+      nameEn: $name_en
+    }
+  ) {
+    __typename
+    ...Error
+    ...ClassificationLevel
+  }
+}
+
+fragment Error on AcClassificationLevelGQLModelUpdateError {
+  msg
+  input
+  failed
+  Entity {
+    lastchange
+  }
+}
+
+fragment ClassificationLevel on AcClassificationLevelGQLModel {
+  id
+  lastchange
+  name
+  nameEn
+}

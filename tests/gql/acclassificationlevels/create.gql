@@ -1,0 +1,27 @@
+mutation AddClassificationLevel($id: UUID, $name: String!, $name_en: String) {
+  programClassificationLevelInsert(
+    classificationLevel: {
+      id: $id
+      name: $name
+      nameEn: $name_en
+    }
+  ) {
+    __typename
+    ...Error
+    ...FE
+  }
+}
+
+fragment Error on InsertError {
+  __typename
+  msg
+  input
+  failed
+}
+
+fragment FE on AcClassificationLevelGQLModel {
+  __typename
+  id
+  name
+  nameEn
+}
