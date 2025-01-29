@@ -1,0 +1,21 @@
+mutation DeleteAcProgramForm($id: UUID!, $lastchange: DateTime!) {
+  acProgramFormDelete(
+    programForm: {
+      id: $id
+      lastchange: $lastchange
+    }
+  ) {
+    __typename
+    ...Error
+  }
+}
+
+fragment Error on AcProgramFormDeleteError {
+  msg
+  input
+  failed
+  Entity {
+    id
+    lastchange
+  }
+}

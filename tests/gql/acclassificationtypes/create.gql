@@ -1,0 +1,28 @@
+mutation AddAcClassificationType($id: UUID, $name: String!, $name_en: String) {
+  programClassificationTypeInsert(
+    classificationType: {
+      id: $id
+      name: $name
+      nameEn: $name_en
+    }
+  ) {
+    __typename
+    ...Error
+    ...AcClassificationType
+  }
+}
+
+fragment Error on InsertError {
+  __typename
+  msg
+  input
+  failed
+}
+
+fragment AcClassificationType on AcClassificationTypeGQLModel {
+  __typename
+  id
+  name
+  nameEn
+  lastchange
+}

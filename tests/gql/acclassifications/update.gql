@@ -1,0 +1,44 @@
+mutation UpdateAcClassification(
+  $id: UUID!
+  $lastchange: DateTime!
+  $classificationlevel_id: UUID
+  $student_id: UUID
+  $order: Int
+  $date: DateTime
+  $semester_id: UUID
+) {
+  programClassificationUpdate(
+    classification: {
+      id: $id
+      lastchange: $lastchange
+      classificationlevelId: $classificationlevel_id
+      studentId: $student_id
+      order: $order
+      date: $date
+      semesterId: $semester_id
+    }
+  ) {
+    __typename
+    ...Error
+    ...AcClassification
+  }
+}
+
+fragment Error on AcClassificationUpdateError {
+  msg
+  input
+  failed
+  Entity {
+    lastchange
+  }
+}
+
+fragment AcClassification on AcClassificationGQLModel {
+  id
+  lastchange
+  classificationlevelId
+  studentId
+  order
+  date
+  semesterId
+}

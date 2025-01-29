@@ -1,0 +1,46 @@
+mutation AddAcClassification(
+  $id: UUID
+  $created: DateTime
+  $lastchange: DateTime
+  $classificationlevel_id: UUID!
+  $student_id: UUID!
+  $order: Int!
+  $date: DateTime!
+  $semester_id: UUID!
+) {
+  programClassificationInsert(
+    classification: {
+      id: $id
+      created: $created
+      lastchange: $lastchange
+      classificationlevelId: $classificationlevel_id
+      studentId: $student_id
+      order: $order
+      date: $date
+      semesterId: $semester_id
+    }
+  ) {
+    __typename
+    ...Error
+    ...FE
+  }
+}
+
+fragment Error on InsertError {
+  __typename
+  msg
+  input
+  failed
+}
+
+fragment FE on AcClassificationGQLModel {
+  __typename
+  id
+  created
+  lastchange
+  classificationlevelId
+  studentId
+  order
+  date
+  semesterId
+}

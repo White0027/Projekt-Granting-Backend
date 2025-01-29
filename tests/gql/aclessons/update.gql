@@ -1,0 +1,38 @@
+mutation UpdateAcLesson(
+  $id: UUID!
+  $lastchange: DateTime!
+  $count: Int
+  $type_id: UUID
+  $topic_id: UUID
+) {
+  programLessonUpdate(
+    lesson: {
+      id: $id
+      lastchange: $lastchange
+      count: $count
+      typeId: $type_id
+      topicId: $topic_id
+    }
+  ) {
+    __typename
+    ...Error
+    ...AcLesson
+  }
+}
+
+fragment Error on AcLessonUpdateError {
+  msg
+  input
+  failed
+  Entity {
+    lastchange
+  }
+}
+
+fragment AcLesson on AcLessonGQLModel {
+  id
+  lastchange
+  count
+  typeId
+  topicId
+}

@@ -1,0 +1,40 @@
+mutation AddAcLesson(
+  $id: UUID
+  $created: DateTime
+  $lastchange: DateTime
+  $count: Int!
+  $type_id: UUID!
+  $topic_id: UUID!
+) {
+  programLessonInsert(
+    lesson: {
+      id: $id
+      created: $created
+      lastchange: $lastchange
+      count: $count
+      typeId: $type_id
+      topicId: $topic_id
+    }
+  ) {
+    __typename
+    ...Error
+    ...AcLesson
+  }
+}
+
+fragment Error on InsertError {
+  __typename
+  msg
+  input
+  failed
+}
+
+fragment AcLesson on AcLessonGQLModel {
+  __typename
+  id
+  created
+  lastchange
+  count
+  typeId
+  topicId
+}

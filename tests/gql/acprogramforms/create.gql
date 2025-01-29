@@ -1,0 +1,28 @@
+mutation AddAcProgramForm($id: UUID, $name: String!, $name_en: String) {
+  acProgramFormInsert(
+    programForm: {
+      id: $id
+      name: $name
+      nameEn: $name_en
+    }
+  ) {
+    __typename
+    ...Error
+    ...AcProgramForm
+  }
+}
+
+fragment Error on InsertError {
+  __typename
+  msg
+  input
+  failed
+}
+
+fragment AcProgramForm on AcProgramFormGQLModel {
+  __typename
+  id
+  name
+  nameEn
+  lastchange
+}

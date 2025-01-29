@@ -1,0 +1,21 @@
+mutation DeleteAcClassification($id: UUID!, $lastchange: DateTime!) {
+  programClassificationDelete(
+    classification: {
+      id: $id
+      lastchange: $lastchange
+    }
+  ) {
+    __typename
+    ...Error
+  }
+}
+
+fragment Error on AcClassificationDeleteError {
+  msg
+  input
+  failed
+  Entity {
+    id
+    lastchange
+  }
+}

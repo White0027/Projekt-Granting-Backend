@@ -1,0 +1,21 @@
+mutation DeleteAcLesson($id: UUID!, $lastchange: DateTime!) {
+  programLessonDelete(
+    lesson: {
+      id: $id
+      lastchange: $lastchange
+    }
+  ) {
+    __typename
+    ...Error
+  }
+}
+
+fragment Error on AcLessonDeleteError {
+  msg
+  input
+  failed
+  Entity {
+    id
+    lastchange
+  }
+}

@@ -1,0 +1,28 @@
+mutation AddAcLessonType($id: UUID, $name: String!, $name_en: String) {
+  programLessonTypeInsert(
+    lessonType: {
+      id: $id
+      name: $name
+      nameEn: $name_en
+    }
+  ) {
+    __typename
+    ...Error
+    ...AcLessonType
+  }
+}
+
+fragment Error on InsertError {
+  __typename
+  msg
+  input
+  failed
+}
+
+fragment AcLessonType on AcLessonTypeGQLModel {
+  __typename
+  id
+  name
+  nameEn
+  lastchange
+}

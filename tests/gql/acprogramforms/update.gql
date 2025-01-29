@@ -1,0 +1,35 @@
+mutation UpdateAcProgramForm(
+  $id: UUID!
+  $lastchange: DateTime!
+  $name: String
+  $name_en: String
+) {
+  acProgramFormUpdate(
+    programForm: {
+      id: $id
+      lastchange: $lastchange
+      name: $name
+      nameEn: $name_en
+    }
+  ) {
+    __typename
+    ...Error
+    ...AcProgramForm
+  }
+}
+
+fragment Error on AcProgramFormUpdateError {
+  msg
+  input
+  failed
+  Entity {
+    lastchange
+  }
+}
+
+fragment AcProgramForm on AcProgramFormGQLModel {
+  id
+  lastchange
+  name
+  nameEn
+}
