@@ -1,0 +1,21 @@
+mutation DeleteAcProgramTitle($id: UUID!, $lastchange: DateTime!) {
+  acProgramTitleDelete(
+    programTitle: {
+      id: $id
+      lastchange: $lastchange
+    }
+  ) {
+    __typename
+    ...Error
+  }
+}
+
+fragment Error on AcProgramTitleDeleteError {
+  msg
+  input
+  failed
+  Entity {
+    id
+    lastchange
+  }
+}

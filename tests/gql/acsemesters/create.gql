@@ -1,0 +1,40 @@
+mutation AddAcSemester(
+  $id: UUID
+  $created: DateTime
+  $lastchange: DateTime
+  $subject_id: UUID!
+  $order: Int!
+  $classificationtype_id: UUID!
+) {
+  programSemesterInsert(
+    semester: {
+      id: $id
+      created: $created
+      lastchange: $lastchange
+      subjectId: $subject_id
+      order: $order
+      classificationTypeId: $classificationtype_id
+    }
+  ) {
+    __typename
+    ...Error
+    ...AcSemester
+  }
+}
+
+fragment Error on InsertError {
+  __typename
+  msg
+  input
+  failed
+}
+
+fragment AcSemester on AcSemesterGQLModel {
+  __typename
+  id
+  created
+  lastchange
+  subjectId
+  order
+  classificationTypeId
+}

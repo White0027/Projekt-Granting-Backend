@@ -1,0 +1,35 @@
+mutation UpdateAcProgramLanguage(
+  $id: UUID!
+  $lastchange: DateTime!
+  $name: String
+  $name_en: String
+) {
+  acProgramLanguageUpdate(
+    programLanguage: {
+      id: $id
+      lastchange: $lastchange
+      name: $name
+      nameEn: $name_en
+    }
+  ) {
+    __typename
+    ...Error
+    ...AcProgramLanguage
+  }
+}
+
+fragment Error on AcProgramLanguageUpdateError {
+  msg
+  input
+  failed
+  Entity {
+    lastchange
+  }
+}
+
+fragment AcProgramLanguage on AcProgramLanguageGQLModel {
+  id
+  lastchange
+  name
+  nameEn
+}

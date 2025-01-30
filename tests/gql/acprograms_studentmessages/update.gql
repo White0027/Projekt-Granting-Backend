@@ -1,28 +1,24 @@
-mutation UpdateAcProgramLevel(
+mutation UpdateAcProgramStudentMessage(
   $id: UUID!
   $lastchange: DateTime!
-  $priority: Int
   $name: String
   $name_en: String
-  $length: Int
 ) {
-  acProgramLevelUpdate(
-    programLevel: {
+  acProgramStudentMessageUpdate(
+    programStudentMessage: {
       id: $id
       lastchange: $lastchange
-      priority: $priority
       name: $name
       nameEn: $name_en
-      length: $length
     }
   ) {
     __typename
     ...Error
-    ...AcProgramLevel
+    ...AcProgramStudentMessage
   }
 }
 
-fragment Error on AcProgramLevelUpdateError {
+fragment Error on AcProgramStudentMessageUpdateError {
   msg
   input
   failed
@@ -31,11 +27,9 @@ fragment Error on AcProgramLevelUpdateError {
   }
 }
 
-fragment AcProgramLevel on AcProgramLevelGQLModel {
+fragment AcProgramStudentMessage on AcProgramStudentMessageGQLModel {
   id
   lastchange
-  priority
   name
   nameEn
-  length
 }

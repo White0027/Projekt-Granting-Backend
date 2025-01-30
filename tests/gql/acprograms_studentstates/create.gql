@@ -1,22 +1,18 @@
-mutation AddAcProgramLevel(
+mutation AddAcProgramStudentState(
   $id: UUID
-  $priority: Int!
   $name: String!
   $name_en: String!
-  $length: Int!
 ) {
-  acProgramLevelInsert(
-    programLevel: {
+  acProgramStudentStateInsert(
+    programStudentState: {
       id: $id
-      priority: $priority
       name: $name
       nameEn: $name_en
-      length: $length
     }
   ) {
     __typename
     ...Error
-    ...AcProgramLevel
+    ...AcProgramStudentState
   }
 }
 
@@ -27,12 +23,10 @@ fragment Error on InsertError {
   failed
 }
 
-fragment AcProgramLevel on AcProgramLevelGQLModel {
+fragment AcProgramStudentState on AcProgramStudentStateGQLModel {
   __typename
   id
-  priority
   name
   nameEn
-  length
   lastchange
 }

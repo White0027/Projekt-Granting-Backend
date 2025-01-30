@@ -1,0 +1,21 @@
+mutation DeleteAcTopic($id: UUID!, $lastchange: DateTime!) {
+  programTopicDelete(
+    topic: {
+      id: $id
+      lastchange: $lastchange
+    }
+  ) {
+    __typename
+    ...Error
+  }
+}
+
+fragment Error on AcTopicDeleteError {
+  msg
+  input
+  failed
+  Entity {
+    id
+    lastchange
+  }
+}

@@ -1,0 +1,21 @@
+mutation DeleteAcSubject($id: UUID!, $lastchange: DateTime!) {
+  programSubjectDelete(
+    subject: {
+      id: $id
+      lastchange: $lastchange
+    }
+  ) {
+    __typename
+    ...Error
+  }
+}
+
+fragment Error on AcSubjectDeleteError {
+  msg
+  input
+  failed
+  Entity {
+    id
+    lastchange
+  }
+}

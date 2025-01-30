@@ -1,0 +1,21 @@
+mutation DeleteAcProgramStudentMessage($id: UUID!, $lastchange: DateTime!) {
+  acProgramStudentMessageDelete(
+    programStudentMessage: {
+      id: $id
+      lastchange: $lastchange
+    }
+  ) {
+    __typename
+    ...Error
+  }
+}
+
+fragment Error on AcProgramStudentMessageDeleteError {
+  msg
+  input
+  failed
+  Entity {
+    id
+    lastchange
+  }
+}

@@ -1,0 +1,44 @@
+mutation AddAcProgramType(
+  $id: UUID
+  $name: String!
+  $name_en: String!
+  $title_id: UUID!
+  $form_id: UUID!
+  $language_id: UUID!
+  $level_id: UUID!
+) {
+  acProgramTypeInsert(
+    programType: {
+      id: $id
+      name: $name
+      nameEn: $name_en
+      titleId: $title_id
+      formId: $form_id
+      languageId: $language_id
+      levelId: $level_id
+    }
+  ) {
+    __typename
+    ...Error
+    ...AcProgramType
+  }
+}
+
+fragment Error on InsertError {
+  __typename
+  msg
+  input
+  failed
+}
+
+fragment AcProgramType on AcProgramTypeGQLModel {
+  __typename
+  id
+  name
+  nameEn
+  titleId
+  formId
+  languageId
+  levelId
+  lastchange
+}

@@ -1,0 +1,37 @@
+mutation AddAcTopic(
+  $id: UUID
+  $created: DateTime
+  $lastchange: DateTime
+  $name: String!
+  $semester_id: UUID!
+) {
+  programTopicInsert(
+    topic: {
+      id: $id
+      created: $created
+      lastchange: $lastchange
+      name: $name
+      semesterId: $semester_id
+    }
+  ) {
+    __typename
+    ...Error
+    ...AcTopic
+  }
+}
+
+fragment Error on InsertError {
+  __typename
+  msg
+  input
+  failed
+}
+
+fragment AcTopic on AcTopicGQLModel {
+  __typename
+  id
+  created
+  lastchange
+  name
+  semesterId
+}

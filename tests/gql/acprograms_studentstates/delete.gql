@@ -1,0 +1,21 @@
+mutation DeleteAcProgramStudentState($id: UUID!, $lastchange: DateTime!) {
+  acProgramStudentStateDelete(
+    programStudentState: {
+      id: $id
+      lastchange: $lastchange
+    }
+  ) {
+    __typename
+    ...Error
+  }
+}
+
+fragment Error on AcProgramStudentStateDeleteError {
+  msg
+  input
+  failed
+  Entity {
+    id
+    lastchange
+  }
+}

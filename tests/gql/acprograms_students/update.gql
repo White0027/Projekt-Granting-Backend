@@ -1,0 +1,38 @@
+mutation UpdateAcProgramStudent(
+  $id: UUID!
+  $lastchange: DateTime!
+  $program_id: UUID
+  $state_id: UUID
+  $student_id: UUID
+) {
+  acProgramStudentUpdate(
+    programStudent: {
+      id: $id
+      lastchange: $lastchange
+      programId: $program_id
+      stateId: $state_id
+      studentId: $student_id
+    }
+  ) {
+    __typename
+    ...Error
+    ...AcProgramStudent
+  }
+}
+
+fragment Error on AcProgramStudentUpdateError {
+  msg
+  input
+  failed
+  Entity {
+    lastchange
+  }
+}
+
+fragment AcProgramStudent on AcProgramStudentGQLModel {
+  id
+  lastchange
+  programId
+  stateId
+  studentId
+}

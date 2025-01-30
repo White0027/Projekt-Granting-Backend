@@ -1,0 +1,21 @@
+mutation DeleteAcProgramLevel($id: UUID!, $lastchange: DateTime!) {
+  acProgramLevelDelete(
+    programLevel: {
+      id: $id
+      lastchange: $lastchange
+    }
+  ) {
+    __typename
+    ...Error
+  }
+}
+
+fragment Error on AcProgramLevelDeleteError {
+  msg
+  input
+  failed
+  Entity {
+    id
+    lastchange
+  }
+}

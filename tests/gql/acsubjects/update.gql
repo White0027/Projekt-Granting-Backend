@@ -1,0 +1,38 @@
+mutation UpdateAcSubject(
+  $id: UUID!
+  $lastchange: DateTime!
+  $name: String
+  $group_id: UUID
+  $program_id: UUID
+) {
+  programSubjectUpdate(
+    subject: {
+      id: $id
+      lastchange: $lastchange
+      name: $name
+      groupId: $group_id
+      programId: $program_id
+    }
+  ) {
+    __typename
+    ...Error
+    ...AcSubject
+  }
+}
+
+fragment Error on AcSubjectUpdateError {
+  msg
+  input
+  failed
+  Entity {
+    lastchange
+  }
+}
+
+fragment AcSubject on AcSubjectGQLModel {
+  id
+  lastchange
+  name
+  groupId
+  programId
+}

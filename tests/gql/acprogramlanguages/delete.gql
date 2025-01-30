@@ -1,0 +1,21 @@
+mutation DeleteAcProgramLanguage($id: UUID!, $lastchange: DateTime!) {
+  acProgramLanguageDelete(
+    programLanguage: {
+      id: $id
+      lastchange: $lastchange
+    }
+  ) {
+    __typename
+    ...Error
+  }
+}
+
+fragment Error on AcProgramLanguageDeleteError {
+  msg
+  input
+  failed
+  Entity {
+    id
+    lastchange
+  }
+}

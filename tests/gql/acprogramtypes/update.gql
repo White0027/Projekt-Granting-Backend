@@ -1,0 +1,47 @@
+mutation UpdateAcProgramType(
+  $id: UUID!
+  $lastchange: DateTime!
+  $name: String
+  $name_en: String
+  $title_id: UUID
+  $form_id: UUID
+  $language_id: UUID
+  $level_id: UUID
+) {
+  acProgramTypeUpdate(
+    programType: {
+      id: $id
+      lastchange: $lastchange
+      name: $name
+      nameEn: $name_en
+      titleId: $title_id
+      formId: $form_id
+      languageId: $language_id
+      levelId: $level_id
+    }
+  ) {
+    __typename
+    ...Error
+    ...AcProgramType
+  }
+}
+
+fragment Error on AcProgramTypeUpdateError {
+  msg
+  input
+  failed
+  Entity {
+    lastchange
+  }
+}
+
+fragment AcProgramType on AcProgramTypeGQLModel {
+  id
+  lastchange
+  name
+  nameEn
+  titleId
+  formId
+  languageId
+  levelId
+}

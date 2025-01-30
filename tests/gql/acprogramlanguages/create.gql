@@ -1,0 +1,28 @@
+mutation AddAcProgramLanguage($id: UUID, $name: String!, $name_en: String) {
+  acProgramLanguageInsert(
+    programLanguage: {
+      id: $id
+      name: $name
+      nameEn: $name_en
+    }
+  ) {
+    __typename
+    ...Error
+    ...AcProgramLanguage
+  }
+}
+
+fragment Error on InsertError {
+  __typename
+  msg
+  input
+  failed
+}
+
+fragment AcProgramLanguage on AcProgramLanguageGQLModel {
+  __typename
+  id
+  name
+  nameEn
+  lastchange
+}

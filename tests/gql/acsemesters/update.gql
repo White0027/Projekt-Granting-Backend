@@ -1,0 +1,38 @@
+mutation UpdateAcSemester(
+  $id: UUID!
+  $lastchange: DateTime!
+  $subject_id: UUID
+  $order: Int
+  $classificationtype_id: UUID
+) {
+  programSemesterUpdate(
+    semester: {
+      id: $id
+      lastchange: $lastchange
+      subjectId: $subject_id
+      order: $order
+      classificationTypeId: $classificationtype_id
+    }
+  ) {
+    __typename
+    ...Error
+    ...AcSemester
+  }
+}
+
+fragment Error on AcSemesterUpdateError {
+  msg
+  input
+  failed
+  Entity {
+    lastchange
+  }
+}
+
+fragment AcSemester on AcSemesterGQLModel {
+  id
+  lastchange
+  subjectId
+  order
+  classificationTypeId
+}

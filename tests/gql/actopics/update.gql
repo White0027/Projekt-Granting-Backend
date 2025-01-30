@@ -1,0 +1,35 @@
+mutation UpdateAcTopic(
+  $id: UUID!
+  $lastchange: DateTime!
+  $name: String
+  $semester_id: UUID
+) {
+  programTopicUpdate(
+    topic: {
+      id: $id
+      lastchange: $lastchange
+      name: $name
+      semesterId: $semester_id
+    }
+  ) {
+    __typename
+    ...Error
+    ...AcTopic
+  }
+}
+
+fragment Error on AcTopicUpdateError {
+  msg
+  input
+  failed
+  Entity {
+    lastchange
+  }
+}
+
+fragment AcTopic on AcTopicGQLModel {
+  id
+  lastchange
+  name
+  semesterId
+}

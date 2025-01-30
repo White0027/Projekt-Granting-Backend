@@ -1,0 +1,41 @@
+mutation UpdateAcProgram(
+  $id: UUID!
+  $lastchange: DateTime!
+  $name: String
+  $type_id: UUID
+  $group_id: UUID
+  $licenced_group_id: UUID
+) {
+  acProgramUpdate(
+    program: {
+      id: $id
+      lastchange: $lastchange
+      name: $name
+      typeId: $type_id
+      groupId: $group_id
+      licencedGroupId: $licenced_group_id
+    }
+  ) {
+    __typename
+    ...Error
+    ...AcProgram
+  }
+}
+
+fragment Error on AcProgramUpdateError {
+  msg
+  input
+  failed
+  Entity {
+    lastchange
+  }
+}
+
+fragment AcProgram on AcProgramGQLModel {
+  id
+  lastchange
+  name
+  typeId
+  groupId
+  licencedGroupId
+}

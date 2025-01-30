@@ -1,0 +1,40 @@
+mutation AddAcSubject(
+  $id: UUID
+  $created: DateTime
+  $lastchange: DateTime
+  $name: String!
+  $group_id: UUID!
+  $program_id: UUID!
+) {
+  programSubjectInsert(
+    subject: {
+      id: $id
+      created: $created
+      lastchange: $lastchange
+      name: $name
+      groupId: $group_id
+      programId: $program_id
+    }
+  ) {
+    __typename
+    ...Error
+    ...AcSubject
+  }
+}
+
+fragment Error on InsertError {
+  __typename
+  msg
+  input
+  failed
+}
+
+fragment AcSubject on AcSubjectGQLModel {
+  __typename
+  id
+  created
+  lastchange
+  name
+  groupId
+  programId
+}
