@@ -9,4 +9,5 @@ fragment AcClassificationType on AcClassificationTypeGQLModel {
     id
     name
     nameEn
+    lastchange
 }

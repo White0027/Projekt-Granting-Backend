@@ -3,7 +3,6 @@ mutation UpdateAcLesson(
   $lastchange: DateTime!
   $count: Int
   $type_id: UUID
-  $topic_id: UUID
 ) {
   programLessonUpdate(
     lesson: {
@@ -11,7 +10,6 @@ mutation UpdateAcLesson(
       lastchange: $lastchange
       count: $count
       typeId: $type_id
-      topicId: $topic_id
     }
   ) {
     __typename
@@ -20,7 +18,7 @@ mutation UpdateAcLesson(
   }
 }
 
-fragment Error on AcLessonUpdateError {
+fragment Error on AcLessonGQLModelUpdateError {
   msg
   input
   failed
@@ -31,8 +29,12 @@ fragment Error on AcLessonUpdateError {
 
 fragment AcLesson on AcLessonGQLModel {
   id
-  lastchange
   count
-  typeId
-  topicId
+  lastchange
+  type{
+    id
+  }
+  topic{
+    id
+  }
 }

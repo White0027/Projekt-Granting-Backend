@@ -2,14 +2,14 @@ mutation UpdateAcProgramStudentMessage(
   $id: UUID!
   $lastchange: DateTime!
   $name: String
-  $name_en: String
+  $date: DateTime!
 ) {
-  acProgramStudentMessageUpdate(
-    programStudentMessage: {
+  programMessageUpdate(
+    message: {
       id: $id
       lastchange: $lastchange
       name: $name
-      nameEn: $name_en
+      date: $date
     }
   ) {
     __typename
@@ -18,7 +18,7 @@ mutation UpdateAcProgramStudentMessage(
   }
 }
 
-fragment Error on AcProgramStudentMessageUpdateError {
+fragment Error on AcProgramMessageGQLModelUpdateError {
   msg
   input
   failed
@@ -27,9 +27,9 @@ fragment Error on AcProgramStudentMessageUpdateError {
   }
 }
 
-fragment AcProgramStudentMessage on AcProgramStudentMessageGQLModel {
+fragment AcProgramStudentMessage on AcProgramMessageGQLModel {
   id
   lastchange
   name
-  nameEn
+  date
 }

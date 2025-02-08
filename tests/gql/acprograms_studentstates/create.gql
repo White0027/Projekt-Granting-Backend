@@ -1,10 +1,10 @@
 mutation AddAcProgramStudentState(
   $id: UUID
   $name: String!
-  $name_en: String!
+  $name_en: String
 ) {
-  acProgramStudentStateInsert(
-    programStudentState: {
+  programStudentStateInsert(
+    studentState: {
       id: $id
       name: $name
       nameEn: $name_en

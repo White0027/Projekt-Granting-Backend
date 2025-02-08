@@ -4,8 +4,8 @@ mutation UpdateAcProgramLanguage(
   $name: String
   $name_en: String
 ) {
-  acProgramLanguageUpdate(
-    programLanguage: {
+  programLanguageTypeUpdate(
+    languageType: {
       id: $id
       lastchange: $lastchange
       name: $name
@@ -18,7 +18,7 @@ mutation UpdateAcProgramLanguage(
   }
 }
 
-fragment Error on AcProgramLanguageUpdateError {
+fragment Error on AcProgramLanguageTypeGQLModelUpdateError {
   msg
   input
   failed
@@ -27,7 +27,7 @@ fragment Error on AcProgramLanguageUpdateError {
   }
 }
 
-fragment AcProgramLanguage on AcProgramLanguageGQLModel {
+fragment AcProgramLanguage on AcProgramLanguageTypeGQLModel {
   id
   lastchange
   name

@@ -3,17 +3,13 @@ mutation UpdateAcProgram(
   $lastchange: DateTime!
   $name: String
   $type_id: UUID
-  $group_id: UUID
-  $licenced_group_id: UUID
 ) {
-  acProgramUpdate(
+  programUpdate(
     program: {
       id: $id
       lastchange: $lastchange
       name: $name
       typeId: $type_id
-      groupId: $group_id
-      licencedGroupId: $licenced_group_id
     }
   ) {
     __typename
@@ -22,7 +18,7 @@ mutation UpdateAcProgram(
   }
 }
 
-fragment Error on AcProgramUpdateError {
+fragment Error on AcProgramGQLModelUpdateError {
   msg
   input
   failed
@@ -35,7 +31,7 @@ fragment AcProgram on AcProgramGQLModel {
   id
   lastchange
   name
-  typeId
-  groupId
-  licencedGroupId
+  type{
+    id
+  }
 }

@@ -18,7 +18,7 @@ mutation UpdateAcLessonType(
   }
 }
 
-fragment Error on AcLessonTypeUpdateError {
+fragment Error on AcLessonTypeGQLModelUpdateError {
   msg
   input
   failed
@@ -29,7 +29,7 @@ fragment Error on AcLessonTypeUpdateError {
 
 fragment AcLessonType on AcLessonTypeGQLModel {
   id
-  lastchange
   name
   nameEn
+  lastchange
 }

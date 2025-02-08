@@ -1,19 +1,17 @@
 mutation AddAcSemester(
   $id: UUID
-  $created: DateTime
-  $lastchange: DateTime
   $subject_id: UUID!
   $order: Int!
   $classificationtype_id: UUID!
+  $valid: Boolean!
 ) {
   programSemesterInsert(
     semester: {
       id: $id
-      created: $created
-      lastchange: $lastchange
       subjectId: $subject_id
       order: $order
-      classificationTypeId: $classificationtype_id
+      classificationtypeId: $classificationtype_id
+      valid: $valid
     }
   ) {
     __typename
@@ -32,9 +30,12 @@ fragment Error on InsertError {
 fragment AcSemester on AcSemesterGQLModel {
   __typename
   id
-  created
   lastchange
-  subjectId
+  subject{
+    id
+  }
   order
-  classificationTypeId
+  classificationType{
+    id
+  }
 }

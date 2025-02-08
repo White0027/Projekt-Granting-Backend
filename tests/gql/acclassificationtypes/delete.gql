@@ -10,7 +10,7 @@ mutation DeleteAcClassificationType($id: UUID!, $lastchange: DateTime!) {
   }
 }
 
-fragment Error on AcClassificationTypeDeleteError {
+fragment Error on AcClassificationTypeGQLModelDeleteError {
   msg
   input
   failed

@@ -1,4 +1,4 @@
-query AcLessonById($id: UUID!) {
+query ($id: UUID!) {
     result: acLessonById(id: $id) {
         __typename
         ...AcLesson

@@ -10,7 +10,7 @@ mutation DeleteAcTopic($id: UUID!, $lastchange: DateTime!) {
   }
 }
 
-fragment Error on AcTopicDeleteError {
+fragment Error on AcTopicGQLModelDeleteError {
   msg
   input
   failed

@@ -1,6 +1,6 @@
 mutation DeleteAcProgramLevel($id: UUID!, $lastchange: DateTime!) {
-  acProgramLevelDelete(
-    programLevel: {
+  programLevelTypeDelete(
+    levelType: {
       id: $id
       lastchange: $lastchange
     }
@@ -10,7 +10,7 @@ mutation DeleteAcProgramLevel($id: UUID!, $lastchange: DateTime!) {
   }
 }
 
-fragment Error on AcProgramLevelDeleteError {
+fragment Error on AcProgramLevelTypeGQLModelDeleteError {
   msg
   input
   failed

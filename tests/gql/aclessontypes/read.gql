@@ -9,4 +9,5 @@ fragment AcLessonType on AcLessonTypeGQLModel {
     id
     name
     nameEn
+    lastchange
 }

@@ -1,6 +1,6 @@
 mutation AddAcProgramForm($id: UUID, $name: String!, $name_en: String) {
-  acProgramFormInsert(
-    programForm: {
+  programFormTypeInsert(
+    formType: {
       id: $id
       name: $name
       nameEn: $name_en
@@ -19,7 +19,7 @@ fragment Error on InsertError {
   failed
 }
 
-fragment AcProgramForm on AcProgramFormGQLModel {
+fragment AcProgramForm on AcProgramFormTypeGQLModel {
   __typename
   id
   name

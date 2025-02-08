@@ -2,16 +2,14 @@ mutation UpdateAcSubject(
   $id: UUID!
   $lastchange: DateTime!
   $name: String
-  $group_id: UUID
-  $program_id: UUID
+  $name_en: String
 ) {
   programSubjectUpdate(
     subject: {
       id: $id
       lastchange: $lastchange
       name: $name
-      groupId: $group_id
-      programId: $program_id
+      nameEn: $name_en
     }
   ) {
     __typename
@@ -20,7 +18,7 @@ mutation UpdateAcSubject(
   }
 }
 
-fragment Error on AcSubjectUpdateError {
+fragment Error on AcSubjectGQLModelUpdateError {
   msg
   input
   failed
@@ -33,6 +31,5 @@ fragment AcSubject on AcSubjectGQLModel {
   id
   lastchange
   name
-  groupId
-  programId
+  nameEn
 }

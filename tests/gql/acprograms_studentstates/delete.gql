@@ -1,6 +1,6 @@
 mutation DeleteAcProgramStudentState($id: UUID!, $lastchange: DateTime!) {
-  acProgramStudentStateDelete(
-    programStudentState: {
+  programStudentStateDelete(
+    studentState: {
       id: $id
       lastchange: $lastchange
     }
@@ -10,7 +10,7 @@ mutation DeleteAcProgramStudentState($id: UUID!, $lastchange: DateTime!) {
   }
 }
 
-fragment Error on AcProgramStudentStateDeleteError {
+fragment Error on AcProgramStudentStateGQLModelDeleteError {
   msg
   input
   failed

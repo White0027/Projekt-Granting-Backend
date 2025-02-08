@@ -1,6 +1,6 @@
 mutation DeleteAcProgramTitle($id: UUID!, $lastchange: DateTime!) {
-  acProgramTitleDelete(
-    programTitle: {
+  programTitleTypeDelete(
+    titleType: {
       id: $id
       lastchange: $lastchange
     }
@@ -10,7 +10,7 @@ mutation DeleteAcProgramTitle($id: UUID!, $lastchange: DateTime!) {
   }
 }
 
-fragment Error on AcProgramTitleDeleteError {
+fragment Error on AcProgramTitleTypeGQLModelDeleteError {
   msg
   input
   failed

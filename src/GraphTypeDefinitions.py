@@ -1140,8 +1140,8 @@ class LessonTypeInputFilter:
     )
 @asPage
 async def lesson_type_page(self, info: strawberry.types.Info, 
-                       skip: Optional[int] = 0, limit: Optional[int] = 10, 
-                       where: Optional[LessonTypeInputFilter] = None) -> List["AcLessonTypeGQLModel"]:
+        skip: Optional[int] = 0, limit: Optional[int] = 10, 
+        where: Optional[LessonTypeInputFilter] = None) -> List["AcLessonTypeGQLModel"]:
     return AcLessonTypeGQLModel.getLoader(info)
 
 @strawberry.field(
@@ -1599,7 +1599,7 @@ class ProgramLevelTypeResultGQLModel:
         description="""Insert the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
-async def program_level_type_insert(self, info: strawberry.types.Info, level_type: ProgramLevelTypeInsertGQLModel) -> Union[AcProgramLevelTypeGQLModel, InsertError[AcProgramTitleTypeGQLModel]]:
+async def program_level_type_insert(self, info: strawberry.types.Info, level_type: ProgramLevelTypeInsertGQLModel) -> Union[AcProgramLevelTypeGQLModel, InsertError[AcProgramLevelTypeGQLModel]]:
     result = await Insert[AcProgramLevelTypeGQLModel].DoItSafeWay(info=info, entity=level_type)
     return result
 
@@ -1607,7 +1607,7 @@ async def program_level_type_insert(self, info: strawberry.types.Info, level_typ
         description="""Update the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
-async def program_level_type_update(self, info: strawberry.types.Info, level_type: ProgramLevelTypeUpdateGQLModel) -> Union[AcProgramLevelTypeGQLModel, UpdateError[AcProgramTitleTypeGQLModel]]:
+async def program_level_type_update(self, info: strawberry.types.Info, level_type: ProgramLevelTypeUpdateGQLModel) -> Union[AcProgramLevelTypeGQLModel, UpdateError[AcProgramLevelTypeGQLModel]]:
     result = await Update[AcProgramLevelTypeGQLModel].DoItSafeWay(info=info, entity=level_type)
     return result
 
@@ -1661,7 +1661,7 @@ class ProgramFormTypeResultGQLModel:
         description="""Insert the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
-async def program_form_type_insert(self, info: strawberry.types.Info, form_type: ProgramFormTypeInsertGQLModel) -> Union[AcProgramFormTypeGQLModel, InsertError[AcProgramTitleTypeGQLModel]]:
+async def program_form_type_insert(self, info: strawberry.types.Info, form_type: ProgramFormTypeInsertGQLModel) -> Union[AcProgramFormTypeGQLModel, InsertError[AcProgramFormTypeGQLModel]]:
     result = await Insert[AcProgramFormTypeGQLModel].DoItSafeWay(info=info, entity=form_type)
     return result
 
@@ -1669,7 +1669,7 @@ async def program_form_type_insert(self, info: strawberry.types.Info, form_type:
         description="""Update the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
-async def program_form_type_update(self, info: strawberry.types.Info, form_type: ProgramFormTypeUpdateGQLModel) -> Union[AcProgramFormTypeGQLModel, UpdateError[AcProgramTitleTypeGQLModel]]:
+async def program_form_type_update(self, info: strawberry.types.Info, form_type: ProgramFormTypeUpdateGQLModel) -> Union[AcProgramFormTypeGQLModel, UpdateError[AcProgramFormTypeGQLModel]]:
     result = await Update[AcProgramFormTypeGQLModel].DoItSafeWay(info=info, entity=form_type)
     return result
 
@@ -2265,7 +2265,7 @@ class LessonInsertGQLModel:
 @strawberry.input(description="Model for definition of U operation")
 class LessonUpdateGQLModel:
     id: IDType
-    lastchange: datetime.datetime
+    lastchange: datetime.datetime = strawberry.field(description="Timestamp for optimistic locking")
     type_id: Optional[IDType] = None
     count: Optional[int] = None
     changedby: strawberry.Private[IDType] = None   

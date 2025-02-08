@@ -4,8 +4,8 @@ mutation UpdateAcProgramForm(
   $name: String
   $name_en: String
 ) {
-  acProgramFormUpdate(
-    programForm: {
+  programFormTypeUpdate(
+    formType: {
       id: $id
       lastchange: $lastchange
       name: $name
@@ -18,7 +18,7 @@ mutation UpdateAcProgramForm(
   }
 }
 
-fragment Error on AcProgramFormUpdateError {
+fragment Error on AcProgramFormTypeGQLModelUpdateError {
   msg
   input
   failed
@@ -27,7 +27,7 @@ fragment Error on AcProgramFormUpdateError {
   }
 }
 
-fragment AcProgramForm on AcProgramFormGQLModel {
+fragment AcProgramForm on AcProgramFormTypeGQLModel {
   id
   lastchange
   name

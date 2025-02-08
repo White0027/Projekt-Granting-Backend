@@ -1,17 +1,13 @@
 mutation AddAcProgram(
   $id: UUID
-  $created: DateTime
-  $lastchange: DateTime
   $name: String!
   $type_id: UUID!
   $group_id: UUID!
   $licenced_group_id: UUID!
 ) {
-  acProgramInsert(
+  programInsert(
     program: {
       id: $id
-      created: $created
-      lastchange: $lastchange
       name: $name
       typeId: $type_id
       groupId: $group_id
@@ -37,7 +33,10 @@ fragment AcProgram on AcProgramGQLModel {
   created
   lastchange
   name
-  typeId
-  groupId
-  licencedGroupId
+  type{
+    id
+  }
+  licencedGroup{
+    id
+  }
 }

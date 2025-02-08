@@ -2,14 +2,12 @@ mutation UpdateAcTopic(
   $id: UUID!
   $lastchange: DateTime!
   $name: String
-  $semester_id: UUID
 ) {
   programTopicUpdate(
     topic: {
       id: $id
       lastchange: $lastchange
       name: $name
-      semesterId: $semester_id
     }
   ) {
     __typename
@@ -18,7 +16,7 @@ mutation UpdateAcTopic(
   }
 }
 
-fragment Error on AcTopicUpdateError {
+fragment Error on AcTopicGQLModelUpdateError {
   msg
   input
   failed
@@ -31,5 +29,4 @@ fragment AcTopic on AcTopicGQLModel {
   id
   lastchange
   name
-  semesterId
 }

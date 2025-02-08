@@ -1,13 +1,13 @@
 mutation AddAcProgramType(
   $id: UUID
   $name: String!
-  $name_en: String!
+  $name_en: String
   $title_id: UUID!
   $form_id: UUID!
   $language_id: UUID!
   $level_id: UUID!
 ) {
-  acProgramTypeInsert(
+  programTypeInsert(
     programType: {
       id: $id
       name: $name
@@ -36,9 +36,17 @@ fragment AcProgramType on AcProgramTypeGQLModel {
   id
   name
   nameEn
-  titleId
-  formId
-  languageId
-  levelId
+  title{
+    id
+  }
+  form{
+    id
+  }
+  language{
+    id
+  }
+  level{
+    id
+  }
   lastchange
 }

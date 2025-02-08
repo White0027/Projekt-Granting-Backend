@@ -1,7 +1,6 @@
 mutation UpdateAcSemester(
   $id: UUID!
   $lastchange: DateTime!
-  $subject_id: UUID
   $order: Int
   $classificationtype_id: UUID
 ) {
@@ -9,9 +8,8 @@ mutation UpdateAcSemester(
     semester: {
       id: $id
       lastchange: $lastchange
-      subjectId: $subject_id
       order: $order
-      classificationTypeId: $classificationtype_id
+      classificationtypeId: $classificationtype_id
     }
   ) {
     __typename
@@ -20,7 +18,7 @@ mutation UpdateAcSemester(
   }
 }
 
-fragment Error on AcSemesterUpdateError {
+fragment Error on AcSemesterGQLModelUpdateError {
   msg
   input
   failed
@@ -32,7 +30,8 @@ fragment Error on AcSemesterUpdateError {
 fragment AcSemester on AcSemesterGQLModel {
   id
   lastchange
-  subjectId
   order
-  classificationTypeId
+  classificationType{
+    id
+  }
 }

@@ -1,13 +1,19 @@
 mutation AddAcProgramStudentMessage(
   $id: UUID
   $name: String!
-  $name_en: String!
+  $date: DateTime!
+  $description: String
+  $program_id: UUID!
+  $student_id: UUID!
 ) {
-  acProgramStudentMessageInsert(
-    programStudentMessage: {
+  programMessageInsert(
+    message: {
       id: $id
       name: $name
-      nameEn: $name_en
+      date: $date
+      description: $description
+      programId: $program_id
+      studentId: $student_id
     }
   ) {
     __typename
@@ -23,10 +29,17 @@ fragment Error on InsertError {
   failed
 }
 
-fragment AcProgramStudentMessage on AcProgramStudentMessageGQLModel {
+fragment AcProgramStudentMessage on AcProgramMessageGQLModel {
   __typename
   id
   name
-  nameEn
   lastchange
+  date
+  description
+  program{
+    id
+  }
+  student{
+    id
+  }
 }

@@ -10,7 +10,7 @@ mutation DeleteAcSemester($id: UUID!, $lastchange: DateTime!) {
   }
 }
 
-fragment Error on AcSemesterDeleteError {
+fragment Error on AcSemesterGQLModelDeleteError {
   msg
   input
   failed

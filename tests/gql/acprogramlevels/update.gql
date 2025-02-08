@@ -1,19 +1,16 @@
 mutation UpdateAcProgramLevel(
   $id: UUID!
   $lastchange: DateTime!
-  $priority: Int
   $name: String
   $name_en: String
-  $length: Int
+
 ) {
-  acProgramLevelUpdate(
-    programLevel: {
+  programLevelTypeUpdate(
+    levelType: {
       id: $id
       lastchange: $lastchange
-      priority: $priority
       name: $name
       nameEn: $name_en
-      length: $length
     }
   ) {
     __typename
@@ -22,7 +19,7 @@ mutation UpdateAcProgramLevel(
   }
 }
 
-fragment Error on AcProgramLevelUpdateError {
+fragment Error on AcProgramLevelTypeGQLModelUpdateError {
   msg
   input
   failed
@@ -31,11 +28,9 @@ fragment Error on AcProgramLevelUpdateError {
   }
 }
 
-fragment AcProgramLevel on AcProgramLevelGQLModel {
+fragment AcProgramLevel on AcProgramLevelTypeGQLModel {
   id
   lastchange
-  priority
   name
   nameEn
-  length
 }

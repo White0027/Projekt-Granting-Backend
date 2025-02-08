@@ -1,7 +1,5 @@
 mutation AddAcLesson(
   $id: UUID
-  $created: DateTime
-  $lastchange: DateTime
   $count: Int!
   $type_id: UUID!
   $topic_id: UUID!
@@ -9,8 +7,6 @@ mutation AddAcLesson(
   programLessonInsert(
     lesson: {
       id: $id
-      created: $created
-      lastchange: $lastchange
       count: $count
       typeId: $type_id
       topicId: $topic_id
@@ -32,9 +28,12 @@ fragment Error on InsertError {
 fragment AcLesson on AcLessonGQLModel {
   __typename
   id
-  created
   lastchange
   count
-  typeId
-  topicId
+  type{
+    id
+  }
+  topic{
+    id
+  }
 }

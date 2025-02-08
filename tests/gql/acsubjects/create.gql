@@ -1,19 +1,17 @@
 mutation AddAcSubject(
   $id: UUID
-  $created: DateTime
-  $lastchange: DateTime
   $name: String!
-  $group_id: UUID!
+  $name_en: String
   $program_id: UUID!
+  $group_id: UUID!
 ) {
   programSubjectInsert(
     subject: {
       id: $id
-      created: $created
-      lastchange: $lastchange
       name: $name
-      groupId: $group_id
+      nameEn: $name_en
       programId: $program_id
+      groupId: $group_id
     }
   ) {
     __typename
@@ -32,9 +30,7 @@ fragment Error on InsertError {
 fragment AcSubject on AcSubjectGQLModel {
   __typename
   id
-  created
   lastchange
   name
-  groupId
-  programId
+  nameEn
 }

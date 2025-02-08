@@ -1,17 +1,17 @@
 mutation UpdateAcProgramStudent(
   $id: UUID!
+  $state_id: UUID!
+  $semester: Int
   $lastchange: DateTime!
-  $program_id: UUID
-  $state_id: UUID
-  $student_id: UUID
+  $name: String!
 ) {
-  acProgramStudentUpdate(
-    programStudent: {
+  programStudentUpdate(
+    student: {
       id: $id
       lastchange: $lastchange
-      programId: $program_id
       stateId: $state_id
-      studentId: $student_id
+      semester: $semester
+      name: $name
     }
   ) {
     __typename
@@ -20,7 +20,7 @@ mutation UpdateAcProgramStudent(
   }
 }
 
-fragment Error on AcProgramStudentUpdateError {
+fragment Error on AcProgramStudentGQLModelUpdateError {
   msg
   input
   failed
@@ -32,7 +32,8 @@ fragment Error on AcProgramStudentUpdateError {
 fragment AcProgramStudent on AcProgramStudentGQLModel {
   id
   lastchange
-  programId
-  stateId
-  studentId
+  state{
+    id
+  }
+  semester
 }

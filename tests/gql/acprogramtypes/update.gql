@@ -8,7 +8,7 @@ mutation UpdateAcProgramType(
   $language_id: UUID
   $level_id: UUID
 ) {
-  acProgramTypeUpdate(
+  programTypeUpdate(
     programType: {
       id: $id
       lastchange: $lastchange
@@ -26,7 +26,7 @@ mutation UpdateAcProgramType(
   }
 }
 
-fragment Error on AcProgramTypeUpdateError {
+fragment Error on AcProgramTypeGQLModelUpdateError {
   msg
   input
   failed
@@ -40,8 +40,16 @@ fragment AcProgramType on AcProgramTypeGQLModel {
   lastchange
   name
   nameEn
-  titleId
-  formId
-  languageId
-  levelId
+  title{
+    id
+  }
+  form{
+    id
+  }
+  language{
+    id
+  }
+  level{
+    id
+  }
 }

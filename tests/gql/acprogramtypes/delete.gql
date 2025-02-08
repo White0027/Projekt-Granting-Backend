@@ -1,5 +1,5 @@
 mutation DeleteAcProgramType($id: UUID!, $lastchange: DateTime!) {
-  acProgramTypeDelete(
+  programTypeDelete(
     programType: {
       id: $id
       lastchange: $lastchange
@@ -10,7 +10,7 @@ mutation DeleteAcProgramType($id: UUID!, $lastchange: DateTime!) {
   }
 }
 
-fragment Error on AcProgramTypeDeleteError {
+fragment Error on AcProgramTypeGQLModelDeleteError {
   msg
   input
   failed

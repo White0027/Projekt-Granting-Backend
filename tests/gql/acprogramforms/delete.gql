@@ -1,6 +1,6 @@
 mutation DeleteAcProgramForm($id: UUID!, $lastchange: DateTime!) {
-  acProgramFormDelete(
-    programForm: {
+  programFormTypeDelete(
+    formType: {
       id: $id
       lastchange: $lastchange
     }
@@ -10,7 +10,7 @@ mutation DeleteAcProgramForm($id: UUID!, $lastchange: DateTime!) {
   }
 }
 
-fragment Error on AcProgramFormDeleteError {
+fragment Error on AcProgramFormTypeGQLModelDeleteError {
   msg
   input
   failed

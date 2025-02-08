@@ -18,7 +18,7 @@ mutation UpdateAcClassificationType(
   }
 }
 
-fragment Error on AcClassificationTypeUpdateError {
+fragment Error on AcClassificationTypeGQLModelUpdateError {
   msg
   input
   failed

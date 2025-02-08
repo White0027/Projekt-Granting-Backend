@@ -9,6 +9,7 @@ fragment AcProgramType on AcProgramTypeGQLModel {
     id
     name
     nameEn
+    lastchange
     level {
         id
     }

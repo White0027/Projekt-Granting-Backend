@@ -4,8 +4,8 @@ mutation UpdateAcProgramTitle(
   $name: String
   $name_en: String
 ) {
-  acProgramTitleUpdate(
-    programTitle: {
+  programTitleTypeUpdate(
+    titleType: {
       id: $id
       lastchange: $lastchange
       name: $name
@@ -18,7 +18,7 @@ mutation UpdateAcProgramTitle(
   }
 }
 
-fragment Error on AcProgramTitleUpdateError {
+fragment Error on AcProgramTitleTypeGQLModelUpdateError {
   msg
   input
   failed
@@ -27,7 +27,7 @@ fragment Error on AcProgramTitleUpdateError {
   }
 }
 
-fragment AcProgramTitle on AcProgramTitleGQLModel {
+fragment AcProgramTitle on AcProgramTitleTypeGQLModel {
   id
   lastchange
   name

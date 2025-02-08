@@ -1,16 +1,16 @@
 mutation AddAcTopic(
   $id: UUID
-  $created: DateTime
-  $lastchange: DateTime
   $name: String!
+  $name_en: String
+  $order: Int  
   $semester_id: UUID!
 ) {
   programTopicInsert(
     topic: {
       id: $id
-      created: $created
-      lastchange: $lastchange
       name: $name
+      nameEn: $name_en
+      order: $order
       semesterId: $semester_id
     }
   ) {
@@ -30,8 +30,11 @@ fragment Error on InsertError {
 fragment AcTopic on AcTopicGQLModel {
   __typename
   id
-  created
   lastchange
   name
-  semesterId
+  nameEn
+  order
+  semester{
+    id
+  }
 }

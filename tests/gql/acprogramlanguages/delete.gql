@@ -1,6 +1,6 @@
 mutation DeleteAcProgramLanguage($id: UUID!, $lastchange: DateTime!) {
-  acProgramLanguageDelete(
-    programLanguage: {
+  programLanguageTypeDelete(
+    languageType: {
       id: $id
       lastchange: $lastchange
     }
@@ -10,7 +10,7 @@ mutation DeleteAcProgramLanguage($id: UUID!, $lastchange: DateTime!) {
   }
 }
 
-fragment Error on AcProgramLanguageDeleteError {
+fragment Error on AcProgramLanguageTypeGQLModelDeleteError {
   msg
   input
   failed

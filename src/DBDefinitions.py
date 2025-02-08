@@ -124,6 +124,8 @@ class LessonModel(BaseModel):
     """Lecture, 2h, 1st semester, Mathematics."""
     __tablename__ = "aclessons"
 
+    name = Column(String, comment="Name of the lesson")
+    name_en = Column(String, comment="Name of the lesson in English")
     topic_id = Column(ForeignKey("actopics.id"), index=True, comment="the topic to which lesson belongs")
     type_id = Column(ForeignKey("aclessontypes.id"), index=True, comment="Lecture, Excercise, Laboratory, ...")
     count = Column(Integer, comment="number of lessons")

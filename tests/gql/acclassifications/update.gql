@@ -2,20 +2,16 @@ mutation UpdateAcClassification(
   $id: UUID!
   $lastchange: DateTime!
   $classificationlevel_id: UUID
-  $student_id: UUID
   $order: Int
   $date: DateTime
-  $semester_id: UUID
 ) {
   programClassificationUpdate(
     classification: {
       id: $id
       lastchange: $lastchange
       classificationlevelId: $classificationlevel_id
-      studentId: $student_id
       order: $order
       date: $date
-      semesterId: $semester_id
     }
   ) {
     __typename
@@ -24,7 +20,7 @@ mutation UpdateAcClassification(
   }
 }
 
-fragment Error on AcClassificationUpdateError {
+fragment Error on AcClassificationGQLModelUpdateError {
   msg
   input
   failed
@@ -36,9 +32,15 @@ fragment Error on AcClassificationUpdateError {
 fragment AcClassification on AcClassificationGQLModel {
   id
   lastchange
-  classificationlevelId
-  studentId
+  level{
+    id
+  }
+  student{
+    id
+  }
   order
   date
-  semesterId
+  semester{
+    id
+  }
 }

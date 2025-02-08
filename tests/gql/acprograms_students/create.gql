@@ -1,19 +1,17 @@
 mutation AddAcProgramStudent(
   $id: UUID
-  $created: DateTime
-  $lastchange: DateTime
   $program_id: UUID!
   $state_id: UUID!
   $student_id: UUID!
+  $semester: Int
 ) {
-  acProgramStudentInsert(
-    programStudent: {
+  programStudentInsert(
+    student: {
       id: $id
-      created: $created
-      lastchange: $lastchange
       programId: $program_id
       stateId: $state_id
       studentId: $student_id
+      semester: $semester
     }
   ) {
     __typename
@@ -32,9 +30,15 @@ fragment Error on InsertError {
 fragment AcProgramStudent on AcProgramStudentGQLModel {
   __typename
   id
-  created
   lastchange
-  programId
-  stateId
-  studentId
+  program{
+    id
+  }
+  state{
+    id
+  }
+  student{
+    id
+  }
+  semester
 }

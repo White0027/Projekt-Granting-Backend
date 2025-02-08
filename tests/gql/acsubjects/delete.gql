@@ -10,7 +10,7 @@ mutation DeleteAcSubject($id: UUID!, $lastchange: DateTime!) {
   }
 }
 
-fragment Error on AcSubjectDeleteError {
+fragment Error on AcSubjectGQLModelDeleteError {
   msg
   input
   failed

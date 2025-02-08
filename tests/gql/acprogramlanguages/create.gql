@@ -1,6 +1,6 @@
 mutation AddAcProgramLanguage($id: UUID, $name: String!, $name_en: String) {
-  acProgramLanguageInsert(
-    programLanguage: {
+  programLanguageTypeInsert(
+    languageType: {
       id: $id
       name: $name
       nameEn: $name_en
@@ -19,7 +19,7 @@ fragment Error on InsertError {
   failed
 }
 
-fragment AcProgramLanguage on AcProgramLanguageGQLModel {
+fragment AcProgramLanguage on AcProgramLanguageTypeGQLModel {
   __typename
   id
   name

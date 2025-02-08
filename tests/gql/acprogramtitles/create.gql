@@ -1,10 +1,10 @@
 mutation AddAcProgramTitle(
   $id: UUID
   $name: String!
-  $name_en: String!
+  $name_en: String
 ) {
-  acProgramTitleInsert(
-    programTitle: {
+  programTitleTypeInsert(
+    titleType: {
       id: $id
       name: $name
       nameEn: $name_en
@@ -23,7 +23,7 @@ fragment Error on InsertError {
   failed
 }
 
-fragment AcProgramTitle on AcProgramTitleGQLModel {
+fragment AcProgramTitle on AcProgramTitleTypeGQLModel {
   __typename
   id
   name

@@ -9,4 +9,5 @@ fragment AcProgramStudentState on AcProgramStudentStateGQLModel {
     id
     name
     nameEn
+    lastchange
 }

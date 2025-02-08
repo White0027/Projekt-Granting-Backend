@@ -4,8 +4,8 @@ mutation UpdateAcProgramStudentState(
   $name: String
   $name_en: String
 ) {
-  acProgramStudentStateUpdate(
-    programStudentState: {
+  programStudentStateUpdate(
+    studentState: {
       id: $id
       lastchange: $lastchange
       name: $name
@@ -18,7 +18,7 @@ mutation UpdateAcProgramStudentState(
   }
 }
 
-fragment Error on AcProgramStudentStateUpdateError {
+fragment Error on AcProgramStudentStateGQLModelUpdateError {
   msg
   input
   failed

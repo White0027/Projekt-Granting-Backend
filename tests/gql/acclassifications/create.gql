@@ -1,7 +1,5 @@
 mutation AddAcClassification(
   $id: UUID
-  $created: DateTime
-  $lastchange: DateTime
   $classificationlevel_id: UUID!
   $student_id: UUID!
   $order: Int!
@@ -11,8 +9,6 @@ mutation AddAcClassification(
   programClassificationInsert(
     classification: {
       id: $id
-      created: $created
-      lastchange: $lastchange
       classificationlevelId: $classificationlevel_id
       studentId: $student_id
       order: $order
@@ -38,9 +34,15 @@ fragment FE on AcClassificationGQLModel {
   id
   created
   lastchange
-  classificationlevelId
-  studentId
+  level{
+    id
+  }
+  student{
+    id
+  }
   order
   date
-  semesterId
+  semester{
+    id
+  }
 }
