@@ -20,18 +20,20 @@ ________________________________________________________________________
 
 28.11.2024 Přidání schémat a _data do QGL modelů
 
-6.1.2024 Kompletní dokončení CRUD operací
+6.1.2025 Kompletní dokončení CRUD operací
 
-21.1.2024 Částečná oprava testů (předělání portů, přidaní POST k FastAPI pro /oauth/login3)
+21.1.2025 Částečná oprava testů (předělání portů, přidaní POST k FastAPI pro /oauth/login3)
           Splněno ze 72% (Test má GET, server má POST)
 
-22.1.2024 Splněno 72%, Oprava předchozích chyb, potřeba doplnit "tables"
+22.1.2025 Splněno 72%, oprava předchozích chyb, potřeba doplnit "tables"
 
-27.1.2024 Splněno 74%, Aktualizace starých testů, potřeba doplnit CUD operace
+27.1.2025 Splněno 74%, aktualizace starých testů, potřeba doplnit CUD operace
 
-28.1.2024 update testů, celkově 79%, 
+28.1.2025 Splněno 79%, update testů
 
-29.1.2024 Splněno 84%, přidání CUD operací u classificationlevels, předělání GraphTypeDefinitions.py
+29.1.2025 Splněno 84%, přidání CUD operací u classificationlevels, předělání GraphTypeDefinitions.py
+
+8.2.2025 Splněno 89%, dokončení testů na CRUD operace
 ________________________________________________________________________
 
 ## Aktuální úkoly
