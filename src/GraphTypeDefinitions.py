@@ -7,29 +7,6 @@ import typing
 import uuid
 from uoishelpers.resolvers import createInputs
 
-# from .DBDefinitions import (
-#     ProgramFormTypeModel,
-#     ProgramLanguageTypeModel,
-#     ProgramLevelTypeModel,
-#     ProgramModel,
-#     ProgramTitleTypeModel,
-#     ProgramTypeModel,
-#     ProgramStudentModel,
-#     ProgramStudentMessageModel,
-#     ProgramStudentStateModel,
-
-#     ClassificationLevelModel,
-#     ClassificationModel,
-#     ClassificationTypeModel,
-    
-#     SubjectModel,
-#     SemesterModel,
-#     TopicModel,
-#     LessonModel,
-#     LessonTypeModel
-# )
-
-
 UserGQLModel = Annotated["UserGQLModel", strawberry.lazy(".GraphTypeDefinitionsExt")]
 GroupGQLModel = Annotated["GroupGQLModel", strawberry.lazy(".GraphTypeDefinitionsExt")]
 
@@ -100,8 +77,8 @@ class AcProgramGQLModel:
             permission_classes=[OnlyForAuthentized(isList=False)]
             )
     async def type(self, info: strawberry.types.Info) -> Optional["AcProgramTypeGQLModel"]:
-        result = await AcProgramTypeGQLModel.resolve_reference(info, self.type_id)
-        return result
+        return await AcProgramTypeGQLModel.resolve_reference(info, self.type_id)
+        
 
     @strawberry.field(
             description="""subjects in the program""",
@@ -109,8 +86,8 @@ class AcProgramGQLModel:
             )
     async def subjects(self, info: strawberry.types.Info) -> List["AcSubjectGQLModel"]:
         loader = AcSubjectGQLModel.getLoader(info)
-        result = await loader.filter_by(program_id=self.id)
-        return result
+        return await loader.filter_by(program_id=self.id)
+        
 
     @strawberry.field(
             description="""subjects in the program""",
@@ -125,11 +102,10 @@ class AcProgramGQLModel:
         ) -> List["AcProgramStudentGQLModel"]:
         wheredict = None if where is None else strawberry.asdict(where)
         loader = AcProgramStudentGQLModel.getLoader(info)
-        rows = await loader.page(skip=skip, limit=limit, where=wheredict, extendedfilter={"program_id": self.id}, orderby=orderby, desc=desc)
+        return await loader.page(skip=skip, limit=limit, where=wheredict, extendedfilter={"program_id": self.id}, orderby=orderby, desc=desc)
         # userawaitables = (UserGQLModel.resolve_reference(row.student_id) for row in rows)
-        # result = await asyncio.gather(*userawaitables)
-        # return result
-        return rows
+        # return await asyncio.gather(*userawaitables)
+        #
 
     @strawberry.field(
             description="""group defining grants of this program""",
@@ -195,16 +171,16 @@ class AcProgramTypeGQLModel:
             permission_classes=[OnlyForAuthentized(isList=False)]
             )
     async def level(self, info: strawberry.types.Info) -> Optional["AcProgramLevelTypeGQLModel"]:
-        result = await AcProgramLevelTypeGQLModel.resolve_reference(info, self.level_id)
-        return result
+        return await AcProgramLevelTypeGQLModel.resolve_reference(info, self.level_id)
+        
 
     @strawberry.field(
             description="""Present, Distant, ...""",
             permission_classes=[OnlyForAuthentized(isList=False)]
             )
     async def form(self, info: strawberry.types.Info) -> Optional["AcProgramFormTypeGQLModel"]:
-        result = await AcProgramFormTypeGQLModel.resolve_reference(info, self.form_id)
-        return result
+        return await AcProgramFormTypeGQLModel.resolve_reference(info, self.form_id)
+        
 
     @strawberry.field(
             description="""Czech, ...""",
@@ -213,16 +189,16 @@ class AcProgramTypeGQLModel:
     async def language(
         self, info: strawberry.types.Info
     ) -> Optional["AcProgramLanguageTypeGQLModel"]:
-        result = await AcProgramLanguageTypeGQLModel.resolve_reference(info, self.language_id)
-        return result
+        return await AcProgramLanguageTypeGQLModel.resolve_reference(info, self.language_id)
+        
 
     @strawberry.field(
             description="""Bc., Ing., ...""",
             permission_classes=[OnlyForAuthentized(isList=False)]
             )
     async def title(self, info: strawberry.types.Info) -> Optional["AcProgramTitleTypeGQLModel"]:
-        result = await AcProgramTitleTypeGQLModel.resolve_reference(info, self.title_id)
-        return result
+        return await AcProgramTitleTypeGQLModel.resolve_reference(info, self.title_id)
+        
 # endregion
 
 # region ProgramMessage Model
@@ -309,7 +285,7 @@ class AcProgramStudentGQLModel:
             permission_classes=[OnlyForAuthentized(isList=False)]
             )
     async def semester(self, info: strawberry.types.Info) -> Optional[int]:
-        return self.semester if self.semester else 0
+        return self.semester or 0
 
     @strawberry.field(
             description="""student of the program""",
@@ -510,8 +486,8 @@ class AcSubjectGQLModel:
             permission_classes=[OnlyForAuthentized(isList=False)]
             )
     async def program(self, info: strawberry.types.Info) -> "AcProgramGQLModel":
-        result = await AcProgramGQLModel.resolve_reference(info, self.program_id)
-        return result
+        return await AcProgramGQLModel.resolve_reference(info, self.program_id)
+        
 
     @strawberry.field(
             description="""Semesters which the subjects in divided into""",
@@ -521,8 +497,8 @@ class AcSubjectGQLModel:
         self, info: strawberry.types.Info
     ) -> List["AcSemesterGQLModel"]:
         loader = AcSemesterGQLModel.getLoader(info)
-        result = await loader.filter_by(subject_id=self.id)
-        return result
+        return await loader.filter_by(subject_id=self.id)
+        
 
     @strawberry.field(
             description="""group defining grants of this subject""",
@@ -530,8 +506,8 @@ class AcSubjectGQLModel:
             )
     async def grants(self, info: strawberry.types.Info) -> Optional["GroupGQLModel"]:
         from .GraphTypeDefinitionsExt import GroupGQLModel
-        result = await GroupGQLModel.resolve_reference(info=info, id=self.group_id)
-        return result
+        return await GroupGQLModel.resolve_reference(info=info, id=self.group_id)
+        
 
 # endregion
     
@@ -575,16 +551,16 @@ class AcSemesterGQLModel:
             permission_classes=[OnlyForAuthentized(isList=False)]
             )
     async def subject(self, info: strawberry.types.Info) -> Optional["AcSubjectGQLModel"]:
-        result = await AcSubjectGQLModel.resolve_reference(info, self.subject_id)
-        return result
+        return await AcSubjectGQLModel.resolve_reference(info, self.subject_id)
+        
 
     @strawberry.field(
             description="""Subject related to the semester (semester owner)""",
             permission_classes=[OnlyForAuthentized(isList=False)]
             )
     async def classification_type(self, info: strawberry.types.Info) -> Optional["AcClassificationTypeGQLModel"]:
-        result = await AcClassificationTypeGQLModel.resolve_reference(info, self.classificationtype_id)
-        return result
+        return await AcClassificationTypeGQLModel.resolve_reference(info, self.classificationtype_id)
+        
 
     @strawberry.field(
             description="""Final classification of the semester""",
@@ -601,11 +577,11 @@ class AcSemesterGQLModel:
         #loader = getLoadersFromInfo(info).acclassification_for_semester
         wheredict = None if where is None else strawberry.asdict(where)
         loader = AcClassificationGQLModel.getLoader(info)
-        result = await loader.page(
+        return await loader.page(
             skip = skip, limit = limit, orderby = orderby, desc = desc,
             where = wheredict, extendedfilter={"semester_id": self.id}
         )
-        return result
+        
 
     @strawberry.field(
             description="""topics""",
@@ -613,8 +589,8 @@ class AcSemesterGQLModel:
             )
     async def topics(self, info: strawberry.types.Info) -> List["AcTopicGQLModel"]:
         loader = AcTopicGQLModel.getLoader(info)
-        result = await loader.filter_by(semester_id=self.id)
-        return result
+        return await loader.filter_by(semester_id=self.id)
+        
 
 
 # endregion
@@ -652,8 +628,8 @@ class AcTopicGQLModel:
             permission_classes=[OnlyForAuthentized(isList=False)]
             )
     async def semester(self, info: strawberry.types.Info) -> Optional["AcSemesterGQLModel"]:
-        result = await AcSemesterGQLModel.resolve_reference(info, self.semester_id)
-        return result
+        return await AcSemesterGQLModel.resolve_reference(info, self.semester_id)
+        
 
     @strawberry.field(
             description="""Lessons for a topic""",
@@ -661,8 +637,8 @@ class AcTopicGQLModel:
             )
     async def lessons(self, info: strawberry.types.Info) -> List["AcLessonGQLModel"]:
         loader = AcLessonGQLModel.getLoader(info)
-        result = await loader.filter_by(topic_id=self.id)
-        return result
+        return await loader.filter_by(topic_id=self.id)
+        
 
 # endregion
     
@@ -692,8 +668,8 @@ class AcLessonGQLModel:
             permission_classes=[OnlyForAuthentized(isList=False)]
             )
     async def type(self, info: strawberry.types.Info) -> Optional["AcLessonTypeGQLModel"]:
-        result = await AcLessonTypeGQLModel.resolve_reference(info, self.type_id)
-        return result
+        return await AcLessonTypeGQLModel.resolve_reference(info, self.type_id)
+        
 
     @strawberry.field(
             description="""Number of hour of this lesson in the topic""",
@@ -707,8 +683,8 @@ class AcLessonGQLModel:
             permission_classes=[OnlyForAuthentized(isList=False)]
             )
     async def topic(self, info: strawberry.types.Info) -> Optional["AcTopicGQLModel"]:
-        result = await AcTopicGQLModel.resolve_reference(info, self.topic_id)
-        return result
+        return await AcTopicGQLModel.resolve_reference(info, self.topic_id)
+        
 
 # endregion
     
@@ -758,16 +734,16 @@ class AcClassificationGQLModel:
             permission_classes=[OnlyForAuthentized(isList=False)]
             )
     async def semester(self, info: strawberry.types.Info) -> Optional["AcSemesterGQLModel"]:
-        result = await AcSemesterGQLModel.resolve_reference(info, id=self.semester_id)
-        return result
+        return await AcSemesterGQLModel.resolve_reference(info, id=self.semester_id)
+        
 
     @strawberry.field(
             description="""Level""",
             permission_classes=[OnlyForAuthentized(isList=False)]
             )
     async def level(self, info: strawberry.types.Info) -> Optional["AcClassificationLevelGQLModel"]:
-        result = await AcClassificationLevelGQLModel.resolve_reference(info, id=self.classificationlevel_id)
-        return result
+        return await AcClassificationLevelGQLModel.resolve_reference(info, id=self.classificationlevel_id)
+        
 
 # endregion
     
@@ -1287,11 +1263,8 @@ class Query:
     ac_program_message_by_id = message_by_id
 
     @strawberry.field(description="""Just container gql test""")
-    async def say_hello_granting(
-        self, info: strawberry.types.Info, id: Optional[str] = "Unknown User"
-    ) -> Union[str, None]:
-        result = f"Hello {id} from granting"
-        return result
+    async def say_hello_granting(self, info: strawberry.types.Info, id: Optional[str] = "Unknown User") -> Union[str, None]:
+        return f"Hello {id} from granting"
 # endregion
 
 ###########################################################################################################################
@@ -1339,8 +1312,7 @@ class ProgramResultGQLModel:
             permission_classes=[OnlyForAuthentized(isList=False)]
     )
     async def program(self, info: strawberry.types.Info) -> Union[AcProgramGQLModel, None]:
-        result = await AcProgramGQLModel.resolve_reference(info, self.id)
-        return result
+        return await AcProgramGQLModel.resolve_reference(info, self.id)
     
 @strawberry.mutation(
         description="""Adds new study program""",
@@ -1362,8 +1334,8 @@ async def program_update(self, info: strawberry.types.Info, program: ProgramUpda
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_delete(self, info: strawberry.types.Info, program: ProgramDeleteGQLModel) -> typing.Optional[DeleteError[AcProgramGQLModel]]:
-    result = await Delete[AcProgramGQLModel].DoItSafeWay(info=info, entity= program)
-    return result
+    return await Delete[AcProgramGQLModel].DoItSafeWay(info=info, entity= program)
+
 
 # endregion
 
@@ -1407,32 +1379,31 @@ class ProgramTypeResultGQLModel:
             permission_classes=[OnlyForAuthentized(isList=False)]
     )
     async def program_type(self, info: strawberry.types.Info) -> Union[AcProgramTypeGQLModel, None]:
-        result = await AcProgramTypeGQLModel.resolve_reference(info, self.id)
-        return result
+        return await AcProgramTypeGQLModel.resolve_reference(info, self.id)
+        
 
 @strawberry.mutation(
         description="""Insert the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_type_insert(self, info: strawberry.types.Info, program_type: ProgramTypeInsertGQLModel) -> Union[AcProgramTypeGQLModel, InsertError[AcProgramTypeGQLModel]]:
-    result = await Insert[AcProgramTypeGQLModel].DoItSafeWay(info=info, entity=program_type)
-    return result
+    return await Insert[AcProgramTypeGQLModel].DoItSafeWay(info=info, entity=program_type)
+    
 
 @strawberry.mutation(
         description="""Update the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_type_update(self, info: strawberry.types.Info, program_type: ProgramTypeUpdateGQLModel) -> Union[AcProgramTypeGQLModel, UpdateError[AcProgramTypeGQLModel]]:
-    result = await Update[AcProgramTypeGQLModel].DoItSafeWay(info=info, entity=program_type)
-    return result
+    return await Update[AcProgramTypeGQLModel].DoItSafeWay(info=info, entity=program_type)
+    
 
 @strawberry.mutation(
         description="""Delete the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_type_delete(self, info: strawberry.types.Info, program_type: ProgramTypeDeleteGQLModel) -> typing.Optional[DeleteError[AcProgramTypeGQLModel]]:
-    result = await Delete[AcProgramTypeGQLModel].DoItSafeWay(info=info, entity=program_type)
-    return result
+    return await Delete[AcProgramTypeGQLModel].DoItSafeWay(info=info, entity=program_type)
 
 # endregion
 
@@ -1469,32 +1440,30 @@ class ProgramLanguageTypeResultGQLModel:
             permission_classes=[OnlyForAuthentized(isList=False)]
     )
     async def program_language_type(self, info: strawberry.types.Info) -> Optional[AcProgramLanguageTypeGQLModel]:
-        result = await AcProgramLanguageTypeGQLModel.resolve_reference(info, self.id)
-        return result
+        return await AcProgramLanguageTypeGQLModel.resolve_reference(info, self.id)
     
 @strawberry.mutation(
         description="""Insert the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_language_type_insert(self, info: strawberry.types.Info, language_type: ProgramLanguageTypeInsertGQLModel) -> Union[AcProgramLanguageTypeGQLModel, InsertError[AcProgramLanguageTypeGQLModel]]:
-    result = await Insert[AcProgramLanguageTypeGQLModel].DoItSafeWay(info=info, entity=language_type)
-    return result
+    return await Insert[AcProgramLanguageTypeGQLModel].DoItSafeWay(info=info, entity=language_type)
 
 @strawberry.mutation(
         description="""Update the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_language_type_update(self, info: strawberry.types.Info, language_type: ProgramLanguageTypeUpdateGQLModel) -> Union[AcProgramLanguageTypeGQLModel, UpdateError[AcProgramLanguageTypeGQLModel]]:
-    result = await Update[AcProgramLanguageTypeGQLModel].DoItSafeWay(info=info, entity=language_type)
-    return result
+    return await Update[AcProgramLanguageTypeGQLModel].DoItSafeWay(info=info, entity=language_type)
+    
 
 @strawberry.mutation(
         description="""Delete the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_language_type_delete(self, info: strawberry.types.Info, language_type: ProgramLanguageTypeDeleteGQLModel) -> typing.Optional[DeleteError[AcProgramLanguageTypeGQLModel]]:
-    result = await Delete[AcProgramLanguageTypeGQLModel].DoItSafeWay(info=info, entity=language_type)
-    return result
+    return await Delete[AcProgramLanguageTypeGQLModel].DoItSafeWay(info=info, entity=language_type)
+    
 
 # endregion
 
@@ -1530,32 +1499,32 @@ class ProgramTitleTypeResultGQLModel:
             permission_classes=[OnlyForAuthentized(isList=False)]
     )
     async def program_title_type(self, info: strawberry.types.Info) -> Optional[AcProgramTitleTypeGQLModel]:
-        result = await AcProgramTitleTypeGQLModel.resolve_reference(info, self.id)
-        return result
+        return await AcProgramTitleTypeGQLModel.resolve_reference(info, self.id)
+        
 
 @strawberry.mutation(
         description="""Insert the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_title_type_insert(self, info: strawberry.types.Info, title_type: ProgramTitleTypeInsertGQLModel) -> Union[AcProgramTitleTypeGQLModel, InsertError[AcProgramTitleTypeGQLModel]]:
-    result = await Insert[AcProgramTitleTypeGQLModel].DoItSafeWay(info=info, entity=title_type)
-    return result
+    return await Insert[AcProgramTitleTypeGQLModel].DoItSafeWay(info=info, entity=title_type)
+    
 
 @strawberry.mutation(
         description="""Update the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_title_type_update(self, info: strawberry.types.Info, title_type: ProgramTitleTypeUpdateGQLModel) -> Union[AcProgramTitleTypeGQLModel, UpdateError[AcProgramTitleTypeGQLModel]]:
-    result = await Update[AcProgramTitleTypeGQLModel].DoItSafeWay(info=info, entity=title_type)
-    return result
+    return await Update[AcProgramTitleTypeGQLModel].DoItSafeWay(info=info, entity=title_type)
+    
 
 @strawberry.mutation(
         description="""Delete the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_title_type_delete(self, info: strawberry.types.Info, title_type: ProgramTitleTypeDeleteGQLModel) -> typing.Optional[DeleteError[AcProgramTitleTypeGQLModel]]:
-    result = await Delete[AcProgramTitleTypeGQLModel].DoItSafeWay(info=info, entity=title_type)
-    return result
+    return await Delete[AcProgramTitleTypeGQLModel].DoItSafeWay(info=info, entity=title_type)
+    
 
 # endregion
 
@@ -1592,32 +1561,32 @@ class ProgramLevelTypeResultGQLModel:
             permission_classes=[OnlyForAuthentized(isList=False)]
     )
     async def program_level_type(self, info: strawberry.types.Info) -> Optional[AcProgramLevelTypeGQLModel]:
-        result = await AcProgramLevelTypeGQLModel.resolve_reference(info, self.id)
-        return result
+        return await AcProgramLevelTypeGQLModel.resolve_reference(info, self.id)
+        
 
 @strawberry.mutation(
         description="""Insert the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_level_type_insert(self, info: strawberry.types.Info, level_type: ProgramLevelTypeInsertGQLModel) -> Union[AcProgramLevelTypeGQLModel, InsertError[AcProgramLevelTypeGQLModel]]:
-    result = await Insert[AcProgramLevelTypeGQLModel].DoItSafeWay(info=info, entity=level_type)
-    return result
+    return await Insert[AcProgramLevelTypeGQLModel].DoItSafeWay(info=info, entity=level_type)
+    
 
 @strawberry.mutation(
         description="""Update the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_level_type_update(self, info: strawberry.types.Info, level_type: ProgramLevelTypeUpdateGQLModel) -> Union[AcProgramLevelTypeGQLModel, UpdateError[AcProgramLevelTypeGQLModel]]:
-    result = await Update[AcProgramLevelTypeGQLModel].DoItSafeWay(info=info, entity=level_type)
-    return result
+    return await Update[AcProgramLevelTypeGQLModel].DoItSafeWay(info=info, entity=level_type)
+    
 
 @strawberry.mutation(
         description="""Delete the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_level_type_delete(self, info: strawberry.types.Info, level_type: ProgramLevelTypeDeleteGQLModel) -> typing.Optional[DeleteError[AcProgramLevelTypeGQLModel]]:
-    result = await Delete[AcProgramLevelTypeGQLModel].DoItSafeWay(info=info, entity=level_type)
-    return result
+    return await Delete[AcProgramLevelTypeGQLModel].DoItSafeWay(info=info, entity=level_type)
+    
 
 # endregion
 
@@ -1654,32 +1623,32 @@ class ProgramFormTypeResultGQLModel:
             permission_classes=[OnlyForAuthentized(isList=False)]
     )
     async def program_form_type(self, info: strawberry.types.Info) -> Optional[AcProgramFormTypeGQLModel]:
-        result = await AcProgramFormTypeGQLModel.resolve_reference(info, self.id)
-        return result
+        return await AcProgramFormTypeGQLModel.resolve_reference(info, self.id)
+        
 
 @strawberry.mutation(
         description="""Insert the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_form_type_insert(self, info: strawberry.types.Info, form_type: ProgramFormTypeInsertGQLModel) -> Union[AcProgramFormTypeGQLModel, InsertError[AcProgramFormTypeGQLModel]]:
-    result = await Insert[AcProgramFormTypeGQLModel].DoItSafeWay(info=info, entity=form_type)
-    return result
+    return await Insert[AcProgramFormTypeGQLModel].DoItSafeWay(info=info, entity=form_type)
+    
 
 @strawberry.mutation(
         description="""Update the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_form_type_update(self, info: strawberry.types.Info, form_type: ProgramFormTypeUpdateGQLModel) -> Union[AcProgramFormTypeGQLModel, UpdateError[AcProgramFormTypeGQLModel]]:
-    result = await Update[AcProgramFormTypeGQLModel].DoItSafeWay(info=info, entity=form_type)
-    return result
+    return await Update[AcProgramFormTypeGQLModel].DoItSafeWay(info=info, entity=form_type)
+    
 
 @strawberry.mutation(
         description="""Delete the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_form_type_delete(self, info: strawberry.types.Info, form_type: ProgramFormTypeDeleteGQLModel) -> typing.Optional[DeleteError[AcProgramFormTypeGQLModel]]:
-    result = await Delete[AcProgramFormTypeGQLModel].DoItSafeWay(info=info, entity=form_type)
-    return result
+    return await Delete[AcProgramFormTypeGQLModel].DoItSafeWay(info=info, entity=form_type)
+    
 
 # endregion
 
@@ -1720,32 +1689,32 @@ class ProgramMessageResultGQLModel:
             permission_classes=[OnlyForAuthentized(isList=False)]
     )
     async def message(self, info: strawberry.types.Info) -> Optional[AcProgramMessageGQLModel]:
-        result = await AcProgramMessageGQLModel.resolve_reference(info, self.id)
-        return result
+        return await AcProgramMessageGQLModel.resolve_reference(info, self.id)
+        
 
 @strawberry.mutation(
         description="""Insert the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_message_insert(self, info: strawberry.types.Info, message: ProgramMessageInsertGQLModel) -> Union[AcProgramMessageGQLModel, InsertError[AcProgramMessageGQLModel]]:
-    result = await Insert[AcProgramMessageGQLModel].DoItSafeWay(info=info, entity=message)
-    return result
+    return await Insert[AcProgramMessageGQLModel].DoItSafeWay(info=info, entity=message)
+    
 
 @strawberry.mutation(
         description="""Update the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_message_update(self, info: strawberry.types.Info, message: ProgramMessageUpdateGQLModel) -> Union[AcProgramMessageGQLModel, UpdateError[AcProgramMessageGQLModel]]:
-    result = await Update[AcProgramMessageGQLModel].DoItSafeWay(info=info, entity=message)
-    return result
+    return await Update[AcProgramMessageGQLModel].DoItSafeWay(info=info, entity=message)
+    
 
 @strawberry.mutation(
         description="""Delete the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_message_delete(self, info: strawberry.types.Info, message: ProgramMessageDeleteGQLModel) -> typing.Optional[DeleteError[AcProgramMessageGQLModel]]:
-    result = await Delete[AcProgramMessageGQLModel].DoItSafeWay(info=info, entity=message)
-    return result
+    return await Delete[AcProgramMessageGQLModel].DoItSafeWay(info=info, entity=message)
+    
 
 # endregion
 
@@ -1788,32 +1757,32 @@ class ProgramStudentResultGQLModel:
             permission_classes=[OnlyForAuthentized(isList=False)]
     )
     async def student(self, info: strawberry.types.Info) -> Optional[AcProgramStudentGQLModel]:
-        result = await AcProgramStudentGQLModel.resolve_reference(info, self.id)
-        return result
+        return await AcProgramStudentGQLModel.resolve_reference(info, self.id)
+        
 
 @strawberry.mutation(
         description="""Insert the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_student_insert(self, info: strawberry.types.Info, student: ProgramStudentInsertGQLModel) -> Union[AcProgramStudentGQLModel, InsertError[AcProgramStudentGQLModel]]:
-    result = await Insert[AcProgramStudentGQLModel].DoItSafeWay(info=info, entity=student)
-    return result
+    return await Insert[AcProgramStudentGQLModel].DoItSafeWay(info=info, entity=student)
+    
 
 @strawberry.mutation(
         description="""Update the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_student_update(self, info: strawberry.types.Info, student: ProgramStudentUpdateGQLModel) -> Union[AcProgramStudentGQLModel, UpdateError[AcProgramStudentGQLModel]]:
-    result = await Update[AcProgramStudentGQLModel].DoItSafeWay(info=info, entity=student)
-    return result
+    return await Update[AcProgramStudentGQLModel].DoItSafeWay(info=info, entity=student)
+    
 
 @strawberry.mutation(
         description="""Delete the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_student_delete(self, info: strawberry.types.Info, student: ProgramStudentDeleteGQLModel) -> typing.Optional[DeleteError[AcProgramStudentGQLModel]]:
-    result = await Delete[AcProgramStudentGQLModel].DoItSafeWay(info=info, entity=student)
-    return result
+    return await Delete[AcProgramStudentGQLModel].DoItSafeWay(info=info, entity=student)
+    
 
 # endregion
 
@@ -1854,32 +1823,32 @@ class SubjectResultGQLModel:
             permission_classes=[OnlyForAuthentized(isList=False)]
     )
     async def subject(self, info: strawberry.types.Info) -> Union[AcSubjectGQLModel, None]:
-        result = await AcSubjectGQLModel.resolve_reference(info, self.id)
-        return result
+        return await AcSubjectGQLModel.resolve_reference(info, self.id)
+        
 
 @strawberry.mutation(
         description="""Update the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_subject_insert(self, info: strawberry.types.Info, subject: SubjectInsertGQLModel) -> Union[AcSubjectGQLModel, InsertError[AcSubjectGQLModel]]:
-    result = await Insert[AcSubjectGQLModel].DoItSafeWay(info=info, entity=subject)
-    return result
+    return await Insert[AcSubjectGQLModel].DoItSafeWay(info=info, entity=subject)
+    
 
 @strawberry.mutation(
         description="""Update the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_subject_update(self, info: strawberry.types.Info, subject: SubjectUpdateGQLModel) -> Union[AcSubjectGQLModel, UpdateError[AcSubjectGQLModel]]:
-    result = await Update[AcSubjectGQLModel].DoItSafeWay(info=info, entity=subject)
-    return result
+    return await Update[AcSubjectGQLModel].DoItSafeWay(info=info, entity=subject)
+    
 
 @strawberry.mutation(
         description="""Update the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_subject_delete(self, info: strawberry.types.Info, subject: SubjectDeleteGQLModel) -> typing.Optional[DeleteError[AcSubjectGQLModel]]:
-    result = await Delete[AcSubjectGQLModel].DoItSafeWay(info=info, entity=subject)
-    return result
+    return await Delete[AcSubjectGQLModel].DoItSafeWay(info=info, entity=subject)
+    
 
 # endregion
 
@@ -1920,32 +1889,32 @@ class SemesterResultGQLModel:
             permission_classes=[OnlyForAuthentized(isList=False)]
     )
     async def semester(self, info: strawberry.types.Info) -> Union[AcSemesterGQLModel, None]:
-        result = await AcSemesterGQLModel.resolve_reference(info, self.id)
-        return result
+        return await AcSemesterGQLModel.resolve_reference(info, self.id)
+        
     
 @strawberry.mutation(
         description="""Update the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_semester_insert(self, info: strawberry.types.Info, semester: SemesterInsertGQLModel) -> Union[AcSemesterGQLModel, InsertError[AcSemesterGQLModel]]:
-    result = await Insert[AcSemesterGQLModel].DoItSafeWay(info=info, entity=semester)
-    return result
+    return await Insert[AcSemesterGQLModel].DoItSafeWay(info=info, entity=semester)
+    
 
 @strawberry.mutation(
         description="""Update the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_semester_update(self, info: strawberry.types.Info, semester: SemesterUpdateGQLModel) -> Union[AcSemesterGQLModel, UpdateError[AcSemesterGQLModel]]:
-    result = await Update[AcSemesterGQLModel].DoItSafeWay(info=info, entity=semester)
-    return result
+    return await Update[AcSemesterGQLModel].DoItSafeWay(info=info, entity=semester)
+    
 
 @strawberry.mutation(
         description="""Update the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_semester_delete(self, info: strawberry.types.Info, semester: SemesterDeleteGQLModel) -> typing.Optional[DeleteError[AcSemesterGQLModel]]:
-    result = await Delete[AcSemesterGQLModel].DoItSafeWay(info=info, entity=semester)
-    return result
+    return await Delete[AcSemesterGQLModel].DoItSafeWay(info=info, entity=semester)
+    
 # endregion
 
 # region LessonType CU
@@ -1980,32 +1949,32 @@ class LessonTypeResultGQLModel:
             permission_classes=[OnlyForAuthentized(isList=False)]
     )
     async def lesson_type(self, info: strawberry.types.Info) -> Optional[AcLessonTypeGQLModel]:
-        result = await AcLessonTypeGQLModel.resolve_reference(info, self.id)
-        return result
+        return await AcLessonTypeGQLModel.resolve_reference(info, self.id)
+        
 
 @strawberry.mutation(
         description="""Update the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_lesson_type_insert(self, info: strawberry.types.Info, lesson_type: LessonTypeInsertGQLModel) -> Union[AcLessonTypeGQLModel, InsertError[AcLessonTypeGQLModel]]:
-    result = await Insert[AcLessonTypeGQLModel].DoItSafeWay(info=info, entity=lesson_type)
-    return result
+    return await Insert[AcLessonTypeGQLModel].DoItSafeWay(info=info, entity=lesson_type)
+    
 
 @strawberry.mutation(
         description="""Update the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_lesson_type_update(self, info: strawberry.types.Info, lesson_type: LessonTypeUpdateGQLModel) -> Union[AcLessonTypeGQLModel, UpdateError[AcLessonTypeGQLModel]]:
-    result = await Update[AcLessonTypeGQLModel].DoItSafeWay(info=info, entity=lesson_type)
-    return result
+    return await Update[AcLessonTypeGQLModel].DoItSafeWay(info=info, entity=lesson_type)
+    
 
 @strawberry.mutation(
         description="""Update the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_lesson_type_delete(self, info: strawberry.types.Info, lesson_type: LessonTypeDeleteGQLModel) -> typing.Optional[DeleteError[AcLessonTypeGQLModel]]:
-    result = await Delete[AcLessonTypeGQLModel].DoItSafeWay(info=info, entity=lesson_type)
-    return result
+    return await Delete[AcLessonTypeGQLModel].DoItSafeWay(info=info, entity=lesson_type)
+    
 
 # endregion
 
@@ -2041,32 +2010,32 @@ class ClassificationTypeResultGQLModel:
             permission_classes=[OnlyForAuthentized(isList=False)]
     )
     async def classification_type(self, info: strawberry.types.Info) -> Union[AcClassificationTypeGQLModel, None]:
-        result = await AcClassificationTypeGQLModel.resolve_reference(info, self.id)
-        return result
+        return await AcClassificationTypeGQLModel.resolve_reference(info, self.id)
+        
 
 @strawberry.mutation(
         description="""Update the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_classification_type_insert(self, info: strawberry.types.Info, classification_type: ClassificationTypeInsertGQLModel) -> Union[AcClassificationTypeGQLModel, InsertError[AcClassificationTypeGQLModel]]:
-    result = await Insert[AcClassificationTypeGQLModel].DoItSafeWay(info=info, entity=classification_type)
-    return result
+    return await Insert[AcClassificationTypeGQLModel].DoItSafeWay(info=info, entity=classification_type)
+    
 
 @strawberry.mutation(
         description="""Update the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_classification_type_update(self, info: strawberry.types.Info, classification_type: ClassificationTypeUpdateGQLModel) -> Union[AcClassificationTypeGQLModel, UpdateError[AcClassificationTypeGQLModel]]:
-    result = await Update[AcClassificationTypeGQLModel].DoItSafeWay(info=info, entity=classification_type)
-    return result
+    return await Update[AcClassificationTypeGQLModel].DoItSafeWay(info=info, entity=classification_type)
+    
 
 @strawberry.mutation(
         description="""Update the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_classification_type_delete(self, info: strawberry.types.Info, classification_type: ClassificationTypeDeleteGQLModel) -> typing.Optional[DeleteError[AcClassificationTypeGQLModel]]:
-    result = await Delete[AcClassificationTypeGQLModel].DoItSafeWay(info=info, entity=classification_type)
-    return result
+    return await Delete[AcClassificationTypeGQLModel].DoItSafeWay(info=info, entity=classification_type)
+    
 # endregion
 
 # region Classification CU
@@ -2105,32 +2074,32 @@ class ClassificationResultGQLModel:
             permission_classes=[OnlyForAuthentized(isList=False)]
     )
     async def classification(self, info: strawberry.types.Info) -> Union[AcClassificationGQLModel, None]:
-        result = await AcClassificationGQLModel.resolve_reference(info, self.id)
-        return result
+        return await AcClassificationGQLModel.resolve_reference(info, self.id)
+        
     
 @strawberry.mutation(
         description="""Insert the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_classification_insert(self, info: strawberry.types.Info, classification: ClassificationInsertGQLModel) -> Union[AcClassificationGQLModel, InsertError[AcClassificationGQLModel]]:
-    result = await Insert[AcClassificationGQLModel].DoItSafeWay(info=info, entity=classification)
-    return result
+    return await Insert[AcClassificationGQLModel].DoItSafeWay(info=info, entity=classification)
+    
 
 @strawberry.mutation(
         description="""Update the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_classification_update(self, info: strawberry.types.Info, classification: ClassificationUpdateGQLModel) -> Union[AcClassificationGQLModel, UpdateError[AcClassificationGQLModel]]:
-    result = await Update[AcClassificationGQLModel].DoItSafeWay(info=info, entity=classification)
-    return result
+    return await Update[AcClassificationGQLModel].DoItSafeWay(info=info, entity=classification)
+    
 
 @strawberry.mutation(
         description="""Delete the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_classification_delete(self, info: strawberry.types.Info, classification: ClassificationDeleteGQLModel) -> typing.Optional[DeleteError[AcClassificationGQLModel]]:
-    result = await Delete[AcClassificationGQLModel].DoItSafeWay(info=info, entity=classification)
-    return result
+    return await Delete[AcClassificationGQLModel].DoItSafeWay(info=info, entity=classification)
+    
 
 # endregion
 
@@ -2167,24 +2136,24 @@ class ClassificationLevelResultGQLModel:
     permission_classes=[OnlyForAuthentized(isList=False)]
 )
 async def program_classification_level_insert(self, info: strawberry.types.Info, classification_level: ClassificationLevelInsertGQLModel) -> Union[AcClassificationLevelGQLModel, InsertError[AcClassificationLevelGQLModel]]:
-    result = await Insert[AcClassificationLevelGQLModel].DoItSafeWay(info=info, entity=classification_level)
-    return result
+    return await Insert[AcClassificationLevelGQLModel].DoItSafeWay(info=info, entity=classification_level)
+    
 
 @strawberry.mutation(
     description="""Update an existing classification level""",
     permission_classes=[OnlyForAuthentized(isList=False)]
 )
 async def program_classification_level_update(self, info: strawberry.types.Info, classification_level: ClassificationLevelUpdateGQLModel) -> Union[AcClassificationLevelGQLModel, UpdateError[AcClassificationLevelGQLModel]]:
-    result = await Update[AcClassificationLevelGQLModel].DoItSafeWay(info=info, entity=classification_level)
-    return result
+    return await Update[AcClassificationLevelGQLModel].DoItSafeWay(info=info, entity=classification_level)
+    
 
 @strawberry.mutation(
     description="""Delete an existing classification level""",
     permission_classes=[OnlyForAuthentized(isList=False)]
 )
 async def program_classification_level_delete(self, info: strawberry.types.Info, classification_level: ClassificationLevelDeleteGQLModel) -> typing.Optional[DeleteError[AcClassificationLevelGQLModel]]:
-    result = await Delete[AcClassificationLevelGQLModel].DoItSafeWay(info=info, entity=classification_level)
-    return result
+    return await Delete[AcClassificationLevelGQLModel].DoItSafeWay(info=info, entity=classification_level)
+    
 
 # endregion
 
@@ -2223,32 +2192,32 @@ class TopicResultGQLModel:
             permission_classes=[OnlyForAuthentized(isList=False)]
     )
     async def topic(self, info: strawberry.types.Info) -> Union[AcTopicGQLModel, None]:
-        result = await AcTopicGQLModel.resolve_reference(info, self.id)
-        return result
+        return await AcTopicGQLModel.resolve_reference(info, self.id)
+        
 
 @strawberry.mutation(
         description="""Insert the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_topic_insert(self, info: strawberry.types.Info, topic: TopicInsertGQLModel) -> Union[AcTopicGQLModel, InsertError[AcTopicGQLModel]]:
-    result = await Insert[AcTopicGQLModel].DoItSafeWay(info=info, entity=topic)
-    return result
+    return await Insert[AcTopicGQLModel].DoItSafeWay(info=info, entity=topic)
+    
 
 @strawberry.mutation(
         description="""Update the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_topic_update(self, info: strawberry.types.Info, topic: TopicUpdateGQLModel) -> Union[AcTopicGQLModel, UpdateError[AcTopicGQLModel]]:
-    result = await Update[AcTopicGQLModel].DoItSafeWay(info=info, entity=topic)
-    return result
+    return await Update[AcTopicGQLModel].DoItSafeWay(info=info, entity=topic)
+    
 
 @strawberry.mutation(
         description="""Delete the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_topic_delete(self, info: strawberry.types.Info, topic: TopicDeleteGQLModel) -> typing.Optional[DeleteError[AcTopicGQLModel]]:
-    result = await Delete[AcTopicGQLModel].DoItSafeWay(info=info, entity=topic)
-    return result
+    return await Delete[AcTopicGQLModel].DoItSafeWay(info=info, entity=topic)
+    
 
 # endregion
 
@@ -2285,32 +2254,32 @@ class LessonResultGQLModel:
             permission_classes=[OnlyForAuthentized(isList=False)]
     )
     async def lesson(self, info: strawberry.types.Info) -> Union[AcLessonGQLModel, None]:
-        result = await AcLessonGQLModel.resolve_reference(info, self.id)
-        return result
+        return await AcLessonGQLModel.resolve_reference(info, self.id)
+        
 
 @strawberry.mutation(
         description="""Insert the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_lesson_insert(self, info: strawberry.types.Info, lesson: LessonInsertGQLModel) -> Union[AcLessonGQLModel, InsertError[AcLessonGQLModel]]:
-    result = await Insert[AcLessonGQLModel].DoItSafeWay(info=info, entity=lesson)
-    return result
+    return await Insert[AcLessonGQLModel].DoItSafeWay(info=info, entity=lesson)
+    
 
 @strawberry.mutation(
         description="""Update the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_lesson_update(self, info: strawberry.types.Info, lesson: LessonUpdateGQLModel) -> Union[AcLessonGQLModel, UpdateError[AcLessonGQLModel]]:
-    result = await Update[AcLessonGQLModel].DoItSafeWay(info=info, entity=lesson)
-    return result
+    return await Update[AcLessonGQLModel].DoItSafeWay(info=info, entity=lesson)
+    
 
 @strawberry.mutation(
         description="""Delete the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_lesson_delete(self, info: strawberry.types.Info, lesson: LessonDeleteGQLModel) -> typing.Optional[DeleteError[AcLessonGQLModel]]:
-    result = await Delete[AcLessonGQLModel].DoItSafeWay(info=info, entity=lesson)
-    return result
+    return await Delete[AcLessonGQLModel].DoItSafeWay(info=info, entity=lesson)
+    
 
 # endregion
 
@@ -2343,32 +2312,32 @@ class StudentStateResultGQLModel:
 
     @strawberry.field(description="""Result of studentstate operation""")
     async def student_state(self, info: strawberry.types.Info) -> Optional[AcProgramStudentStateGQLModel]:
-        result = await AcProgramStudentStateGQLModel.resolve_reference(info, self.id)
-        return result
+        return await AcProgramStudentStateGQLModel.resolve_reference(info, self.id)
+        
 
 @strawberry.mutation(
         description="""Insert the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_student_state_insert(self, info: strawberry.types.Info, student_state: StudentStateInsertGQLModel) -> Union[AcProgramStudentStateGQLModel, InsertError[AcProgramStudentStateGQLModel]]:
-    result = await Insert[AcProgramStudentStateGQLModel].DoItSafeWay(info=info, entity=student_state)
-    return result
+    return await Insert[AcProgramStudentStateGQLModel].DoItSafeWay(info=info, entity=student_state)
+    
 
 @strawberry.mutation(
         description="""Update the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_student_state_update(self, info: strawberry.types.Info, student_state: StudentStateUpdateGQLModel) -> Union[AcProgramStudentStateGQLModel, UpdateError[AcProgramStudentStateGQLModel]]:
-    result = await Update[AcProgramStudentStateGQLModel].DoItSafeWay(info=info, entity=student_state)
-    return result
+    return await Update[AcProgramStudentStateGQLModel].DoItSafeWay(info=info, entity=student_state)
+    
 
 @strawberry.mutation(
         description="""Delete the type of study program""",
         permission_classes=[OnlyForAuthentized(isList=False)]
     )
 async def program_student_state_delete(self, info: strawberry.types.Info, student_state: StudentStateDeleteGQLModel) -> typing.Optional[DeleteError[AcProgramStudentStateGQLModel]]:
-    result = await Delete[AcProgramStudentStateGQLModel].DoItSafeWay(info=info, entity=student_state)
-    return result
+    return await Delete[AcProgramStudentStateGQLModel].DoItSafeWay(info=info, entity=student_state)
+    
 
 # endregion
 

@@ -34,6 +34,8 @@ ________________________________________________________________________
 29.1.2025 Splněno 84%, přidání CUD operací u classificationlevels, předělání GraphTypeDefinitions.py
 
 8.2.2025 Splněno 89%, dokončení testů na CRUD operace
+
+10.2.2025 Splněno 90%
 ________________________________________________________________________
 
 ## Aktuální úkoly
@@ -65,7 +67,7 @@ ________________________________________________________________________
     Annotated[Optional[str], strawberry.argument(description="")]="0"
     ```
 - [ ] U všech fields jsou permission classes a v komentáři uvedeno, kdo má k atributu či funkcionalitě přístup
-- [ ] Testy s alespoň 90% pokrytím pomocí dotazů, ty jsou uloženy v systému souborů (read.gql, create.gql, …)
+- [x] Testy s alespoň 90% pokrytím pomocí dotazů, ty jsou uloženy v systému souborů (read.gql, create.gql, …)
 
 ________________________________________________________________________
 

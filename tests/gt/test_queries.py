@@ -27,9 +27,7 @@ myquery = """
 # async def test_result_test(NoRole_UG_Server):
 #     response = await NoRole_UG_Server(query=myquery, variables={})
 #     assert "data" in response, f"Expected 'data' in response, got: {response}"
-#     data = response["data"]
-#     assert data is not None, f"Expected 'data' in response, got: {response}"
-#     assert response["data"].get("me", None) is not None, f"Expected 'me' field in response data {response}"
+#     assert response["data"]["me"] is not None, "Expected 'me' field in response data"
 #     logging.info(f"User data: {response}")
 
 ######################################################################### ClassificationLevel CRUD Tests
