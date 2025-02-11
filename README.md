@@ -6,19 +6,21 @@ ________________________________________________________________________
 
 ## Deníček
 
-7.10.2024 publikován repositář
+7.10.2024 Publikován repositář
 
-30.10.2024 dokončení komentářů u DBDefinitons
+30.10.2024 Dokončení komentářů u DBDefinitons
 
-5.11.2024 dokončení descriptions v GraphTypeDefinitions
+5.11.2024 Dokončení descriptions v GraphTypeDefinitions
 
-7.11.2024 uspěšné prezentování projektu na 1. projektovém dni
+7.11.2024 Úspěšné prezentování projektu na 1. projektovém dni
 
-14.11.2024 úprava Dataloaderů
+14.11.2024 Úprava Dataloaderů
 
-25.11.2024 přidání Voyager pro zobrazení dat
+25.11.2024 Přidání Voyager pro zobrazení dat
 
 28.11.2024 Přidání schémat a _data do QGL modelů
+
+9.12.2024 Úspěšné prezenetování projektu na 2. projektovém dni
 
 6.1.2025 Kompletní dokončení CRUD operací
 
@@ -32,6 +34,7 @@ ________________________________________________________________________
 28.1.2025 Splněno 79%, update testů
 
 29.1.2025 Splněno 84%, přidání CUD operací u classificationlevels, předělání GraphTypeDefinitions.py
+          Úspěšné prezentování projektu na 3. projektovém dni
 
 8.2.2025 Splněno 89%, dokončení testů na CRUD operace
 
@@ -52,7 +55,6 @@ ________________________________________________________________________
     - rbacobject_id
 - [x] Přidání CRUD operací
 - [x] Vektorové atributy mají volitelné parametry where, limit a skip a mají alternativu podle standardu relay connection
-- [ ] Vektorové resolvery globální úrovně (query) mají také alternativu podle standardu relay connection
 - [ ] Součástí filtrů (where) bude primární klíč i cizí klíče
 - [x] Počáteční import dat je realizován jako asynchronní task: 
     ```python
@@ -88,7 +90,6 @@ ________________________________________________________________________
 uvicorn main:app --env-file environment.txt --port 8001
 ```
 ```bash
-uvicorn main:app --reload --port 8125
 pytest --cov-report term-missing --cov=src --log-cli-level=INFO -x
 ```
 ```bash
