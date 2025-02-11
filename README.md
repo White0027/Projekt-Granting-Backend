@@ -66,7 +66,7 @@ ________________________________________________________________________
     ```python
     Annotated[Optional[str], strawberry.argument(description="")]="0"
     ```
-- [ ] U všech fields jsou permission classes a v komentáři uvedeno, kdo má k atributu či funkcionalitě přístup
+- [x] U všech fields jsou permission classes a v komentáři uvedeno, kdo má k atributu či funkcionalitě přístup
 - [x] Testy s alespoň 90% pokrytím pomocí dotazů, ty jsou uloženy v systému souborů (read.gql, create.gql, …)
 
 ________________________________________________________________________
